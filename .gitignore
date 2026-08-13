@@ -19,3 +19,4 @@ portable-vscode
 .vscode-remote-ssh/
 # End of Selection
 ```
+.envrc
