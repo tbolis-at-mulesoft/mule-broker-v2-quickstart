@@ -1,0 +1,56 @@
+{
+  "protocolVersion": "2025-06-18",
+  "transport": {
+    "kind": "streamableHttp",
+    "path": "/api/platform/{serverId}/mcp"
+  },
+  "provider": {
+    "organization": "",
+    "url": ""
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": true,
+    "logging": true
+  },
+  "logging": {
+    "level": "info"
+  },
+  "platform": "mulesoft",
+  "tools": [
+    {
+      "name": "updateIssue",
+      "description": "Updates a Jira ticket with a new status and adds a comment with resolution details. Returns confirmation of the update.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "ticket_id",
+          "status",
+          "comment"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "open",
+              "in-progress",
+              "resolved",
+              "escalated",
+              "closed"
+            ],
+            "type": "string",
+            "description": "New status for the ticket"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment to add to the ticket with resolution details"
+          },
+          "ticket_id": {
+            "type": "string",
+            "description": "The Jira ticket ID to update"
+          }
+        }
+      }
+    }
+  ]
+}

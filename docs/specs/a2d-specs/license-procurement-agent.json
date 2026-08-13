@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "exportedAt": "2026-08-13T21:16:57.842Z",
+  "manifest": {
+    "mcpServers": [],
+    "agentCards": [
+      {
+        "id": "f81aaefb-e088-43f8-9a8c-96dee55d2f25",
+        "name": "License Procurement Agent",
+        "type": "agent_card"
+      }
+    ]
+  },
+  "mcpServers": [],
+  "agentCards": [
+    {
+      "name": "License Procurement Agent",
+      "description": "Checks software license availability and provisions licenses for employees.",
+      "type": "mock",
+      "url": "https://www.a2d-ai.com/api/platform/927e71a3-b469-43e4-b9b8-7d2da63b1d41/a2a",
+      "protocol_version": "1.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {
+        "streaming": false,
+        "pushNotifications": false
+      },
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "mulesoft",
+      "status": "draft",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "license_check_and_provision",
+          "name": "License Check and Provision",
+          "description": "Check license availability and provision for a user. Looks up current seat counts for the requested software title, verifies whether a license is available or must be purchased, and if available assigns and activates the license for the requesting employee, returning confirmation of the assignment.",
+          "examples": [
+            "Does the marketing team have an available Tableau license for a new hire starting next Monday?",
+            "Please provision a Figma seat for employee jdoe@company.com under the design team license pool.",
+            "Check if there is a spare Adobe Creative Cloud license before purchasing a new one for the finance team."
+          ],
+          "input_modes": [
+            "application/json",
+            "text/plain"
+          ],
+          "output_modes": [
+            "application/json",
+            "text/plain"
+          ],
+          "tags": [],
+          "enabled": true,
+          "sort_order": 1
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "a2a-1780993219237",
+          "name": "Scenario 1",
+          "response": "{\n  \"id\": \"lp-001\",\n  \"contextId\": \"lp-ctx-001\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"lp-art-001\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"License check complete.\\n\\nSoftware: Figma\\nCurrent License: Viewer (free tier)\\nRequired License: Developer seat\\nStatus: Available - 3 Developer seats remaining\\nAction Taken: Developer seat provisioned\\nLicense ID: LIC-2026-04-0892\\nEffective: Immediately\\n\\nResolution: license_given\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ]\n}",
+          "condition": {
+            "field": "text",
+            "value": "Figma",
+            "operator": "contains"
+          }
+        },
+        {
+          "id": "a2a-1780993253574",
+          "name": "Scenario 2",
+          "response": "{\n  \"id\": \"lp-005\",\n  \"contextId\": \"lp-ctx-005\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"lp-art-005\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"License check complete.\\n\\nSoftware: Tableau\\nStatus: No Tableau licenses available in the company pool. Unable to provision automatically. Requires manager approval and procurement team involvement.\\n\\nResolution: unresolved\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ]\n}",
+          "condition": {
+            "field": "text",
+            "value": "Tableau",
+            "operator": "contains"
+          }
+        },
+        {
+          "id": "a2a-1780993280073",
+          "name": "Scenario 3",
+          "response": "{\n  \"id\": \"lp-002\",\n  \"contextId\": \"lp-ctx-002\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"lp-art-002\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"License check complete.\\n\\nSoftware: GitHub Enterprise\\nStatus: Available - 12 seats remaining\\nAction Taken: Enterprise seat provisioned\\nLicense ID: LIC-2026-04-1547\\nEffective: Within 5 minutes\\n\\nResolution: license_given\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ]\n}",
+          "condition": {
+            "field": "text",
+            "value": "Github",
+            "operator": "contains"
+          }
+        },
+        {
+          "id": "a2a-1780993301489",
+          "name": "Scenario 4",
+          "response": "{\n  \"id\": \"lp-004\",\n  \"contextId\": \"lp-ctx-004\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"lp-art-004\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"License check complete.\\n\\nStatus: No licenses available in the company pool. Unable to provision automatically. Requires manager approval and procurement.\\n\\nResolution: unresolved\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ]\n}",
+          "condition": {
+            "field": "text",
+            "value": "",
+            "operator": "contains"
+          }
+        }
+      ],
+      "config": {
+        "url": "https://www.a2d-ai.com/api/platform/927e71a3-b469-43e4-b9b8-7d2da63b1d41/a2a",
+        "provider": {
+          "url": "https://www.mulesoft.com",
+          "organization": "MuleSoft"
+        },
+        "capabilities": {
+          "streaming": false,
+          "pushNotifications": false
+        },
+        "protocolVersion": "1.0",
+        "defaultInputModes": [
+          "application/json",
+          "text/plain"
+        ],
+        "defaultOutputModes": [
+          "application/json",
+          "text/plain"
+        ]
+      }
+    }
+  ]
+}

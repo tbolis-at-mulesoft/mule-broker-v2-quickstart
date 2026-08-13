@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "exportedAt": "2026-08-13T21:17:12.985Z",
+  "manifest": {
+    "mcpServers": [],
+    "agentCards": [
+      {
+        "id": "aabc1814-72c3-4091-ba67-75600396ee91",
+        "name": "Help Center Agent",
+        "type": "agent_card"
+      }
+    ]
+  },
+  "mcpServers": [],
+  "agentCards": [
+    {
+      "name": "Help Center Agent",
+      "description": "Searches the IT knowledge base for answers to common issues. Returns relevant articles with step-by-step instructions.",
+      "type": "mock",
+      "url": "https://www.a2d-ai.com/api/platform/d546fc09-897d-4b1a-9d3b-93acf0c991c5/a2a",
+      "protocol_version": "1.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {
+        "streaming": false,
+        "pushNotifications": false
+      },
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "mulesoft",
+      "status": "draft",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "knowledge_base_search",
+          "name": "Knowledge Base Search",
+          "description": "Search for IT help articles and known solutions. Queries the internal knowledge base using keywords or a description of the issue, matches against existing articles covering common problems like VPN access, email sync, and account resets, and returns the most relevant article along with step-by-step remediation instructions.",
+          "examples": [
+            "How do I reset my VPN password when I am locked out of the corporate network?",
+            "My Outlook email stopped syncing after the latest update, what troubleshooting steps should I take?",
+            "I am trying to log into Figma but I am getting a license error, is there a knowledge base article for this?"
+          ],
+          "input_modes": [
+            "application/json",
+            "text/plain"
+          ],
+          "output_modes": [
+            "application/json",
+            "text/plain"
+          ],
+          "tags": [],
+          "enabled": true,
+          "sort_order": 1
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "a2a-1780993722060",
+          "name": "Scenario 1",
+          "response": "{\n  \"id\": \"hc-001\",\n  \"contextId\": \"hc-ctx-001\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"hc-art-001\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"Found article: KB-2041: How to Reset Your VPN Password.\\n\\n1. Go to https://vpn.company.com/reset\\n2. Enter your corporate email address\\n3. Click Send Reset Link\\n4. Check your email for the reset link (arrives within 2 minutes)\\n5. Set a new password (12+ characters with uppercase, lowercase, number, symbol)\\n6. Reconnect to VPN with new credentials\\n\\nResolution: help_given\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ]\n}",
+          "condition": {
+            "field": "text",
+            "value": "VPN",
+            "operator": "contains"
+          }
+        },
+        {
+          "id": "a2a-1780993750056",
+          "name": "Scenario 2",
+          "response": "{\n  \"id\": \"hc-005\",\n  \"contextId\": \"hc-ctx-005\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"hc-art-005\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"No relevant articles found for Figma issues. This appears to be a licensing or access issue rather than a knowledge base topic. Recommend checking with the License Procurement team.\\n\\nResolution: unresolved\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ]\n}",
+          "condition": {
+            "field": "text",
+            "value": "Figma",
+            "operator": "contains"
+          }
+        },
+        {
+          "id": "a2a-1780993783049",
+          "name": "Scenario 3",
+          "response": "{\n  \"id\": \"hc-006\",\n  \"contextId\": \"hc-ctx-006\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"hc-art-006\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"No relevant articles found for Tableau access. Tableau provisioning requires manager approval and procurement team involvement.\\n\\nResolution: unresolved\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ]\n}",
+          "condition": {
+            "field": "text",
+            "value": "Tableau",
+            "operator": "contains"
+          }
+        },
+        {
+          "id": "a2a-1780993798153",
+          "name": "Scenario 4",
+          "response": "{\n  \"id\": \"hc-002\",\n  \"contextId\": \"hc-ctx-002\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"hc-art-002\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"Found article: KB-3087: Troubleshooting Email Sync Issues.\\n\\n1. Open Outlook then File then Account Settings\\n2. Select your account and click Repair\\n3. Follow the prompts to re-authenticate\\n4. If needed, clear the Outlook cache\\n5. Restart Outlook\\n\\nResolution: help_given\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ]\n}",
+          "condition": {
+            "field": "text",
+            "value": "email",
+            "operator": "contains"
+          }
+        },
+        {
+          "id": "a2a-1780993889255",
+          "name": "Scenario 5",
+          "response": "{\n  \"id\": \"hc-004\",\n  \"contextId\": \"hc-ctx-004\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"hc-art-004\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"No relevant articles found in the knowledge base for this issue. Recommend escalating to a human agent.\\n\\nResolution: unresolved\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ]\n}",
+          "condition": {
+            "field": "text",
+            "value": "",
+            "operator": "contains"
+          }
+        },
+        {
+          "id": "a2a-1780993909767",
+          "name": "Scenario 6",
+          "response": "{\n  \"contextId\": \"e22b99fc-8499-4d26-a3bf-25ee82cca710\",\n  \"id\": \"e22b99fc-8499-4d26-a3bf-25ee82cca710\",\n  \"status\": { \"state\": \"TASK_STATE_COMPLETED\", \"timestamp\": \"2024-01-01T00:00:00.000Z\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"886c0729-669a-4ad2-9ffb-d3339dc1c4a0\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"text\": \"Your response here.\",\n          \"mediaType\": \"text/plain\"\n        }\n      ]\n    }\n  ],\n  \"history\": [],\n  \"metadata\": {}\n}",
+          "condition": {
+            "field": "text",
+            "value": "",
+            "operator": "contains"
+          }
+        }
+      ],
+      "config": {
+        "url": "https://www.a2d-ai.com/api/platform/d546fc09-897d-4b1a-9d3b-93acf0c991c5/a2a",
+        "provider": {
+          "url": "https://www.mulesoft.com",
+          "organization": "MuleSoft"
+        },
+        "capabilities": {
+          "streaming": false,
+          "pushNotifications": false
+        },
+        "protocolVersion": "1.0",
+        "defaultInputModes": [
+          "application/json",
+          "text/plain"
+        ],
+        "defaultOutputModes": [
+          "application/json",
+          "text/plain"
+        ]
+      }
+    }
+  ]
+}

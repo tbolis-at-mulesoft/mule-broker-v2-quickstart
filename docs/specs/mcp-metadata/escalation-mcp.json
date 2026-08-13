@@ -1,0 +1,58 @@
+{
+  "protocolVersion": "2025-06-18",
+  "transport": {
+    "kind": "streamableHttp",
+    "path": "/api/platform/{serverId}/mcp"
+  },
+  "provider": {
+    "organization": "",
+    "url": ""
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": true,
+    "logging": true
+  },
+  "logging": {
+    "level": "info"
+  },
+  "platform": "mulesoft",
+  "tools": [
+    {
+      "name": "escalate",
+      "description": "Escalates a support ticket to the on-call team for immediate attention. Returns escalation confirmation with team assignment and tracking ID.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "ticket_id",
+          "severity",
+          "reason",
+          "description"
+        ],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "Brief explanation for the escalation"
+          },
+          "severity": {
+            "enum": [
+              "high",
+              "low"
+            ],
+            "type": "string",
+            "description": "Severity level of the ticket"
+          },
+          "ticket_id": {
+            "type": "string",
+            "description": "The Jira ticket ID to escalate"
+          },
+          "description": {
+            "type": "string",
+            "description": "Full description of the support ticket"
+          }
+        }
+      }
+    }
+  ]
+}

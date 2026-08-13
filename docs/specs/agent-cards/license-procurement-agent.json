@@ -1,0 +1,24 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "License Procurement Agent",
+  "description": "Checks software license availability and provisions licenses for employees.",
+  "url": "https://www.a2d-ai.com/api/platform/927e71a3-b469-43e4-b9b8-7d2da63b1d41/a2a",
+  "capabilities": {
+    "pushNotifications": false
+  },
+  "provider": {
+    "url": "",
+    "organization": ""
+  },
+  "version": "1.0.0",
+  "securitySchemes": {},
+  "defaultInputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "skills": []
+}

@@ -1,0 +1,21 @@
+# VSCode: ignore common workspace and user settings, extensions, backups, and other temp files
+.vscode/
+.vscode-test/
+.history/
+.idea/
+*.code-workspace
+*.code-workspace.bak
+*.vsix
+.DS_Store
+portable-vscode
+# VSCode extension development temp and test files
+*.vsixmanifest
+*.vsixpackage
+*.vsix
+.vscode-insiders/
+.vscode-remote/
+.vscode-server/
+.vscode-remote-containers/
+.vscode-remote-ssh/
+# End of Selection
+```

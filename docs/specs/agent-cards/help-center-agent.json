@@ -1,0 +1,31 @@
+{
+  "name": "Help Center Agent",
+  "version": "1.0.0",
+  "description": "Searches the IT knowledge base for answers to common issues. Returns relevant articles with step-by-step instructions.",
+  "skills": [],
+  "capabilities": {
+    "extendedAgentCard": false,
+    "streaming": false,
+    "pushNotifications": false,
+    "extensions": []
+  },
+  "provider": {
+    "url": "",
+    "organization": ""
+  },
+  "defaultInputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "supportedInterfaces": [
+    {
+      "url": "https://www.a2d-ai.com/api/platform/d546fc09-897d-4b1a-9d3b-93acf0c991c5/a2a",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ]
+}

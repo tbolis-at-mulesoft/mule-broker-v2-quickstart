@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "exportedAt": "2026-08-13T21:15:31.520Z",
+  "manifest": {
+    "mcpServers": [
+      {
+        "id": "e7753046-211b-4377-be61-cbe8bbdce1fd",
+        "name": "Escalation MCP",
+        "type": "mcp_server"
+      }
+    ],
+    "agentCards": []
+  },
+  "mcpServers": [
+    {
+      "name": "Escalation MCP",
+      "type": "mock",
+      "description": "MCP server that escalates support tickets directly to a human on-call team for immediate attention, returning the assigned team and a tracking ID for follow-up.",
+      "config": {
+        "provider": {
+          "url": "https://www.mulesoft.com",
+          "organization": "MuleSoft"
+        },
+        "lastPublish": {
+          "name": "Escalation MCP",
+          "assetId": "escalation-mcp",
+          "groupId": "<redacted-anypoint-org-id>",
+          "version": "1.0.0",
+          "timestamp": "2026-04-14T06:22:11.205Z",
+          "description": "Escalates an IT ticket to a human",
+          "organizationId": "<redacted-anypoint-org-id>"
+        }
+      },
+      "transport_config": {
+        "kind": "streamableHttp",
+        "path": "/api/platform/escalation-mcp/mcp"
+      },
+      "enabled": true,
+      "status": "draft",
+      "source_url": null,
+      "mock_data": {},
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "introspect_auth_type": "none",
+      "introspect_auth_config": {},
+      "tools": [
+        {
+          "name": "escalateTicket",
+          "description": "Escalates a support ticket to the on-call team for immediate attention. Accepts a ticket_id, a severity level (high or low), a reason summarizing why escalation is needed, and a full description of the issue. Notifies the on-call team and returns an escalation confirmation including the assigned team and a tracking ID for follow-up.",
+          "input_schema": {
+            "type": "object",
+            "required": [
+              "ticket_id",
+              "severity",
+              "reason",
+              "description"
+            ],
+            "properties": {
+              "reason": {
+                "type": "string",
+                "description": "Brief explanation for the escalation"
+              },
+              "severity": {
+                "enum": [
+                  "high",
+                  "low"
+                ],
+                "type": "string",
+                "description": "Severity level of the ticket"
+              },
+              "ticket_id": {
+                "type": "string",
+                "description": "The Jira ticket ID to escalate"
+              },
+              "description": {
+                "type": "string",
+                "description": "Full description of the support ticket"
+              }
+            }
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 0,
+          "mock_scenarios": [
+            {
+              "id": "1e4788dc-a527-4da5-83cb-be3c33ccfd6a",
+              "name": "Successful escalation",
+              "response": "{\"success\":true,\"ticket_id\":\"PROJ-123\",\"assigned_team\":\"on-call\",\"tracking_id\":\"ESC-4821\",\"message\":\"Ticket PROJ-123 escalated to the on-call team.\"}",
+              "condition": {
+                "field": "ticket_id",
+                "value": "true",
+                "operator": "exists"
+              },
+              "responseType": "json"
+            }
+          ]
+        }
+      ],
+      "resources": [],
+      "prompts": [],
+      "openapiSpecs": []
+    }
+  ],
+  "agentCards": []
+}

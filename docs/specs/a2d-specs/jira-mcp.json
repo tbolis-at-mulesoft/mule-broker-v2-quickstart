@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "exportedAt": "2026-08-13T21:15:13.218Z",
+  "manifest": {
+    "mcpServers": [
+      {
+        "id": "48db9b51-1e71-48b4-9b0c-f9f8c540ec8b",
+        "name": "Jira MCP",
+        "type": "mcp_server"
+      }
+    ],
+    "agentCards": []
+  },
+  "mcpServers": [
+    {
+      "name": "Jira MCP",
+      "type": "mock",
+      "description": "Mock MCP server exposing a Jira ticket-update tool for testing agent workflows that transition issue status and add resolution comments.",
+      "config": {
+        "provider": {
+          "url": "https://www.atlassian.com/software/jira",
+          "organization": "Jira"
+        },
+        "lastPublish": {
+          "name": "Jira MCP",
+          "assetId": "jira-mcp",
+          "groupId": "<redacted-anypoint-org-id>",
+          "version": "1.0.0",
+          "timestamp": "2026-04-14T06:23:52.058Z",
+          "description": "Updates Jira MCP ticket",
+          "organizationId": "<redacted-anypoint-org-id>"
+        }
+      },
+      "transport_config": {
+        "kind": "streamableHttp",
+        "path": "/api/platform/jira-mcp/mcp"
+      },
+      "enabled": true,
+      "status": "draft",
+      "source_url": null,
+      "mock_data": {},
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "introspect_auth_type": "none",
+      "introspect_auth_config": {},
+      "tools": [
+        {
+          "name": "updateIssue",
+          "description": "Updates a Jira ticket with a new status and adds a comment with resolution details. Accepts a ticket_id identifying the Jira issue, a status value (open, in-progress, resolved, escalated, or closed), and a comment describing the resolution or reasoning behind the change. Applies the status transition on the ticket and appends the comment to its activity log, then returns a confirmation of the update including the ticket ID, the new status, and a timestamp.",
+          "input_schema": {
+            "type": "object",
+            "required": [
+              "ticket_id",
+              "status",
+              "comment"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "open",
+                  "in-progress",
+                  "resolved",
+                  "escalated",
+                  "closed"
+                ],
+                "type": "string",
+                "description": "New status for the ticket"
+              },
+              "comment": {
+                "type": "string",
+                "description": "Comment to add to the ticket with resolution details"
+              },
+              "ticket_id": {
+                "type": "string",
+                "description": "The Jira ticket ID to update"
+              }
+            }
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 0,
+          "mock_scenarios": [
+            {
+              "id": "3de37103-f120-4c74-868a-328acb6340ab",
+              "name": "Successful ticket update",
+              "response": "{\"success\":true,\"ticket_id\":\"PROJ-123\",\"status\":\"resolved\",\"message\":\"Ticket PROJ-123 updated to resolved and comment added.\"}",
+              "condition": {
+                "field": "ticket_id",
+                "value": "true",
+                "operator": "exists"
+              },
+              "responseType": "json"
+            }
+          ]
+        }
+      ],
+      "resources": [],
+      "prompts": [],
+      "openapiSpecs": []
+    }
+  ],
+  "agentCards": []
+}
