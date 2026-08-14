@@ -7,11 +7,13 @@ up the Agent Network Gateways the agent network will run on.
 
 - [1. Grant the required Anypoint Platform permissions](#1-grant-the-required-anypoint-platform-permissions)
 - [2. Set up Agent Network Gateways](#2-set-up-agent-network-gateways)
-  - [Select a Business Group (Command Palette path)](#select-a-business-group-command-palette-path)
-  - [Select an environment (Command Palette path)](#select-an-environment-command-palette-path)
-  - [Select the target space type (Command Palette path)](#select-the-target-space-type-command-palette-path)
-  - [Select the target region (Command Palette path)](#select-the-target-region-command-palette-path)
-  - [Confirm the gateway name (Command Palette path)](#confirm-the-gateway-name-command-palette-path)
+  - [Anypoint Platform UI approach](#anypoint-platform-ui-approach)
+  - [Command Palette approach (non-trial accounts only)](#command-palette-approach-non-trial-accounts-only)
+    - [Select a Business Group](#select-a-business-group)
+    - [Select an environment](#select-an-environment)
+    - [Select the target space type](#select-the-target-space-type)
+    - [Select the target region](#select-the-target-region)
+    - [Confirm the gateway name](#confirm-the-gateway-name)
 - [3. Wait for the gateway to deploy](#3-wait-for-the-gateway-to-deploy)
 
 ## 1. Grant the required Anypoint Platform permissions
@@ -34,6 +36,8 @@ environment you'll use for the agent network.
 
 ## 2. Set up Agent Network Gateways
 
+### Anypoint Platform UI approach
+
 **For trial accounts, use the Anypoint Platform UI** — the VS Code Command
 Palette command doesn't work on trial accounts due to trial-related
 limitations, so the UI is the go-to path here.
@@ -51,40 +55,42 @@ not customizable on trial accounts.
 
 ![Add Managed Omni Gateway form, with name, deployment target, release channel, version, and gateway type](images/45-add-managed-omni-gateway-form.png)
 
-> **Non-trial accounts:** you can alternatively open the Command Palette
-> (**Cmd+Shift+P**) and run **"MuleSoft: Set Up Agent Network Gateways..."**,
-> which walks through the same choices as a series of quick-picks instead of
-> the single form above — see steps 3–7 below.
->
-> ![Command Palette running MuleSoft: Set Up Agent Network Gateways](images/46-command-palette-setup-gateways.png)
+### Command Palette approach (non-trial accounts only)
 
-### Select a Business Group (Command Palette path)
+This is an alternative to the Anypoint Platform UI approach for non-trial
+accounts only. Open the Command Palette (**Cmd+Shift+P**) and run **"MuleSoft:
+Set Up Agent Network Gateways..."**. The command walks through the same choices
+as a series of quick-picks instead of a single form.
+
+![Command Palette running MuleSoft: Set Up Agent Network Gateways](images/46-command-palette-setup-gateways.png)
+
+#### Select a Business Group
 
 Pick the Business Group to set up the gateways in — for example, the
 **Salesforce** Business Group.
 
 ![Select a Business Group quick-pick](images/47-select-business-group.png)
 
-### Select an environment (Command Palette path)
+#### Select an environment
 
 Pick the environment to deploy the gateway to — for example, **Sandbox**.
 
 ![Select the environment quick-pick](images/48-select-environment.png)
 
-### Select the target space type (Command Palette path)
+#### Select the target space type
 
 Pick **Shared Space** or **Private Space** for the gateway.
 
 ![Select the target space type quick-pick](images/49-select-target-space-type.png)
 
-### Select the target region (Command Palette path)
+#### Select the target region
 
 Pick the CloudHub region to deploy the gateway to — for example,
 **Cloudhub-US-East-2**.
 
 ![Select the target region quick-pick](images/50-select-target-region.png)
 
-### Confirm the gateway name (Command Palette path)
+#### Confirm the gateway name
 
 Confirm or edit the default gateway name, then press **Enter**.
 
