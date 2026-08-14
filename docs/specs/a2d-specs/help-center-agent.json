@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "exportedAt": "2026-08-13T21:17:12.985Z",
+  "exportedAt": "2026-08-14T09:18:50.925Z",
   "manifest": {
     "mcpServers": [],
     "agentCards": [
       {
-        "id": "aabc1814-72c3-4091-ba67-75600396ee91",
+        "id": "44431c1a-3bfa-46b7-b66d-16d0f9859c12",
         "name": "Help Center Agent",
         "type": "agent_card"
       }
@@ -18,7 +18,7 @@
       "description": "Searches the IT knowledge base for answers to common issues. Returns relevant articles with step-by-step instructions.",
       "type": "mock",
       "url": "https://www.a2d-ai.com/api/platform/d546fc09-897d-4b1a-9d3b-93acf0c991c5/a2a",
-      "protocol_version": "1.0",
+      "protocol_version": "0.3.0",
       "version": "1.0.0",
       "provider": {},
       "capabilities": {
