@@ -1,22 +1,29 @@
-# VSCode: ignore common workspace and user settings, extensions, backups, and other temp files
-.vscode/
-.vscode-test/
-.history/
+# OS files
+.DS_Store
+
+# Local environment
+.envrc
+
+# IDE/editor files
 .idea/
+.history/
 *.code-workspace
 *.code-workspace.bak
-*.vsix
-.DS_Store
-portable-vscode
-# VSCode extension development temp and test files
-*.vsixmanifest
-*.vsixpackage
-*.vsix
+
+# VS Code and related
+.vscode/
+.vscode-test/
 .vscode-insiders/
 .vscode-remote/
 .vscode-server/
 .vscode-remote-containers/
 .vscode-remote-ssh/
-# End of Selection
-```
-.envrc
+portable-vscode
+
+# VS Code extension packaging artifacts
+*.vsix
+*.vsixmanifest
+*.vsixpackage
+
+# Local project artifacts
+it-help-investigation-agent-network
