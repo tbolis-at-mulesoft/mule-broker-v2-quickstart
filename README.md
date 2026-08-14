@@ -31,3 +31,10 @@ The guide is split into one file per phase — work through them in order:
 
 Screenshots for each step live in [docs/images/](docs/images/), numbered in
 the order they're referenced across the guide.
+
+## References
+
+- [MuleSoft free trial signup](https://anypoint.mulesoft.com/login/signup)
+- [Building Agent Networks for Agent Fabric](https://docs.mulesoft.com/agent-network/latest/af-agent-networks)
+- [A²D — Agentic Asset Designer](https://a2d-ai.com) — design and mock the
+  agents and MCP servers used by the example agent network.
