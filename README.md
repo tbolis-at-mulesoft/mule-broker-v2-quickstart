@@ -21,8 +21,13 @@ The guide is split into one file per phase — work through them in order:
 6. [Set Up Agent Network Gateways](docs/05-set-up-agent-network-gateways.md) —
    grant the required permissions and deploy the Agent Network Gateways.
 7. [Build the Agent Network](docs/06-build-agent-network.md) — create the
-   agent network project and build the agent network broker itself
-   *(in progress — more steps to come)*.
+   agent network project and build the agent network broker itself.
+8. [Publish the Agent Network](docs/07-publish-agent-network.md) — publish the
+   completed network assets to Anypoint Exchange and verify them.
+9. [Deploy the Agent Network](docs/08-deploy-agent-network.md) — deploy the
+   published network to CloudHub 2.0 and verify its running instances.
+10. [Test the Agent Network Broker](docs/09-test-agent-network-broker.md) —
+    call the deployed broker and verify its investigation and escalation paths.
 
 Screenshots for each step live in [docs/images/](docs/images/), numbered in
 the order they're referenced across the guide.

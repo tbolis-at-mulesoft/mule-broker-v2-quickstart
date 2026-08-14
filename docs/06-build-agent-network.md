@@ -13,7 +13,7 @@ agent network.
 - [1. Create the Agent Network project](#1-create-the-agent-network-project)
   - [Prompt 1 — Register the network assets](#prompt-1--register-the-network-assets)
   - [Prompt 2 — Add broker metadata](#prompt-2--add-broker-metadata)
-- [Prompt 3 — Create the IT help investigation flow](#prompt-3--create-the-it-help-investigation-flow)
+  - [Prompt 3 — Create the IT help investigation flow](#prompt-3--create-the-it-help-investigation-flow)
 
 ## 1. Create the Agent Network project
 
@@ -340,7 +340,11 @@ brokers:
 If `brokers/broker1.agent` is still present, delete it. It is an unused
 artifact from the initial project scaffold.
 
-## Prompt 3 — Create the IT help investigation flow
+### Prompt 3 — Create the IT help investigation flow
+
+> **Implementation note:** In this example, severity classification is
+> performed by a Subagent node. A Generator node would likely be a simpler
+> choice for this focused classification step, but both node types work.
 
 In **MuleSoft Vibes**, enter the following prompt:
 
@@ -681,4 +685,5 @@ echo unresolvedResponse:
 
 ---
 
-**Previous:** [Phase 5 — Set Up Agent Network Gateways](05-set-up-agent-network-gateways.md)
+**Previous:** [Phase 5 — Set Up Agent Network Gateways](05-set-up-agent-network-gateways.md) ·
+**Next:** [Phase 7 — Publish the Agent Network](07-publish-agent-network.md)
