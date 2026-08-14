@@ -17,10 +17,12 @@ The guide is split into one file per phase — work through them in order:
 4. [Link Anypoint Platform to Salesforce](docs/03-link-salesforce.md) — link
    the Salesforce org to Anypoint Platform to enable MuleSoft Vibes.
 5. [Set Up Mock Agents and MCP Servers](docs/04-mock-agents-and-mcps.md) — use
-   a2d to design and mock the agents and MCP servers the network will call
+   a2d to design and mock the agents and MCP servers the network will call.
+6. [Set Up Agent Network Gateways](docs/05-set-up-agent-network-gateways.md) —
+   grant the required permissions and deploy the Agent Network Gateways.
+7. [Build the Agent Network](docs/06-build-agent-network.md) — create the
+   agent network project and build the agent network broker itself
    *(in progress — more steps to come)*.
-6. [Build the Agent Network](docs/05-build-agent-network.md) — build the
-   agent network broker itself.
 
 Screenshots for each step live in [docs/images/](docs/images/), numbered in
 the order they're referenced across the guide.

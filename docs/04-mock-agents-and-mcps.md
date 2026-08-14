@@ -1,6 +1,6 @@
 # Phase 4 — Set Up Mock Agents and MCP Servers
 
-The agent network built in [Phase 5](05-build-agent-network.md) needs other
+The agent network built in [Phase 6](06-build-agent-network.md) needs other
 agents and MCP servers to talk to. Since this guide focuses on the **agent
 network broker** itself rather than any specific downstream agent, it's
 enough to use **a2d** to design and mock the agents and MCP servers the
@@ -122,4 +122,4 @@ After importing, open each asset's detail page (**Overview** tab) and note its
 ---
 
 **Previous:** [Phase 3 — Link Anypoint Platform to Salesforce](03-link-salesforce.md) ·
-**Next:** [Phase 5 — Build the Agent Network](05-build-agent-network.md)
+**Next:** [Phase 5 — Set Up Agent Network Gateways](05-set-up-agent-network-gateways.md)

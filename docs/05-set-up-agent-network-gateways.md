@@ -1,7 +1,7 @@
-# Phase 5 — Build the Agent Network
+# Phase 5 — Set Up Agent Network Gateways
 
-With Anypoint Platform linked to Salesforce and the MCP servers enabled,
-build the first example agent network.
+With Anypoint Platform linked to Salesforce and the MCP servers enabled, set
+up the Agent Network Gateways the agent network will run on.
 
 ## Contents
 
@@ -105,4 +105,5 @@ Once deployed, the status turns green and shows **Running**.
 
 ---
 
-**Previous:** [Phase 4 — Set Up Mock Agents and MCP Servers](04-mock-agents-and-mcps.md)
+**Previous:** [Phase 4 — Set Up Mock Agents and MCP Servers](04-mock-agents-and-mcps.md) ·
+**Next:** [Phase 6 — Build the Agent Network](06-build-agent-network.md)
