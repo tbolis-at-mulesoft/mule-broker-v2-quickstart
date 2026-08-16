@@ -14,7 +14,7 @@ local dev environment is ready before building the agent network.
 Open VS Code. You should land on the Welcome tab with no folders open yet —
 this is the starting point for setting up the agent-network project.
 
-![Freshly installed VS Code welcome screen](images/13-vscode-installed-welcome.png)
+![Freshly installed VS Code welcome screen](images/14-vscode-installed-welcome.png)
 
 ## 2. Open the Anypoint Code Builder welcome view
 
@@ -26,7 +26,7 @@ link — this is the entry point for Phase 3.
 
 The bottom-right status bar shows **"Not logged in to Anypoint Platform."**
 
-![Welcome to Anypoint Code Builder](images/14-anypoint-code-builder-welcome.png)
+![Welcome to Anypoint Code Builder](images/15-anypoint-code-builder-welcome.png)
 
 ## 3. Log in to Anypoint Platform
 
@@ -36,24 +36,24 @@ the status bar to start the sign-in flow.
 1. VS Code asks the Anypoint Code Builder extension's permission to sign in —
    click **Allow**.
 
-   ![Confirm the extension may sign in using Anypoint Platform](images/15-anypoint-signin-confirm.png)
+   ![Confirm the extension may sign in using Anypoint Platform](images/16-anypoint-signin-confirm.png)
 
 2. Your browser opens the MuleSoft sign-in page. Enter your trial account's
    username and password (created in [Phase 1](01-account-setup.md)) and
    click **Sign in**.
 
-   ![MuleSoft sign-in page](images/16-mulesoft-signin-page.png)
+   ![MuleSoft sign-in page](images/17-mulesoft-signin-page.png)
 
 3. Your browser asks permission to hand control back to VS Code via a
    `vscode://` URI — click **Open** (optionally check "Do not ask me again
    for this extension" to skip this prompt next time).
 
-   ![Allow the extension to open the VS Code URI](images/17-allow-open-vscode-uri.png)
+   ![Allow the extension to open the VS Code URI](images/18-allow-open-vscode-uri.png)
 
 4. Back in VS Code, the status bar now shows your Anypoint Platform username
    — you're signed in.
 
-   ![Signed in to Anypoint Platform](images/18-anypoint-logged-in.png)
+   ![Signed in to Anypoint Platform](images/19-anypoint-logged-in.png)
 
 ---
 

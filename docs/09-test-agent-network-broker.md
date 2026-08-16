@@ -24,7 +24,7 @@ Go to [a2d-ai.com](https://www.a2d-ai.com/), open **A² Playground**, and select
 the **A2A** protocol. Paste the Consumer Endpoint into **Enter endpoint URL**
 and click **Connect**.
 
-![A² Playground ready to connect to an A2A consumer endpoint](images/78-a2d-a2a-playground.png)
+![A² Playground ready to connect to an A2A consumer endpoint](images/79-a2d-a2a-playground.png)
 
 ## 2. Verify the broker agent card
 
@@ -32,7 +32,7 @@ After you click **Connect**, A² Playground retrieves the broker's A2A agent
 card. Confirm that it shows **IT Help Investigation Broker**, A2A 1.0, and the
 **IT Ticket Triage** skill. The message panel is now ready for test requests.
 
-![A² Playground connected to the IT Help Investigation Broker and showing its agent card and ticket-triage skill](images/79-a2a-playground-connected-broker.png)
+![A² Playground connected to the IT Help Investigation Broker and showing its agent card and ticket-triage skill](images/80-a2a-playground-connected-broker.png)
 
 ## 3. Send test support requests
 
@@ -72,24 +72,24 @@ uses the expected route and outcome:
 - **Website outage:** Returns `200 OK`, uses `JIRA001`, and confirms immediate
   escalation to the on-call team with the high-severity reason.
 
-  ![Expected response for a website outage showing JIRA001 escalated to the on-call team](images/81-outage-escalation-response.png)
+  ![Expected response for a website outage showing JIRA001 escalated to the on-call team](images/82-outage-escalation-response.png)
 
 - **Figma license:** Returns `200 OK` and confirms that a Figma Developer
   license was provisioned for `jane.doe@company.com` and the ticket was
   updated.
 
-  ![Expected response confirming a Figma Developer license was provisioned](images/82-figma-license-response.png)
+  ![Expected response confirming a Figma Developer license was provisioned](images/83-figma-license-response.png)
 
 - **Two-factor authentication:** Returns `200 OK`; when the automated
   investigation cannot find a solution, it confirms that `JIRA001` was
   escalated to a human with an investigation summary.
 
-  ![Expected unresolved response for two-factor authentication setup showing escalation to a human](images/83-two-factor-unresolved-response.png)
+  ![Expected unresolved response for two-factor authentication setup showing escalation to a human](images/84-two-factor-unresolved-response.png)
 
 - **VPN password reset:** Returns `200 OK` and provides actionable self-service
   password-reset instructions from the Help Center.
 
-  ![Expected Help Center response with steps to reset a VPN password](images/84-vpn-password-reset-response.png)
+  ![Expected Help Center response with steps to reset a VPN password](images/85-vpn-password-reset-response.png)
 
 ## 4. Verify the responses and activity
 
@@ -110,7 +110,7 @@ troubleshooting or request tracing is needed.
 > 33 seconds for `it_help_investigation`. These values are p99 latency, not
 > averages, and vary with traffic and downstream service performance.
 
-![Anypoint Insights showing request volume, p99 response time, and error rate for the broker and connected services](images/85-anypoint-insights-response-times.png)
+![Anypoint Insights showing request volume, p99 response time, and error rate for the broker and connected services](images/86-anypoint-insights-response-times.png)
 
 For protocol details, see the
 [Agent Script Reference](https://docs.mulesoft.com/agent-network/latest/af-agent-script-reference).

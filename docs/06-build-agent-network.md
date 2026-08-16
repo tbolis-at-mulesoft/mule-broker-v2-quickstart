@@ -22,14 +22,14 @@ Builder. Open the Command Palette (**Cmd+Shift+P**) and run **"MuleSoft:
 Create an Agent Network Project..."**, or use the Welcome view's **Create →
 Create an Agent Network** link.
 
-![Command Palette running MuleSoft: Create an Agent Network Project, with the Create an Agent Network link in the Welcome view](images/54-create-agent-network-project-command.png)
+![Command Palette running MuleSoft: Create an Agent Network Project, with the Create an Agent Network link in the Welcome view](images/55-create-agent-network-project-command.png)
 
 In the **Create an Agent Network Project** dialog, enter a **Project Name**
 (e.g. `IT Help Investigation Agent Network`), confirm the **Project Location**,
 pick the **Business Group** (e.g. **Salesforce**), and click **Create
 Project**.
 
-![Create an Agent Network Project dialog, with project name, location, and business group filled in](images/55-create-agent-network-project-dialog.png)
+![Create an Agent Network Project dialog, with project name, location, and business group filled in](images/56-create-agent-network-project-dialog.png)
 
 You land in the scaffolded project. The Explorer shows `brokers/broker1.agent`,
 `agent-network.yaml`, and `exchange.json`. `agent-network.yaml` defines the
@@ -39,7 +39,7 @@ The **Canvas** view visualizes the broker's flow: a Generator, an Executor
 (`RunAction`), a Router (`ResultRouter`) with **Success**/**Otherwise**
 branches, and Echo nodes for the success and error responses.
 
-![Scaffolded agent network project, showing agent-network.yaml and the Canvas view](images/56-scaffolded-agent-network-project.png)
+![Scaffolded agent network project, showing agent-network.yaml and the Canvas view](images/57-scaffolded-agent-network-project.png)
 
 ### Prompt 1 — Register the network assets
 
@@ -64,22 +64,22 @@ Also register:
 Create a connection for every registered asset using lowercase snake_case only for names.
 ```
 
-![MuleSoft Vibes with the agent network asset registration prompt entered](images/57-enter-agent-network-registration-prompt.png)
+![MuleSoft Vibes with the agent network asset registration prompt entered](images/58-enter-agent-network-registration-prompt.png)
 
 Approve commands when MuleSoft Vibes requests permission. At the end, allow it
 to run the build command to validate the project. If validation or build errors
 occur, allow MuleSoft Vibes to address all errors and keep iterating—fixing
 issues and rerunning the build—until the project builds successfully.
 
-![MuleSoft Vibes requesting approval to run the final project validation command](images/58-approve-agent-network-build-command.png)
+![MuleSoft Vibes requesting approval to run the final project validation command](images/59-approve-agent-network-build-command.png)
 
-![Agent Network project built successfully](images/59-agent-network-build-success.png)
+![Agent Network project built successfully](images/60-agent-network-build-success.png)
 
 The **Task Completed** screen confirms that all five assets are registered,
 their connections and configuration are updated, and the project builds
 cleanly.
 
-![Task Completed screen confirming five registered assets, updated connections and configuration, and a clean project build](images/60-agent-network-task-completed.png)
+![Task Completed screen confirming five registered assets, updated connections and configuration, and a clean project build](images/61-agent-network-task-completed.png)
 
 #### Resulting `agent-network.yaml`
 
@@ -298,7 +298,7 @@ metadata, including both supported interfaces. The missing
 Prompt 2 adds metadata only, and the broker implementation file has not yet
 been created.
 
-![Task Completed notification confirming broker1 was replaced with the IT Help Investigation broker metadata and both supported interfaces](images/61-broker-metadata-task-completed.png)
+![Task Completed notification confirming broker1 was replaced with the IT Help Investigation broker metadata and both supported interfaces](images/62-broker-metadata-task-completed.png)
 
 #### Resulting broker configuration
 
@@ -393,7 +393,7 @@ The **Task Completed** notification confirms that the build validated cleanly
 and the broker implementation contains the complete IT help investigation
 flow.
 
-![Task Completed notification confirming the IT help investigation flow build validated without errors or warnings](images/62-investigation-flow-build-validated.png)
+![Task Completed notification confirming the IT help investigation flow build validated without errors or warnings](images/63-investigation-flow-build-validated.png)
 
 Open the **Canvas** view and verify that the generated flow looks similar to
 the reference below. Confirm that it includes ticket intake, severity
@@ -401,7 +401,7 @@ classification, immediate high-severity escalation, low-severity
 cross-platform investigation, resolution routing, and a clear response for
 each outcome. Node names and layout may vary.
 
-![Canvas view of the IT help investigation flow with severity and resolution routing](images/63-it-help-investigation-flow-canvas.png)
+![Canvas view of the IT help investigation flow with severity and resolution routing](images/64-it-help-investigation-flow-canvas.png)
 
 ### Resulting `brokers/it-help-investigation.agent`
 

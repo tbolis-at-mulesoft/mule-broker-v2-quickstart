@@ -7,8 +7,9 @@ MuleSoft's Anypoint Platform.
 
 The guide is split into one file per phase — work through them in order:
 
-1. [Prerequisites](docs/00-prerequisites.md) — install VS Code and the
-   Anypoint Extension Pack.
+1. [Prerequisites](docs/00-prerequisites.md) — install VS Code, the Anypoint
+   Extension Pack, and the CLI for Agent Fabric plugin, and confirm all of them
+   are on the latest available versions.
 2. [Account Setup](docs/01-account-setup.md) — sign up for a MuleSoft free
    trial (Anypoint Platform account) and a Salesforce Developer Edition org
    (for MuleSoft Vibes).
@@ -36,5 +37,8 @@ the order they're referenced across the guide.
 
 - [MuleSoft free trial signup](https://anypoint.mulesoft.com/login/signup)
 - [Building Agent Networks for Agent Fabric](https://docs.mulesoft.com/agent-network/latest/af-agent-networks)
+- [CLI for Agent Fabric Plugin](https://docs.mulesoft.com/anypoint-cli/latest/agent-fabric)
+  — `agent-network` command reference
+  ([latest plugin version on npm](https://www.npmjs.com/package/mulesoft-anypoint-cli-agent-fabric-plugin))
 - [A²D — Agentic Asset Designer](https://a2d-ai.com) — design and mock the
   agents and MCP servers used by the example agent network.

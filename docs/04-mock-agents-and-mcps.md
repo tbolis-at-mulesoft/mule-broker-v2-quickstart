@@ -22,14 +22,14 @@ is a community tool for designing secure, compliant MCP Server specs and
 Agent Cards, with built-in mocking, validation, and publishing to Anypoint
 Exchange. Click **Get Started**.
 
-![A2D landing page](images/33-a2d-landing-page.png)
+![A2D landing page](images/34-a2d-landing-page.png)
 
 ## 2. Register an account
 
 Sign up with Google or GitHub, or create an account manually with an
 Organization Name, Email, and Password.
 
-![A2D Create your account form](images/34-a2d-signup-form.png)
+![A2D Create your account form](images/35-a2d-signup-form.png)
 
 ## 3. Accept the terms on the Dashboard
 
@@ -39,7 +39,7 @@ auth/data is stored via Supabase, the app is hosted on Vercel, it's provided
 "as-is", and you're responsible for your own data and API key security. Check
 all items and click **Accept All Terms** to continue.
 
-![A2D Dashboard with Know Before You Start acknowledgment banner](images/35-a2d-dashboard-accept-terms.png)
+![A2D Dashboard with Know Before You Start acknowledgment banner](images/36-a2d-dashboard-accept-terms.png)
 
 ## 4. Go to Organization Settings
 
@@ -47,7 +47,7 @@ In the left nav, go to **Settings → Organization Settings**. The
 **Import / Export** tab lets you export design specs (MCP servers, agent
 cards, REST APIs) as JSON/ZIP, or import them into another instance.
 
-![A2D Organization Settings, Import / Export tab](images/36-a2d-organization-settings-import-export.png)
+![A2D Organization Settings, Import / Export tab](images/37-a2d-organization-settings-import-export.png)
 
 ## 5. Import the example agent and MCP specs
 
@@ -88,7 +88,7 @@ lists the assets found in the file (e.g. **License Procurement Agent**,
 **Import selected**. Repeat for each `a2d-specs/` file to import all the
 assets.
 
-![Import design spec, select assets dialog](images/37-import-design-spec-select-assets.png)
+![Import design spec, select assets dialog](images/38-import-design-spec-select-assets.png)
 
 ## 6. Note down each asset's endpoint URL
 
@@ -100,24 +100,24 @@ After importing, open each asset's detail page (**Overview** tab) and note its
   Agent card URL (GET well-known):
   `https://www.a2d-ai.com/api/platform/1b8e91aa-986b-459d-8dff-f376058df62f/a2a/.well-known/agent-card.json`.
 
-  ![License Procurement Agent asset detail page showing its endpoint URL](images/38-license-procurement-agent-endpoint.png)
+  ![License Procurement Agent asset detail page showing its endpoint URL](images/39-license-procurement-agent-endpoint.png)
 
 - **Help Center Agent** — Agent Card. Endpoint URL (POST `message/send`):
   `https://www.a2d-ai.com/api/platform/44431c1a-3bfa-46b7-b66d-16d0f9859c12/a2a`.
   Agent card URL (GET well-known):
   `https://www.a2d-ai.com/api/platform/44431c1a-3bfa-46b7-b66d-16d0f9859c12/a2a/.well-known/agent-card.json`.
 
-  ![Help Center Agent asset detail page showing its endpoint URL](images/39-help-center-agent-endpoint.png)
+  ![Help Center Agent asset detail page showing its endpoint URL](images/40-help-center-agent-endpoint.png)
 
 - **Jira MCP** — MCP Server. Endpoint URL:
   `https://www.a2d-ai.com/api/platform/cee52004-1761-435d-9b34-f62ab9f4fc0a/mcp`.
 
-  ![Jira MCP asset detail page showing its endpoint URL](images/40-jira-mcp-endpoint.png)
+  ![Jira MCP asset detail page showing its endpoint URL](images/41-jira-mcp-endpoint.png)
 
 - **Escalation MCP** — MCP Server. Endpoint URL:
   `https://www.a2d-ai.com/api/platform/a242730a-9a16-4408-80a4-9c25e7e06d0f/mcp`.
 
-  ![Escalation MCP asset detail page showing its endpoint URL](images/41-escalation-mcp-endpoint.png)
+  ![Escalation MCP asset detail page showing its endpoint URL](images/42-escalation-mcp-endpoint.png)
 
 ---
 

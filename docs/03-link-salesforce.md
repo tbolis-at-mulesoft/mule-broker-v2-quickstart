@@ -27,7 +27,7 @@ Salesforce org — Agentforce/Vibes features depend on it. In Salesforce
 **Setup**, search for **"Einstein"** → **Einstein Setup**, and check that
 **Turn on Einstein** is set to **On**.
 
-![Einstein Setup — Turn on Einstein](images/19-einstein-setup-turn-on.png)
+![Einstein Setup — Turn on Einstein](images/20-einstein-setup-turn-on.png)
 
 ## 2. Open Access Management → Salesforce
 
@@ -36,7 +36,7 @@ from the left nav. This page manages capabilities integrated with Salesforce
 — cross-platform access to data and AI tools through trusted Salesforce
 orgs.
 
-![Manage Capabilities Integrated with Salesforce](images/20-anypoint-salesforce-access-management.png)
+![Manage Capabilities Integrated with Salesforce](images/21-anypoint-salesforce-access-management.png)
 
 ## 3. Accept the Agentforce terms
 
@@ -44,7 +44,7 @@ Click **Accept** on the **"Enable Agentforce for Anypoint Platform"** banner.
 Review the terms (including the Generative AI section), check **"I accept
 the terms and conditions"**, then click **Accept**.
 
-![Accept Terms for Agentforce in Anypoint Platform](images/21-accept-agentforce-terms.png)
+![Accept Terms for Agentforce in Anypoint Platform](images/22-accept-agentforce-terms.png)
 
 ## 4. Start adding the Salesforce org
 
@@ -53,7 +53,7 @@ Org Tenant Key** — you can get this from the Salesforce Administrator inside
 **MuleSoft > Setup** in the Salesforce org itself, so leave this dialog open
 and switch to Salesforce next.
 
-![Add Salesforce Org dialog](images/22-add-salesforce-org-dialog.png)
+![Add Salesforce Org dialog](images/23-add-salesforce-org-dialog.png)
 
 ## 5. Get the tenant key from Salesforce Setup
 
@@ -65,20 +65,20 @@ Anypoint Platform).
 
 Click **Complete the Connection**.
 
-![MuleSoft Anypoint Platform Setup page in Salesforce](images/23-salesforce-anypoint-platform-setup.png)
+![MuleSoft Anypoint Platform Setup page in Salesforce](images/24-salesforce-anypoint-platform-setup.png)
 
 This opens a dialog with **"Your Salesforce org tenant key"** — copy it
 using the copy icon next to it. (Treat this key like a credential; it's
 blurred here since it authorizes the connection to this org.)
 
-![Connection to MuleSoft Anypoint Platform, showing the tenant key field](images/24-salesforce-tenant-key-blurred.png)
+![Connection to MuleSoft Anypoint Platform, showing the tenant key field](images/25-salesforce-tenant-key-blurred.png)
 
 ## 6. Paste the tenant key back in Anypoint Platform
 
 Switch back to the **Add Salesforce Org** dialog in Anypoint Platform and
 paste the tenant key into the **Salesforce Org Tenant Key** field.
 
-![Add Salesforce Org dialog with the tenant key pasted in](images/25-add-salesforce-org-key-pasted.png)
+![Add Salesforce Org dialog with the tenant key pasted in](images/26-add-salesforce-org-key-pasted.png)
 
 ## 7. Confirm the alias and add the org
 
@@ -87,7 +87,7 @@ Salesforce org's **Org ID** and **Org URL**, plus a **Name Used in Anypoint
 Platform** field — this is just a display alias inside Anypoint Platform, so
 any name works. Confirm or edit it, then click **Add**.
 
-![Add Salesforce Org dialog with the alias name field, ready to add](images/26-add-salesforce-org-alias.png)
+![Add Salesforce Org dialog with the alias name field, ready to add](images/27-add-salesforce-org-alias.png)
 
 ## 8. Copy the Anypoint Platform Org Key
 
@@ -95,7 +95,7 @@ A success dialog confirms the Salesforce org was added, and shows the
 **Anypoint Platform Org Key** — the reverse credential needed to complete the
 connection from the Salesforce side. Copy it using the **Copy** button.
 
-![Success dialog showing the Anypoint Platform Org Key](images/27-anypoint-org-key-success.png)
+![Success dialog showing the Anypoint Platform Org Key](images/28-anypoint-org-key-success.png)
 
 ## 9. Paste the Org Key back in Salesforce
 
@@ -103,7 +103,7 @@ Switch back to Salesforce's **Connection to MuleSoft Anypoint Platform**
 dialog, paste the Anypoint Platform Org Key into the **Anypoint Platform
 Organization ID** field, and click **Connect**.
 
-![Salesforce dialog with the Anypoint Platform Org Key pasted into the Organization ID field](images/28-salesforce-paste-org-key.png)
+![Salesforce dialog with the Anypoint Platform Org Key pasted into the Organization ID field](images/29-salesforce-paste-org-key.png)
 
 ## 10. Confirm Agentforce is enabled
 
@@ -112,7 +112,7 @@ Platform"** banner, and the **Anypoint Platform Setup** page now shows the
 connected org's details — the connected Anypoint org, its Org ID, and the
 Anypoint org admin's name and email.
 
-![Agentforce successfully enabled, with the connected org's details](images/29-agentforce-enabled-connected.png)
+![Agentforce successfully enabled, with the connected org's details](images/30-agentforce-enabled-connected.png)
 
 From here, the Agentforce/Vibes capabilities can also be enabled from the
 **Capabilities Managed in Anypoint Platform** section on the Salesforce
@@ -124,7 +124,7 @@ With the two accounts linked, the **MuleSoft Vibes** chat panel in Anypoint
 Code Builder (VS Code) is ready to use — a "Build with Agent" chat surface
 alongside the editor.
 
-![MuleSoft Vibes chat panel in Anypoint Code Builder](images/30-mulesoft-vibes-chat-panel.png)
+![MuleSoft Vibes chat panel in Anypoint Code Builder](images/31-mulesoft-vibes-chat-panel.png)
 
 ## 12. Enable all MCP servers
 
@@ -133,9 +133,9 @@ The MuleSoft Vibes panel starts with only 1 of 3 MCP servers active. Click
 servers — **MuleSoft MCP DX Server**, **MuleSoft MCP DX Policy Server**, and
 **MuleSoft Platform MCP Server** — until all three show active.
 
-![MuleSoft Vibes panel before enabling the remaining MCP servers](images/31-mcp-servers-before-enable.png)
+![MuleSoft Vibes panel before enabling the remaining MCP servers](images/32-mcp-servers-before-enable.png)
 
-![MCP Servers list with all three servers toggled on](images/32-mcp-servers-all-enabled.png)
+![MCP Servers list with all three servers toggled on](images/33-mcp-servers-all-enabled.png)
 
 ---
 
