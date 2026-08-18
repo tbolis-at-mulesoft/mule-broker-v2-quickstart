@@ -1,0 +1,58 @@
+{
+  "main": "agent-network.yaml",
+  "name": "IT Help Investigation Agent Network",
+  "classifier": "agentic-network",
+  "organizationId": "0fad75bb-e242-46ea-b4d8-b1536fe84263",
+  "descriptorVersion": "1.0.0",
+  "description": "Triages IT support tickets, escalates critical issues, and resolves common problems through cross-platform investigation with Help Center and License Procurement agents.",
+  "tags": [],
+  "metadata": {
+    "variables": {
+      "helpCenterAgent": {
+        "url": {
+          "description": "Help Center Agent (Agentforce) URL",
+          "default": "https://www.a2d-ai.com/api/platform/a626be9a-c2e8-4c66-b927-08b364d7814d/a2a",
+          "secret": false
+        }
+      },
+      "licenseProcurementAgent": {
+        "url": {
+          "description": "License Procurement Agent (Scanned) URL",
+          "default": "https://www.a2d-ai.com/api/platform/de8ab8b5-a2c7-470b-91ba-99ccf191734c/a2a",
+          "secret": false
+        }
+      },
+      "escalationMcp": {
+        "url": {
+          "description": "Escalation MCP Server URL",
+          "default": "https://www.a2d-ai.com/api/platform/7d7ed142-32b5-4589-a285-0da266b85e25/",
+          "secret": false
+        }
+      },
+      "jiraMcp": {
+        "url": {
+          "description": "Jira MCP Server URL",
+          "default": "https://www.a2d-ai.com/api/platform/b57202bb-baa0-4b96-aa82-eeb178303da8/",
+          "secret": false
+        }
+      },
+      "azureOpenAI": {
+        "url": {
+          "description": "Azure OpenAI URL",
+          "default": "",
+          "secret": false
+        },
+        "apiKey": {
+          "description": "Azure OpenAI API Key",
+          "default": "",
+          "secret": true
+        }
+      }
+    }
+  },
+  "apiVersion": "v1.0",
+  "dependencies": [],
+  "groupId": "0fad75bb-e242-46ea-b4d8-b1536fe84263",
+  "assetId": "it-help-investigation-network",
+  "version": "1.0.0"
+}

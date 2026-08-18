@@ -1,0 +1,72 @@
+{
+  "main": "agent-network.yaml",
+  "name": "Employee Onboarding Agent Network",
+  "classifier": "agentic-network",
+  "organizationId": "0fad75bb-e242-46ea-b4d8-b1536fe84263",
+  "descriptorVersion": "1.0.0",
+  "description": "Onboards a new employee end-to-end across Workday, Salesforce, Zendesk, Badging, and PingID, enriching a missing home address from the Talent Pool directory.",
+  "tags": [],
+  "metadata": {
+    "variables": {
+      "workdayAgent": {
+        "url": {
+          "description": "Employee Onboarding Workday Agent URL",
+          "default": "https://www.a2d-ai.com/api/platform/3d711378-8048-447c-a850-e8f2526d870b/a2a",
+          "secret": false
+        }
+      },
+      "salesforceAgent": {
+        "url": {
+          "description": "Employee Onboarding Salesforce Agent URL",
+          "default": "https://www.a2d-ai.com/api/platform/d615fc87-378e-4a22-8146-c441cb322e8e/a2a",
+          "secret": false
+        }
+      },
+      "zendeskAgent": {
+        "url": {
+          "description": "Employee Onboarding Zendesk Agent URL",
+          "default": "https://www.a2d-ai.com/api/platform/1b7cbba6-bf8f-4c2c-bbc1-4336051e273e/a2a",
+          "secret": false
+        }
+      },
+      "badgingAgent": {
+        "url": {
+          "description": "Employee Onboarding Badging Agent URL",
+          "default": "https://www.a2d-ai.com/api/platform/cd7afb88-1b2b-42b4-826a-dae9c2f68f50/a2a",
+          "secret": false
+        }
+      },
+      "pingidAgent": {
+        "url": {
+          "description": "Employee Onboarding PingID Agent URL",
+          "default": "https://www.a2d-ai.com/api/platform/ad1acfbb-9495-4103-aa51-6d2e92671ab7/a2a",
+          "secret": false
+        }
+      },
+      "talentPoolMcp": {
+        "url": {
+          "description": "Employee Onboarding Talent Pool MCP URL",
+          "default": "https://www.a2d-ai.com/api/platform/6a78fd74-02aa-415b-9f4d-50fadea90cdf/",
+          "secret": false
+        }
+      },
+      "azureOpenAI": {
+        "url": {
+          "description": "Azure OpenAI URL",
+          "default": "",
+          "secret": false
+        },
+        "apiKey": {
+          "description": "Azure OpenAI API Key",
+          "default": "",
+          "secret": true
+        }
+      }
+    }
+  },
+  "apiVersion": "v1.0",
+  "dependencies": [],
+  "groupId": "0fad75bb-e242-46ea-b4d8-b1536fe84263",
+  "assetId": "employee-onboarding-network",
+  "version": "2.0.0"
+}

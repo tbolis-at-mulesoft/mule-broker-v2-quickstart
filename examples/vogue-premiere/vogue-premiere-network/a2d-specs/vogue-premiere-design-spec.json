@@ -1,0 +1,692 @@
+{
+  "version": 1,
+  "exportedAt": "2026-08-18T14:16:05.077Z",
+  "manifest": {
+    "mcpServers": [
+      {
+        "id": "5b9581fd-ffae-460f-a21a-d8a3afab99fb",
+        "name": "Customer MCP",
+        "type": "mcp_server"
+      },
+      {
+        "id": "8bbb5f18-1a6d-4d10-baca-fe3873f88cf7",
+        "name": "Order MCP",
+        "type": "mcp_server"
+      },
+      {
+        "id": "11bd0881-c3c8-47cf-b71b-f75be2a6487b",
+        "name": "Product Catalog MCP",
+        "type": "mcp_server"
+      }
+    ],
+    "agentCards": [
+      {
+        "id": "8e503ffc-8e5f-480d-aa3b-8421b572a5a2",
+        "name": "Availability Agent",
+        "type": "agent_card"
+      },
+      {
+        "id": "dbebcf30-1327-4fcb-b8cd-525c2f37417c",
+        "name": "Loyalty Agent",
+        "type": "agent_card"
+      },
+      {
+        "id": "71ffb179-20e9-4cdc-8ba3-f4fd4abdc2e1",
+        "name": "Styling Agent",
+        "type": "agent_card"
+      }
+    ]
+  },
+  "mcpServers": [
+    {
+      "name": "Customer MCP",
+      "type": "mock",
+      "description": "Provides agent-ready access to Vogue's customer system, exposing the customer's full personalization profile in a single response: style preferences, sizes, purchase history, and other personal context. The personalization layer that turns generic recommendations into recommendations for this specific customer.",
+      "config": {
+        "lastPublish": {
+          "name": "Customer MCP",
+          "assetId": "customer-mcp",
+          "groupId": "2ae4f563-f0b8-4fd0-a0f4-c5d558a04a69",
+          "version": "1.0.0",
+          "timestamp": "2026-05-26T02:48:00.709Z",
+          "description": "Provides agent-ready access to Vogue's customer system, exposing the customer's full personalization profile in a single response: style preferences, sizes, purchase history, and other personal context. The personalization layer that turns generic recommendations into recommendations for this specific customer.",
+          "organizationId": "008efb80-114c-4319-9617-2722bf5bb1fa"
+        }
+      },
+      "transport_config": {
+        "kind": "streamableHttp",
+        "path": "/api/platform/customer-mcp/mcp"
+      },
+      "enabled": true,
+      "status": "published",
+      "source_url": null,
+      "mock_data": {},
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "introspect_auth_type": "none",
+      "introspect_auth_config": {},
+      "tools": [
+        {
+          "name": "get_customer_profile",
+          "description": "Retrieve a customer's complete profile in a single call. Returns style preferences (preferred fits, brands, things to avoid), sizes across categories (tops, jackets, trousers, footwear), purchase history summary, and any other personalization context. Used at the start of a styling session to ground recommendations in the customer's actual preferences and sizes.",
+          "input_schema": {
+            "type": "object",
+            "required": [
+              "customer_name"
+            ],
+            "properties": {
+              "customer_name": {
+                "type": "string",
+                "description": "The unique customer identifier."
+              }
+            }
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 0,
+          "mock_scenarios": [
+            {
+              "id": "1778098782284",
+              "name": "Default (Alex Chen)",
+              "response": "{\n  \"customer_id\": \"CUS-7421\",\n  \"name\": \"Alex Chen\",\n  \"loyalty_tier\": \"Platinum\",\n  \"points_balance\": 18420,\n  \"style_preferences\": {\n    \"fits\": [\"tailored\", \"slim\"],\n    \"preferred_brands\": [\"Theory\", \"Brunello Cucinelli\", \"Common Projects\"],\n    \"things_to_avoid\": [\"bold patterns\", \"oversized fits\"],\n    \"palette\": \"neutral\"\n  },\n  \"sizes\": {\n    \"tops\": \"M\",\n    \"jackets\": \"40R\",\n    \"trousers\": \"32x32\",\n    \"footwear\": \"10.5\"\n  },\n  \"recent_purchases\": [\n    {\n      \"order_id\": \"ORD-99214\",\n      \"date\": \"2026-04-22\",\n      \"items\": \"Theory cashmere sweater, charcoal\",\n      \"status\": \"in_transit\"\n    }\n  ]\n}",
+              "condition": {
+                "field": "",
+                "value": "",
+                "operator": "==="
+              },
+              "responseType": "json"
+            }
+          ]
+        }
+      ],
+      "resources": [],
+      "prompts": [],
+      "openapiSpecs": []
+    },
+    {
+      "name": "Order MCP",
+      "type": "mock",
+      "description": "The Order MCP is the order creation layer of Vogue Premiere. It exposes tools to create Orders and Check Shipping status.",
+      "config": {
+        "lastPublish": {
+          "name": "Order MCP",
+          "assetId": "order-mcp",
+          "groupId": "2ae4f563-f0b8-4fd0-a0f4-c5d558a04a69",
+          "version": "1.0.0",
+          "timestamp": "2026-05-26T02:46:34.996Z",
+          "description": "The Order MCP is the order creation layer of Vogue Premiere. It exposes tools to create Orders and Check Shipping status.",
+          "organizationId": "008efb80-114c-4319-9617-2722bf5bb1fa"
+        }
+      },
+      "transport_config": {
+        "kind": "streamableHttp",
+        "path": "/api/platform/order-mcp/mcp"
+      },
+      "enabled": true,
+      "status": "published",
+      "source_url": null,
+      "mock_data": {},
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "introspect_auth_type": "none",
+      "introspect_auth_config": {},
+      "tools": [
+        {
+          "name": "post_order",
+          "description": "This tool creates Orders",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "customerName": {
+                "type": "string",
+                "description": "Name of the Customer"
+              }
+            }
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 0,
+          "mock_scenarios": [
+            {
+              "id": "1779731551249",
+              "name": "Default",
+              "response": "{\n\"orderId\": \"ORD-2026-00001\",\n\"customerId\": \"CUST-001234\",\n\"status\": \"PROCESSING\",\n\"shipMethod\": \"Expedited\"\n}",
+              "condition": {
+                "field": "",
+                "value": "",
+                "operator": "==="
+              },
+              "responseType": "json"
+            }
+          ]
+        },
+        {
+          "name": "get_shipping_status",
+          "description": "shipping status of the order",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "orderId": {
+                "type": "string"
+              }
+            }
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 1,
+          "mock_scenarios": [
+            {
+              "id": "1779731706861",
+              "name": "Default",
+              "response": "{\n  \"orderId\": \"ORD-2026-00789\",\n  \"customerId\": \"CUST-001234\",\n  \"status\": \"IN_TRANSIT\",\n  \"trackingNumber\": \"1Z999AA10123456784\",\n  \"carrier\": \"UPS\"\n}",
+              "condition": {
+                "field": "",
+                "value": "",
+                "operator": "==="
+              },
+              "responseType": "json"
+            }
+          ]
+        }
+      ],
+      "resources": [],
+      "prompts": [],
+      "openapiSpecs": []
+    },
+    {
+      "name": "Product Catalog MCP",
+      "type": "mock",
+      "description": "Provides agent-ready access to Vogue's product catalog with search, product detail, and availability operations.",
+      "config": {
+        "lastPublish": {
+          "name": "Product Catalog MCP",
+          "assetId": "product-catalog-mcp",
+          "groupId": "2ae4f563-f0b8-4fd0-a0f4-c5d558a04a69",
+          "version": "1.0.0",
+          "timestamp": "2026-05-26T02:48:30.091Z",
+          "description": "Provides agent-ready access to Vogue's product catalog with search, product detail, and availability operations.",
+          "organizationId": "008efb80-114c-4319-9617-2722bf5bb1fa"
+        }
+      },
+      "transport_config": {
+        "kind": "streamableHttp",
+        "path": "/api/platform/product-catalog-mcp/mcp"
+      },
+      "enabled": true,
+      "status": "published",
+      "source_url": null,
+      "mock_data": {},
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "introspect_auth_type": "none",
+      "introspect_auth_config": {},
+      "tools": [
+        {
+          "name": "search_products",
+          "description": "Search Vogue's product catalog for items matching specified criteria. Returns a list of candidate products. Used to find clothing and accessories appropriate for a customer's occasion, preferences, sizes, and weather context. Always specify the occasion when known — it's the strongest signal for finding relevant items. Other filters like categories, fit, palette, and brand can be added to refine results. Results include product ID, name, category, brand, price, available sizes, and a short description.",
+          "input_schema": {
+            "type": "object",
+            "required": [
+              "occasion"
+            ],
+            "properties": {
+              "occasion": {
+                "enum": [
+                  "smart-casual",
+                  "formal",
+                  "casual"
+                ],
+                "type": "string",
+                "description": "The occasion the customer is dressing for. Drives the product recommendations. Valid values: smart-casual, formal, casual."
+              }
+            }
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 0,
+          "mock_scenarios": [
+            {
+              "id": "1777650336060",
+              "name": "smart-casual",
+              "response": "{\n  \"results\": [\n    {\n      \"product_id\": \"PRD-8831\",\n      \"name\": \"Theory Unstructured Blazer\",\n      \"brand\": \"Theory\",\n      \"category\": \"blazer\",\n      \"color\": \"Navy\",\n      \"price\": 595.00,\n      \"currency\": \"USD\",\n      \"available_sizes\": [\"38R\", \"40R\", \"42R\", \"44R\"],\n      \"description\": \"Lightweight unstructured blazer in Italian wool. Soft shoulder, half-canvas construction. Smart-casual styling for spring and fall.\"\n    },\n    {\n      \"product_id\": \"PRD-4410\",\n      \"name\": \"Brunello Cucinelli Oxford Shirt\",\n      \"brand\": \"Brunello Cucinelli\",\n      \"category\": \"shirt\",\n      \"color\": \"Ivory\",\n      \"price\": 420.00,\n      \"currency\": \"USD\",\n      \"available_sizes\": [\"S\", \"M\", \"L\", \"XL\"],\n      \"description\": \"Heavyweight Italian oxford shirt with mother-of-pearl buttons. Tailored fit, point collar.\"\n    },\n    {\n      \"product_id\": \"PRD-7722\",\n      \"name\": \"Theory Tailored Trouser\",\n      \"brand\": \"Theory\",\n      \"category\": \"trousers\",\n      \"color\": \"Stone\",\n      \"price\": 325.00,\n      \"currency\": \"USD\",\n      \"available_sizes\": [\"32x30\", \"32x32\", \"34x32\", \"36x32\"],\n      \"description\": \"Year-round wool tailored trouser. Slim through the leg, flat front, no cuff.\"\n    },\n    {\n      \"product_id\": \"PRD-2115\",\n      \"name\": \"Common Projects Achilles Low\",\n      \"brand\": \"Common Projects\",\n      \"category\": \"footwear\",\n      \"color\": \"White\",\n      \"price\": 445.00,\n      \"currency\": \"USD\",\n      \"available_sizes\": [\"9\", \"9.5\", \"10\", \"10.5\", \"11\", \"11.5\"],\n      \"description\": \"Italian-made minimalist leather sneaker. Gold heel stamp. Pairs equally well with tailored trousers and denim.\"\n    }\n  ],\n  \"result_count\": 4\n}",
+              "condition": {
+                "field": "occasion",
+                "value": "smart-casual",
+                "operator": "==="
+              },
+              "responseType": "json"
+            }
+          ]
+        },
+        {
+          "name": "check_product_status",
+          "description": "Retrieve the master product status from Vogue's catalog (powered by Informatica Product 360). Returns whether the product is active and sellable, plus the list of sizes the product is offered in. Does NOT return real-time stock counts — for size-level inventory, use check_size_inventory. Used as the first check when verifying a product is purchasable before presenting it to the customer.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product_id": {
+                "type": "string",
+                "description": "The unique product identifier returned from search_products. Format: 'PRD-' followed by digits."
+              }
+            }
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 1,
+          "mock_scenarios": [
+            {
+              "id": "1777991596853",
+              "name": "Theory Navy Blazer",
+              "response": "{\n  \"product_id\": \"PRD-8831\",\n  \"name\": \"Theory Unstructured Navy Blazer\",\n  \"status\": \"active\",\n  \"availability\": \"in_stock\",\n  \"available_sizes\": [\"38R\", \"40R\", \"42R\", \"44R\"],\n  \"source\": \"Powered by Informatica Product 360\"\n}",
+              "condition": {
+                "field": "product_id",
+                "value": "PRD-8831",
+                "operator": "==="
+              },
+              "responseType": "json"
+            },
+            {
+              "id": "1777991615031",
+              "name": "Brunello Cucinelli Oxford",
+              "response": "{\n  \"product_id\": \"PRD-4410\",\n  \"name\": \"Brunello Cucinelli Ivory Oxford Shirt\",\n  \"status\": \"active\",\n  \"availability\": \"in_stock\",\n  \"available_sizes\": [\"S\", \"M\", \"L\", \"XL\"],\n  \"source\": \"Powered by Informatica Product 360\"\n}",
+              "condition": {
+                "field": "product_id",
+                "value": "PRD-4410",
+                "operator": "==="
+              },
+              "responseType": "json"
+            },
+            {
+              "id": "1777991644790",
+              "name": "Theory Stone Trouser (LOW STOCK)",
+              "response": "{\n  \"product_id\": \"PRD-7722\",\n  \"name\": \"Theory Stone Tailored Trouser\",\n  \"status\": \"active\",\n  \"availability\": \"in_stock\",\n  \"available_sizes\": [\"30x32\", \"32x32\", \"34x32\", \"36x32\"],\n  \"source\": \"Powered by Informatica Product 360\"\n}",
+              "condition": {
+                "field": "product_id",
+                "value": "PRD-7722",
+                "operator": "==="
+              },
+              "responseType": "json"
+            },
+            {
+              "id": "1777991660350",
+              "name": "Common Projects Achilles Low",
+              "response": "{\n  \"product_id\": \"PRD-2115\",\n  \"name\": \"Common Projects Achilles Low\",\n  \"status\": \"active\",\n  \"availability\": \"in_stock\",\n  \"available_sizes\": [\"9\", \"9.5\", \"10\", \"10.5\", \"11\", \"11.5\"],\n  \"source\": \"Powered by Informatica Product 360\"\n}",
+              "condition": {
+                "field": "product_id",
+                "value": "PRD-2115",
+                "operator": "==="
+              },
+              "responseType": "json"
+            }
+          ]
+        },
+        {
+          "name": "check_size_inventory",
+          "description": "Retrieve real-time stock for a specific product and size from Vogue's order management system (OMS). Returns whether the size is currently in stock, the units remaining, and any low-stock warnings. Used after check_product_status to confirm the customer can actually purchase the recommended item in their size before presenting it.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "size": {
+                "type": "string",
+                "description": "The customer's size for this product. Format depends on category — clothing might be 'M' or '40R', footwear might be '10.5'. Pull this from the customer's size preferences (retrieved via get_customer_profile)."
+              },
+              "product_id": {
+                "type": "string",
+                "description": "The unique product identifier. Format: 'PRD-' followed by digits."
+              }
+            }
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 2,
+          "mock_scenarios": [
+            {
+              "id": "1778529819462",
+              "name": "Theory Navy Blazer (40R)",
+              "response": "{\n  \"product_id\": \"PRD-8831\",\n  \"size\": \"40R\",\n  \"in_stock\": true,\n  \"units_remaining\": 12,\n  \"stock_warning\": null,\n  \"source\": \"Vogue OMS\"\n}",
+              "condition": {
+                "field": "product_id",
+                "value": "PRD-8831",
+                "operator": "==="
+              },
+              "responseType": "json"
+            },
+            {
+              "id": "1778529839122",
+              "name": "Brunello Cucinelli Oxford (M)",
+              "response": "{\n  \"product_id\": \"PRD-4410\",\n  \"size\": \"M\",\n  \"in_stock\": true,\n  \"units_remaining\": 8,\n  \"stock_warning\": null,\n  \"source\": \"Vogue OMS\"\n}",
+              "condition": {
+                "field": "product_id",
+                "value": "PRD-4410",
+                "operator": "==="
+              },
+              "responseType": "json"
+            },
+            {
+              "id": "1778529839523",
+              "name": "Theory Stone Trouser (32x32)",
+              "response": "{\n  \"product_id\": \"PRD-7722\",\n  \"size\": \"32x32\",\n  \"in_stock\": true,\n  \"units_remaining\": 2,\n  \"stock_warning\": \"Only 2 left in 32x32\",\n  \"source\": \"Vogue OMS\"\n}",
+              "condition": {
+                "field": "product_id",
+                "value": "PRD-7722",
+                "operator": "==="
+              },
+              "responseType": "json"
+            },
+            {
+              "id": "1778529867683",
+              "name": "Common Projects Achilles Low (10.5)",
+              "response": "{\n  \"product_id\": \"PRD-2115\",\n  \"size\": \"10.5\",\n  \"in_stock\": true,\n  \"units_remaining\": 5,\n  \"stock_warning\": null,\n  \"source\": \"Vogue OMS\"\n}",
+              "condition": {
+                "field": "product_id",
+                "value": "PRD-2115",
+                "operator": "==="
+              },
+              "responseType": "json"
+            }
+          ]
+        }
+      ],
+      "resources": [],
+      "prompts": [],
+      "openapiSpecs": []
+    }
+  ],
+  "agentCards": [
+    {
+      "name": "Availability Agent",
+      "description": "Confirms that recommended products are actually purchasable for the customer before they're presented or before an order is placed. Checks each item against Vogue's product catalog (powered by Informatica Product 360) for general stock and size-specific availability, and surfaces low-stock warnings so customers can act on time-sensitive information.",
+      "type": "mock",
+      "url": "https://www.a2d-ai.com/api/platform/8e503ffc-8e5f-480d-aa3b-8421b572a5a2/a2a",
+      "protocol_version": "0.3.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {},
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "other",
+      "status": "published",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "inventory-verification",
+          "name": "Inventory Verification",
+          "description": "Verify that recommended products are in stock and available in the customer's specific size. Returns availability status for each item, including low-stock warnings (e.g., \"only 2 left in 32x32\") so the customer can prioritize purchases of items that are running low. Used as a reality check between styling recommendations and presentation to the customer.",
+          "examples": [
+            "Are these all in stock in my size?",
+            "Check availability on these products: PRD-8831, PRD-4410, PRD-7722, PRD-2115",
+            "Is the navy blazer available in 40R?",
+            "Confirm sizes before I order"
+          ],
+          "input_modes": [
+            "application/json",
+            "text/plain"
+          ],
+          "output_modes": [
+            "application/json"
+          ],
+          "tags": [
+            "availability",
+            "inventory",
+            "sizing",
+            "vogue",
+            "retail"
+          ],
+          "enabled": true,
+          "sort_order": 0
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "a2a-1778097960765",
+          "name": "stock",
+          "response": "{\n  \"id\": \"7a19689b-ecff-4a94-ac67-003c26c7d6dd\",\n  \"contextId\": \"e22b99fc-8499-4d26-a3bf-25ee82cca710\",\n  \"status\": { \"state\": \"completed\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"886c0729-669a-4ad2-9ffb-d3339dc1c4a0\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"kind\": \"text\",\n          \"text\": \"Let me check inventory for your sizes:\\n\\n- Theory Unstructured Navy Blazer - Available in 40R\\n- Brunello Cucinelli Ivory Oxford Shirt - Available in M\\n- Theory Stone Tailored Trouser - Only 2 left in 32x32\\n- Common Projects Achilles Low - Available in 10.5\\n\\nEverything's available, but the trouser is running low - only 2 units in your size remaining. Worth ordering soon if you want to keep the full set.\"\n        }\n      ]\n    }\n  ],\n  \"history\": [],\n  \"kind\": \"task\",\n  \"metadata\": {}\n}",
+          "condition": {
+            "field": "text",
+            "value": "stock",
+            "operator": "contains"
+          }
+        },
+        {
+          "id": "a2a-1778098232470",
+          "name": "default",
+          "response": "{\n  \"id\": \"7a19689b-ecff-4a94-ac67-003c26c7d6dd\",\n  \"contextId\": \"e22b99fc-8499-4d26-a3bf-25ee82cca710\",\n  \"status\": { \"state\": \"completed\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"886c0729-669a-4ad2-9ffb-d3339dc1c4a0\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"kind\": \"text\",\n          \"text\": \"Let me check inventory for your sizes:\\n\\n- Theory Unstructured Navy Blazer - Available in 40R\\n- Brunello Cucinelli Ivory Oxford Shirt - Available in M\\n- Theory Stone Tailored Trouser - Only 2 left in 32x32\\n- Common Projects Achilles Low - Available in 10.5\\n\\nEverything's available, but the trouser is running low - only 2 units in your size remaining. Worth ordering soon if you want to keep the full set.\"\n        }\n      ]\n    }\n  ],\n  \"history\": [],\n  \"kind\": \"task\",\n  \"metadata\": {}\n}",
+          "condition": {
+            "field": "text",
+            "value": "",
+            "operator": "contains"
+          }
+        }
+      ],
+      "config": {
+        "url": "https://www.a2d-ai.com/api/platform/8e503ffc-8e5f-480d-aa3b-8421b572a5a2/a2a",
+        "provider": {
+          "url": "https://develop-actionability.workshops.mulesoft.com/Actionability%20Workshop/index.html",
+          "organization": "MuleSoft"
+        },
+        "lastPublish": {
+          "name": "Availability Agent",
+          "assetId": "availability-agent",
+          "groupId": "2ae4f563-f0b8-4fd0-a0f4-c5d558a04a69",
+          "version": "1.0.0",
+          "timestamp": "2026-05-26T02:50:10.985Z",
+          "description": "Confirms that recommended products are actually purchasable for the customer before they're presented or before an order is placed. Checks each item against Vogue's product catalog (powered by Informatica Product 360) for general stock and size-specific availability, and surfaces low-stock warnings so customers can act on time-sensitive information.",
+          "organizationId": "008efb80-114c-4319-9617-2722bf5bb1fa"
+        },
+        "capabilities": {},
+        "protocolVersion": "0.3.0",
+        "defaultInputModes": [
+          "application/json",
+          "text/plain"
+        ],
+        "defaultOutputModes": [
+          "application/json",
+          "text/plain"
+        ]
+      }
+    },
+    {
+      "name": "Loyalty Agent",
+      "description": "Vogue Premiere's loyalty and personalization specialist. Surfaces the right perks at the right moments based on the customer's tier, the order context, and Vogue's loyalty program rules. Ensures Platinum customers feel like Platinum customers by applying complimentary services, expedited shipping, and tier-specific discounts in conversation rather than burying them in a separate program portal.",
+      "type": "mock",
+      "url": "https://www.a2d-ai.com/api/platform/dbebcf30-1327-4fcb-b8cd-525c2f37417c/a2a",
+      "protocol_version": "0.3.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {},
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "others",
+      "status": "published",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "loyalty-personalization",
+          "name": "Loyalty Personalization",
+          "description": "Apply Vogue Premiere loyalty program rules to the customer's current order or session context. Surfaces tier-specific benefits like complimentary expedited shipping, free monogramming on premium items, and member-only discounts. Calculates points earned and balance progress toward the next reward. Designed to make loyalty perks visible at the moment of intent rather than requiring the customer to navigate a separate membership portal.",
+          "examples": [
+            "What loyalty perks do I have?",
+            "Show me my Platinum benefits",
+            "What's my points balance?",
+            "What discounts apply to this order?"
+          ],
+          "input_modes": [
+            "application/json",
+            "text/plain"
+          ],
+          "output_modes": [
+            "application/json"
+          ],
+          "tags": [
+            "loyalty",
+            "perks",
+            "personalization",
+            "platinum",
+            "vogue"
+          ],
+          "enabled": true,
+          "sort_order": 0
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "a2a-1778098641850",
+          "name": "Platinum perks",
+          "response": "{\n  \"id\": \"7a19689b-ecff-4a94-ac67-003c26c7d6dd\",\n  \"contextId\": \"e22b99fc-8499-4d26-a3bf-25ee82cca710\",\n  \"status\": { \"state\": \"completed\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"886c0729-669a-4ad2-9ffb-d3339dc1c4a0\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"kind\": \"text\",\n          \"text\": \"Your Platinum benefits on this order:\\n\\n- Complimentary expedited shipping (normally $35) - your order arrives in 2 days\\n- Complimentary monogramming on premium items like the Theory blazer\\n- Early access to new collections\\n\\nYou'll earn 1,785 points on this order.\"\n        }\n      ]\n    }\n  ],\n  \"history\": [],\n  \"kind\": \"task\",\n  \"metadata\": {}\n}",
+          "condition": {
+            "field": "text",
+            "value": "",
+            "operator": "contains"
+          }
+        }
+      ],
+      "config": {
+        "url": "https://www.a2d-ai.com/api/platform/dbebcf30-1327-4fcb-b8cd-525c2f37417c/a2a",
+        "provider": {
+          "url": "https://www.mulesoft.com/",
+          "organization": "MuleSoft"
+        },
+        "lastPublish": {
+          "name": "Loyalty Agent",
+          "assetId": "loyalty-agent",
+          "groupId": "2ae4f563-f0b8-4fd0-a0f4-c5d558a04a69",
+          "version": "1.0.0",
+          "timestamp": "2026-05-26T02:49:08.170Z",
+          "description": "Vogue Premiere's loyalty and personalization specialist. Surfaces the right perks at the right moments based on the customer's tier, the order context, and Vogue's loyalty program rules. Ensures Platinum customers feel like Platinum customers by applying complimentary services, expedited shipping, and tier-specific discounts in conversation rather than burying them in a separate program portal.",
+          "organizationId": "008efb80-114c-4319-9617-2722bf5bb1fa"
+        },
+        "capabilities": {},
+        "protocolVersion": "0.3.0",
+        "defaultInputModes": [
+          "application/json",
+          "text/plain"
+        ],
+        "defaultOutputModes": [
+          "application/json",
+          "text/plain"
+        ]
+      }
+    },
+    {
+      "name": "Styling Agent",
+      "description": "Vogue Premiere's outfit recommendation specialist. Generates personalized outfit recommendations for customers based on their preferences, sizes, the occasion they're dressing for, and real-world conditions like weather. Pulls customer profile data, retrieves weather context for future occasions, and searches Vogue's product catalog (powered by Informatica Product 360) to assemble complete outfits — not just lists of unrelated items.",
+      "type": "mock",
+      "url": "https://www.a2d-ai.com/api/platform/71ffb179-20e9-4cdc-8ba3-f4fd4abdc2e1/a2a",
+      "protocol_version": "0.3.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {},
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "others",
+      "status": "published",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "outfit-recommendation",
+          "name": "Outfit Recommendation",
+          "description": "Generate a complete, personalized outfit recommendation for a customer based on their preferences, sizes, the occasion they're dressing for, and real-world conditions like weather. Returns a coordinated set of items (typically 4: jacket/blazer, shirt, trousers, footwear) with brief explanations of why each piece works for the occasion. Uses the customer's profile and Vogue's product catalog to ensure recommendations are personal and purchasable.",
+          "examples": [
+            "I have a dinner in Napa next Saturday. Something nicer than business casual, but not a full suit",
+            "What should I wear to a beach wedding in June?",
+            "I need an outfit for a client presentation tomorrow",
+            "Help me put together a smart-casual look for fall"
+          ],
+          "input_modes": [
+            "application/json",
+            "text/plain"
+          ],
+          "output_modes": [
+            "application/json"
+          ],
+          "tags": [
+            "styling",
+            "recommendation",
+            "outfit",
+            "vogue",
+            "retail"
+          ],
+          "enabled": true,
+          "sort_order": 0
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "a2a-1778097308580",
+          "name": "Smart-casual outfit recommendation",
+          "response": "{\n  \"id\": \"7a19689b-ecff-4a94-ac67-003c26c7d6dd\",\n  \"contextId\": \"e22b99fc-8499-4d26-a3bf-25ee82cca710\",\n  \"status\": { \"state\": \"completed\" },\n  \"artifacts\": [\n    {\n      \"artifactId\": \"886c0729-669a-4ad2-9ffb-d3339dc1c4a0\",\n      \"name\": \"task\",\n      \"parts\": [\n        {\n          \"kind\": \"text\",\n          \"text\": \"Great occasion. Napa in late April is mild - about 74F during the day, cooling off in the evening. Smart-casual works perfectly. Here's what I'd put together for you:\\n\\n- Theory Unstructured Navy Blazer - $595\\n  Italian wool, soft shoulder. Polished without being too formal.\\n\\n- Brunello Cucinelli Ivory Oxford Shirt - $420\\n  Heavyweight oxford with a tailored fit. Pairs beautifully under the navy blazer.\\n\\n- Theory Stone Tailored Trouser - $325\\n  Year-round wool, slim through the leg. Bridges casual and elevated.\\n\\n- Common Projects Achilles Low - $445\\n  Italian-made minimalist sneaker. Keeps the look modern without being too dressy.\\n\\nSubtotal: $1,785\"\n        }\n      ]\n    }\n  ],\n  \"history\": [],\n  \"kind\": \"task\",\n  \"metadata\": {}\n}",
+          "condition": {
+            "field": "text",
+            "value": "Napa",
+            "operator": "contains"
+          }
+        }
+      ],
+      "config": {
+        "url": "https://www.a2d-ai.com/api/platform/71ffb179-20e9-4cdc-8ba3-f4fd4abdc2e1/a2a",
+        "provider": {
+          "url": "https://www.mulesoft.com/",
+          "organization": "MuleSoft"
+        },
+        "lastPublish": {
+          "name": "Styling Agent",
+          "assetId": "styling-agent",
+          "groupId": "2ae4f563-f0b8-4fd0-a0f4-c5d558a04a69",
+          "version": "1.0.0",
+          "timestamp": "2026-05-26T02:50:40.756Z",
+          "description": "Vogue Premiere's outfit recommendation specialist. Generates personalized outfit recommendations for customers based on their preferences, sizes, the occasion they're dressing for, and real-world conditions like weather. Pulls customer profile data, retrieves weather context for future occasions, and searches Vogue's product catalog (powered by Informatica Product 360) to assemble complete outfits — not just lists of unrelated items.",
+          "organizationId": "008efb80-114c-4319-9617-2722bf5bb1fa"
+        },
+        "capabilities": {},
+        "protocolVersion": "0.3.0",
+        "defaultInputModes": [
+          "application/json",
+          "text/plain"
+        ],
+        "defaultOutputModes": [
+          "application/json",
+          "text/plain"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+agentNetwork: 2.0.0
+info:
+  label: IT Help Investigation Agent Network
+  version: v1
+registry:
+  agents:
+    help-center-agent:
+      info:
+        label: Help Center Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a:
+            card:
+              name: Help Center Agent
+              description: Searches the IT knowledge base for answers to common issues. Returns relevant articles with step-by-step instructions.
+              version: 1.0.0
+              capabilities:
+                streaming: false
+                pushNotifications: false
+              defaultInputModes:
+                - application/json
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: knowledge-search
+                  name: Knowledge Base Search
+                  description: Search for IT help articles and known solutions.
+                  tags:
+                    - knowledge-base
+                    - it-support
+                  examples:
+                    - How do I reset my VPN password?
+                    - My email is not syncing
+                    - How do I set up two-factor authentication?
+                  inputModes:
+                    - application/json
+                    - text/plain
+                  outputModes:
+                    - application/json
+                    - text/plain
+    license-procurement-agent:
+      info:
+        label: License Procurement Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              name: License Procurement Agent
+              description: Checks software license availability and provisions licenses for employees.
+              url: ${licenseProcurementAgent.url}
+              protocolVersion: "0.3.0"
+              version: 1.0.0
+              capabilities:
+                streaming: false
+                pushNotifications: true
+                stateTransitionHistory: false
+              defaultInputModes:
+                - application/json
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: license-check
+                  name: License Check and Provision
+                  description: Check license availability and provision for a user.
+                  tags:
+                    - licensing
+                    - provisioning
+                  examples:
+                    - Provision a Figma license for jane.doe@company.com
+                    - Check if we have available GitHub Enterprise seats
+                    - I need access to Jira
+                  inputModes:
+                    - application/json
+                    - text/plain
+                  outputModes:
+                    - application/json
+                    - text/plain
+  mcps:
+    escalation-mcp:
+      info:
+        label: Escalation MCP
+      metadata:
+        transport:
+          kind: streamableHttp
+    jira-mcp:
+      info:
+        label: Jira MCP
+      metadata:
+        transport:
+          kind: streamableHttp
+  llms:
+    it-help-investigation-azure-openai:
+      info:
+        label: IT Help Investigation LLM
+        description: Azure OpenAI LLM Provider
+      metadata:
+        platform: AzureOpenai
+context:
+  connections:
+    help-center-agent-connection:
+      kind: a2a
+      ref:
+        name: help-center-agent
+      url: ${helpCenterAgent.url}
+    license-procurement-agent-connection:
+      kind: a2a
+      ref:
+        name: license-procurement-agent
+      url: ${licenseProcurementAgent.url}
+    escalation-mcp-connection:
+      kind: mcp
+      ref:
+        name: escalation-mcp
+      url: ${escalationMcp.url}
+    jira-mcp-connection:
+      kind: mcp
+      ref:
+        name: jira-mcp
+      url: ${jiraMcp.url}
+    it-help-investigation-azure-openai-connection:
+      kind: llm
+      ref:
+        name: it-help-investigation-azure-openai
+      url: ${azureOpenAI.url}
+      authentication:
+        kind: apiKey
+        apiKey: ${azureOpenAI.apiKey}
+brokers:
+  it-help-investigation-broker:
+    kind: AgentScript
+    implementation: ./brokers/it-help-investigation.agent
+    interfaces:
+      a2a:
+        card:
+          name: IT Help Investigation Broker
+          description: Triages IT support tickets, escalates critical issues, and resolves common problems through cross-platform investigation.
+          version: 1.0.0
+          supportedInterfaces:
+            - url: http://localhost:8001/it-help-investigation-broker/
+              protocolVersion: "1.0"
+              protocolBinding: HTTP+JSON
+            - url: http://localhost:8001/it-help-investigation-broker/
+              protocolVersion: "1.0"
+              protocolBinding: JSONRPC
+          capabilities:
+            streaming: false
+            pushNotifications: true
+          defaultInputModes:
+            - text/plain
+          defaultOutputModes:
+            - text/plain
+          skills:
+            - id: ticket-triage
+              name: IT Ticket Triage
+              description: Classifies and resolves IT support tickets.
+              tags:
+                - it-support
+                - help-desk

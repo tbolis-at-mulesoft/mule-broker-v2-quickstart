@@ -1,0 +1,214 @@
+agentNetwork: 2.0.0
+info:
+  label: Vogue Premiere Agent Network
+  version: v1
+registry:
+  agents:
+    styling-agent:
+      info:
+        label: Styling Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              url: ${stylingAgent.url}
+              protocolVersion: 0.3.0
+              name: Styling Agent
+              version: 1.0.0
+              description: Recommends complete outfits for the customer.
+              capabilities:
+                pushNotifications: false
+              defaultInputModes:
+                - application/json
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: styling-recommend-outfit
+                  name: Recommend Outfit
+                  description: Recommends a complete outfit for a customer's occasion.
+                  tags:
+                    - styling
+                  inputModes:
+                    - application/json
+                    - text/plain
+                  outputModes:
+                    - application/json
+                    - text/plain
+    availability-agent:
+      info:
+        label: Availability Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              url: ${availabilityAgent.url}
+              protocolVersion: 0.3.0
+              name: Availability Agent
+              version: 1.0.0
+              description: Verifies stock and sizes across Product 360 and the OMS.
+              capabilities:
+                pushNotifications: false
+              defaultInputModes:
+                - application/json
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: availability-check-stock
+                  name: Check Availability
+                  description: Verifies stock and size availability for products.
+                  tags:
+                    - availability
+                  inputModes:
+                    - application/json
+                    - text/plain
+                  outputModes:
+                    - application/json
+                    - text/plain
+    loyalty-agent:
+      info:
+        label: Loyalty Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              url: ${loyaltyAgent.url}
+              protocolVersion: 0.3.0
+              name: Loyalty Agent
+              version: 1.0.0
+              description: Applies tier-specific loyalty perks.
+              capabilities:
+                pushNotifications: false
+              defaultInputModes:
+                - application/json
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: loyalty-apply-perks
+                  name: Apply Loyalty Perks
+                  description: Applies tier-specific perks to the customer.
+                  tags:
+                    - loyalty
+                  inputModes:
+                    - application/json
+                    - text/plain
+                  outputModes:
+                    - application/json
+                    - text/plain
+  mcps:
+    customer-mcp:
+      info:
+        label: Customer MCP
+      metadata:
+        transport:
+          kind: streamableHttp
+          path: /mcp
+    order-mcp:
+      info:
+        label: Order MCP
+      metadata:
+        transport:
+          kind: streamableHttp
+          path: /mcp
+  llms:
+    vogue-premiere-azure-openai:
+      info:
+        label: Vogue Premiere LLM
+        description: Azure OpenAI LLM Provider
+      metadata:
+        platform: AzureOpenai
+context:
+  connections:
+    styling-agent-connection:
+      kind: a2a
+      ref:
+        name: styling-agent
+        namespace: 0fad75bb-e242-46ea-b4d8-b1536fe84263
+      url: ${stylingAgent.url}
+    availability-agent-connection:
+      kind: a2a
+      ref:
+        name: availability-agent
+        namespace: 0fad75bb-e242-46ea-b4d8-b1536fe84263
+      url: ${availabilityAgent.url}
+    loyalty-agent-connection:
+      kind: a2a
+      ref:
+        name: loyalty-agent
+        namespace: 0fad75bb-e242-46ea-b4d8-b1536fe84263
+      url: ${loyaltyAgent.url}
+    customer-mcp-connection:
+      kind: mcp
+      ref:
+        name: customer-mcp
+        namespace: 0fad75bb-e242-46ea-b4d8-b1536fe84263
+      url: ${customerMcp.url}
+    order-mcp-connection:
+      kind: mcp
+      ref:
+        name: order-mcp
+        namespace: 0fad75bb-e242-46ea-b4d8-b1536fe84263
+      url: ${orderMcp.url}
+    vogue-premiere-azure-openai-connection:
+      kind: llm
+      ref:
+        name: vogue-premiere-azure-openai
+        namespace: 0fad75bb-e242-46ea-b4d8-b1536fe84263
+      url: ${azureOpenAI.url}
+      authentication:
+        kind: apiKey
+        apiKey: ${azureOpenAI.apiKey}
+brokers:
+  vogue-premiere-broker:
+    kind: AgentScript
+    implementation: ./brokers/vogue-premiere.agent
+    interfaces:
+      a2a:
+        card:
+          name: Vogue Premiere Styling Concierge
+          version: 1.0.0
+          supportedInterfaces:
+            - url: http://localhost:8001/vogue-premiere/
+              protocolVersion: "1.0"
+              protocolBinding: HTTP+JSON
+            - url: http://localhost:8001/vogue-premiere/
+              protocolVersion: "1.0"
+              protocolBinding: JSONRPC
+          description: A personal luxury fashion assistant that handles styling, availability, loyalty, and orders.
+          capabilities:
+            streaming: true
+            pushNotifications: false
+          defaultInputModes:
+            - application/json
+            - text/plain
+          defaultOutputModes:
+            - application/json
+            - text/plain
+          skills:
+            - id: vogue-style-concierge
+              name: Vogue Style Concierge
+              description: Handles customer-facing styling, availability, loyalty, and order interactions for Vogue Premiere.
+              tags:
+                - styling
+                - loyalty
+                - orders
+                - vogue
+              examples:
+                - Hi, this is Alex Chen. I have a dinner in Napa next Saturday and I'm looking for an outfit that's nicer than business casual, but not a full suit
+                - Can you check if all those products are available in my size?
+                - Show me my loyalty perks
+                - Place the order for the whole outfit.
+              inputModes:
+                - application/json
+                - text/plain
+              outputModes:
+                - application/json
+                - text/plain

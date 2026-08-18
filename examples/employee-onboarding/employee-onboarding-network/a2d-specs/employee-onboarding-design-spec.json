@@ -1,0 +1,586 @@
+{
+  "version": 1,
+  "exportedAt": "2026-08-18T13:28:20.560Z",
+  "manifest": {
+    "mcpServers": [
+      {
+        "id": "6a78fd74-02aa-415b-9f4d-50fadea90cdf",
+        "name": "Employee Onboarding Talent Pool MCP",
+        "type": "mcp_server"
+      }
+    ],
+    "agentCards": [
+      {
+        "id": "cd7afb88-1b2b-42b4-826a-dae9c2f68f50",
+        "name": "Employee Onboarding Badging Agent",
+        "type": "agent_card"
+      },
+      {
+        "id": "ad1acfbb-9495-4103-aa51-6d2e92671ab7",
+        "name": "Employee Onboarding PingID Agent",
+        "type": "agent_card"
+      },
+      {
+        "id": "d615fc87-378e-4a22-8146-c441cb322e8e",
+        "name": "Employee Onboarding Salesforce Agent",
+        "type": "agent_card"
+      },
+      {
+        "id": "3d711378-8048-447c-a850-e8f2526d870b",
+        "name": "Employee Onboarding Workday Agent",
+        "type": "agent_card"
+      },
+      {
+        "id": "1b7cbba6-bf8f-4c2c-bbc1-4336051e273e",
+        "name": "Employee Onboarding Zendesk Agent",
+        "type": "agent_card"
+      }
+    ]
+  },
+  "mcpServers": [
+    {
+      "name": "Employee Onboarding Talent Pool MCP",
+      "type": "mock",
+      "description": "Deterministic read-only facade over the Talent Pool employee directory for the Employee Onboarding network. Enriches an incoming employee record with a postal address matched from the employee's email when the address is missing. Tools only — no resources, no prompts, no LLM reasoning. Mock for the Employee Onboarding Agent Network v2 PoC.",
+      "config": {
+        "provider": {
+          "organization": "MuleSoft"
+        }
+      },
+      "transport_config": {
+        "kind": "streamableHttp",
+        "path": "/api/platform/{serverId}/mcp"
+      },
+      "enabled": true,
+      "status": "draft",
+      "source_url": null,
+      "mock_data": {},
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "introspect_auth_type": "none",
+      "introspect_auth_config": {},
+      "tools": [
+        {
+          "name": "match_email_to_address",
+          "description": "Looks up an employee's postal address from the Talent Pool directory by email. Used to enrich a new-hire record when the address was not provided.",
+          "input_schema": {
+            "type": "object",
+            "required": [
+              "email"
+            ],
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "The employee's work email to match against the Talent Pool directory."
+              }
+            },
+            "additionalProperties": false
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 0,
+          "mock_scenarios": [
+            {
+              "id": "fe1577ba-d737-4284-9e8a-c9e451df15ae",
+              "name": "Alex Smith address",
+              "response": "{\"email\":\"alex.smith@example.com\",\"address\":\"123 Oak Street, San Francisco, CA 94102\"}",
+              "condition": {
+                "field": "email",
+                "value": "alex.smith",
+                "operator": "contains"
+              },
+              "responseType": "json"
+            },
+            {
+              "id": "27204d66-61f7-4e5d-b4f8-aed3f1aed203",
+              "name": "Riya Patel address",
+              "response": "{\"email\":\"riya.patel@example.com\",\"address\":\"456 Maple Avenue, Austin, TX 73301\"}",
+              "condition": {
+                "field": "email",
+                "value": "riya.patel",
+                "operator": "contains"
+              },
+              "responseType": "json"
+            },
+            {
+              "id": "a8b68c06-d26e-45f2-a199-e4fc4c3dc134",
+              "name": "David Chen address",
+              "response": "{\"email\":\"david.chen@example.com\",\"address\":\"789 Elm Drive, Seattle, WA 98101\"}",
+              "condition": {
+                "field": "email",
+                "value": "david.chen",
+                "operator": "contains"
+              },
+              "responseType": "json"
+            }
+          ]
+        },
+        {
+          "name": "lookup_employee_department",
+          "description": "Looks up an employee's department and cost center from the Talent Pool directory by email. Provided by the Talent Pool directory but not used by the onboarding broker graph.",
+          "input_schema": {
+            "type": "object",
+            "required": [
+              "email"
+            ],
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "The employee's work email to match against the Talent Pool directory."
+              }
+            },
+            "additionalProperties": false
+          },
+          "output_schema": null,
+          "annotations": {},
+          "enabled": true,
+          "sort_order": 1,
+          "mock_scenarios": [
+            {
+              "id": "dca8e496-8271-4800-92a3-c64271fcc4fb",
+              "name": "Alex Smith department",
+              "response": "{\"email\":\"alex.smith@example.com\",\"department\":\"Sales\",\"costCenter\":\"CC-4200\"}",
+              "condition": {
+                "field": "email",
+                "value": "alex.smith",
+                "operator": "contains"
+              },
+              "responseType": "json"
+            }
+          ]
+        }
+      ],
+      "resources": [],
+      "prompts": [],
+      "openapiSpecs": []
+    }
+  ],
+  "agentCards": [
+    {
+      "name": "Employee Onboarding Badging Agent",
+      "description": "Initiates and tracks the employee badging process for the Employee Onboarding network, including outreach for badge photo collection. Initiates a badge request from employeeId and email, returning a badge request ID. Mock agent for the Employee Onboarding Agent Network v2 PoC.",
+      "type": "mock",
+      "url": null,
+      "protocol_version": "0.3.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {},
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "Bedrock",
+      "status": "draft",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "initiate_badge_request",
+          "name": "initiate_badge_request",
+          "description": "Initiates a badge request for a new employee, including outreach for badge photo collection, from a plain-text request containing the employee ID and email. Example: \"Initiate a badge request for Employee ID EMP1001, email alex.smith@example.com.\" Returns a badge request ID with status photo_requested.",
+          "examples": [
+            "Initiate a badge request for Employee ID EMP1001, email alex.smith@example.com."
+          ],
+          "input_modes": [
+            "text/plain"
+          ],
+          "output_modes": [
+            "text/plain"
+          ],
+          "tags": [
+            "onboarding",
+            "badging",
+            "identity"
+          ],
+          "enabled": true,
+          "sort_order": 0
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "c77ddf34-d6c6-41a0-a62f-86d308dbc11d",
+          "name": "Badging - EMP1001",
+          "response": "{\"id\":\"bg-task-BADGE1001\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"bg-msg-BADGE1001\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Badge request initiated.\\n\\n•  Employee ID: EMP1001\\n•  Personal Email: alex.smith@example.com\\n•  Badge Request ID: BADGE1001\\n•  Status: photo_requested\\n•  Action Required: false\"}]}},\"artifacts\":[{\"artifactId\":\"artifact-BADGE1001\",\"name\":\"badge_request\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1001\\\",\\\"email\\\":\\\"alex.smith@example.com\\\",\\\"badgeRequestId\\\":\\\"BADGE1001\\\",\\\"status\\\":\\\"photo_requested\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1001",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "3dbe18ef-2e4e-4455-bfba-7699815523c1",
+          "name": "Badging - EMP1002",
+          "response": "{\"id\":\"bg-task-BADGE1002\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"bg-msg-BADGE1002\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Badge request initiated.\\n\\n•  Employee ID: EMP1002\\n•  Personal Email: riya.patel@example.com\\n•  Badge Request ID: BADGE1002\\n•  Status: photo_requested\\n•  Action Required: false\"}]}},\"artifacts\":[{\"artifactId\":\"artifact-BADGE1002\",\"name\":\"badge_request\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1002\\\",\\\"email\\\":\\\"riya.patel@example.com\\\",\\\"badgeRequestId\\\":\\\"BADGE1002\\\",\\\"status\\\":\\\"photo_requested\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1002",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "2e44511e-0c54-4e92-9140-d83d275cd7b6",
+          "name": "Badging - EMP1003",
+          "response": "{\"id\":\"bg-task-BADGE1003\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"bg-msg-BADGE1003\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Badge request initiated.\\n\\n•  Employee ID: EMP1003\\n•  Personal Email: david.chen@example.com\\n•  Badge Request ID: BADGE1003\\n•  Status: photo_requested\\n•  Action Required: false\"}]}},\"artifacts\":[{\"artifactId\":\"artifact-BADGE1003\",\"name\":\"badge_request\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1003\\\",\\\"email\\\":\\\"david.chen@example.com\\\",\\\"badgeRequestId\\\":\\\"BADGE1003\\\",\\\"status\\\":\\\"photo_requested\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1003",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        }
+      ],
+      "config": {}
+    },
+    {
+      "name": "Employee Onboarding PingID Agent",
+      "description": "Provisions PingID MFA/identity accounts for new employees in the Employee Onboarding network. Requires employeeId and email to provision a PingID account. Mock agent for the Employee Onboarding Agent Network v2 PoC.",
+      "type": "mock",
+      "url": null,
+      "protocol_version": "0.3.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {},
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "PingID",
+      "status": "draft",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "provision_pingid",
+          "name": "provision_pingid",
+          "description": "Provisions a PingID MFA/identity account for a new employee from a plain-text request containing the employee ID and email. Example: \"Provision a PingID MFA/identity account for Employee ID EMP1001, email alex.smith@example.com.\" Returns the provisioned PingID.",
+          "examples": [
+            "Provision a PingID MFA/identity account for Employee ID EMP1001, email alex.smith@example.com."
+          ],
+          "input_modes": [
+            "text/plain"
+          ],
+          "output_modes": [
+            "text/plain"
+          ],
+          "tags": [
+            "pingid",
+            "mfa",
+            "identity",
+            "security",
+            "it"
+          ],
+          "enabled": true,
+          "sort_order": 0
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "a08c5867-a039-4694-a768-4e4b554b6a4c",
+          "name": "PingID - EMP1001",
+          "response": "{\"id\":\"pid-task-EMP1001\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"pid-msg-EMP1001\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"PingID account provisioned successfully.\\n\\nEmployee ID: EMP1001\\nEmail: alex.smith@example.com\\nPingID: PINGID-EMP1001\"}]}},\"artifacts\":[{\"artifactId\":\"artifact-pingid-EMP1001\",\"name\":\"pingid_provisioning\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1001\\\",\\\"email\\\":\\\"alex.smith@example.com\\\",\\\"pingId\\\":\\\"PINGID-EMP1001\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1001",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "9ca6ebb4-0db4-4108-b848-fa258f29ee34",
+          "name": "PingID - EMP1002",
+          "response": "{\"id\":\"pid-task-EMP1002\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"pid-msg-EMP1002\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"PingID account provisioned successfully.\\n\\nEmployee ID: EMP1002\\nEmail: riya.patel@example.com\\nPingID: PINGID-EMP1002\"}]}},\"artifacts\":[{\"artifactId\":\"artifact-pingid-EMP1002\",\"name\":\"pingid_provisioning\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1002\\\",\\\"email\\\":\\\"riya.patel@example.com\\\",\\\"pingId\\\":\\\"PINGID-EMP1002\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1002",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "8990b636-216a-4b10-a204-d29f40d1f2b6",
+          "name": "PingID - EMP1003",
+          "response": "{\"id\":\"pid-task-EMP1003\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"pid-msg-EMP1003\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"PingID account provisioned successfully.\\n\\nEmployee ID: EMP1003\\nEmail: david.chen@example.com\\nPingID: PINGID-EMP1003\"}]}},\"artifacts\":[{\"artifactId\":\"artifact-pingid-EMP1003\",\"name\":\"pingid_provisioning\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1003\\\",\\\"email\\\":\\\"david.chen@example.com\\\",\\\"pingId\\\":\\\"PINGID-EMP1003\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1003",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        }
+      ],
+      "config": {}
+    },
+    {
+      "name": "Employee Onboarding Salesforce Agent",
+      "description": "Handles CRM profile creation and territory assignment in Salesforce for the Employee Onboarding network. Creates a CRM profile from employeeId and email, and assigns a sales territory. Mock agent for the Employee Onboarding Agent Network v2 PoC.",
+      "type": "mock",
+      "url": null,
+      "protocol_version": "0.3.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {},
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "Salesforce",
+      "status": "draft",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "create_crm_profile",
+          "name": "create_crm_profile",
+          "description": "Creates a CRM profile in Salesforce and assigns a sales territory from a plain-text request containing the employee ID and email. Example: \"Create a Salesforce CRM profile and assign a territory for Employee ID EMP1001, email jane.doe@example.com.\" If territory is missing, responds input-required offering territory options.",
+          "examples": [
+            "Create a Salesforce CRM profile and assign a territory for Employee ID EMP1001, email alex.smith@example.com."
+          ],
+          "input_modes": [
+            "text/plain"
+          ],
+          "output_modes": [
+            "text/plain"
+          ],
+          "tags": [
+            "salesforce",
+            "crm",
+            "territory-assignment"
+          ],
+          "enabled": true,
+          "sort_order": 0
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "fc9894cf-9d52-4973-9d7e-4c4218201652",
+          "name": "Salesforce - EMP1001",
+          "response": "{\"id\":\"sf-task-EMP1001\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"sf-msg-EMP1001\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Created CRM profile and assigned territory: DC - NW Prime\\n\\n•  Employee ID: EMP1001\\n•  Email: alex.smith@example.com\\n•  Territory: DC - NW Prime\"}]}},\"artifacts\":[{\"artifactId\":\"salesforce-artifact-EMP1001\",\"name\":\"salesforce_crm_result\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1001\\\",\\\"email\\\":\\\"alex.smith@example.com\\\",\\\"territory\\\":\\\"DC - NW Prime\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1001",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "30db1624-7847-4c28-a308-f31b30e020f1",
+          "name": "Salesforce - EMP1002",
+          "response": "{\"id\":\"sf-task-EMP1002\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"sf-msg-EMP1002\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Created CRM profile and assigned territory: DC - SW Prime\\n\\n•  Employee ID: EMP1002\\n•  Email: riya.patel@example.com\\n•  Territory: DC - SW Prime\"}]}},\"artifacts\":[{\"artifactId\":\"salesforce-artifact-EMP1002\",\"name\":\"salesforce_crm_result\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1002\\\",\\\"email\\\":\\\"riya.patel@example.com\\\",\\\"territory\\\":\\\"DC - SW Prime\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1002",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "7cc4e90c-f2f4-4e8b-8599-fae14721c058",
+          "name": "Salesforce - EMP1003",
+          "response": "{\"id\":\"sf-task-EMP1003\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"sf-msg-EMP1003\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Created CRM profile and assigned territory: DC - NW Prime\\n\\n•  Employee ID: EMP1003\\n•  Email: david.chen@example.com\\n•  Territory: DC - NW Prime\"}]}},\"artifacts\":[{\"artifactId\":\"salesforce-artifact-EMP1003\",\"name\":\"salesforce_crm_result\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1003\\\",\\\"email\\\":\\\"david.chen@example.com\\\",\\\"territory\\\":\\\"DC - NW Prime\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1003",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        }
+      ],
+      "config": {}
+    },
+    {
+      "name": "Employee Onboarding Workday Agent",
+      "description": "Manages employee data in Workday for the Employee Onboarding network. Creates new-hire records from name, email, phone, and address, returning a Workday Employee ID. If the address is missing it requests it. Mock agent for the Employee Onboarding Agent Network v2 PoC.",
+      "type": "mock",
+      "url": null,
+      "protocol_version": "0.3.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {},
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "Workday",
+      "status": "draft",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "create_new_hire",
+          "name": "create_new_hire",
+          "description": "Creates a new employee record in Workday from a plain-text request containing name, email, phone, and address. Example: \"Create a new hire in Workday. Name: Jane Doe. Email: jane.doe@example.com. Phone: 9876543210. Address: 123 Main St, Mumbai.\" Returns the created record with a Workday Employee ID. If the address is missing, responds input-required asking for it.",
+          "examples": [
+            "Create a new hire in Workday. Name: Alex Smith. Email: alex.smith@example.com. Phone: 555-0100. Address: 123 Oak Street, San Francisco, CA 94102."
+          ],
+          "input_modes": [
+            "text/plain"
+          ],
+          "output_modes": [
+            "text/plain"
+          ],
+          "tags": [
+            "workday",
+            "new-hire",
+            "hr",
+            "employee-record"
+          ],
+          "enabled": true,
+          "sort_order": 0
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "45959ff4-8c96-4ecd-b4d9-1eea82c46e10",
+          "name": "Workday - Alex Smith",
+          "response": "{\"id\":\"wd-task-EMP1001\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"wd-msg-EMP1001\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"New hire created in Workday.\\n\\n•  Name: Alex Smith\\n•  Email: alex.smith@example.com\\n•  Phone: 555-0100\\n•  Address: 123 Oak Street, San Francisco, CA 94102\\n•  Employee ID: EMP1001\\n•  Status: Active\"}]}},\"artifacts\":[{\"artifactId\":\"workday-artifact-EMP1001\",\"name\":\"workday_provision_result\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"name\\\":\\\"Alex Smith\\\",\\\"email\\\":\\\"alex.smith@example.com\\\",\\\"employeeId\\\":\\\"EMP1001\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "alex.smith",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "95007b48-6211-41f5-9ea8-2a2939e5d756",
+          "name": "Workday - Riya Patel",
+          "response": "{\"id\":\"wd-task-EMP1002\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"wd-msg-EMP1002\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"New hire created in Workday.\\n\\n•  Name: Riya Patel\\n•  Email: riya.patel@example.com\\n•  Phone: 555-0102\\n•  Address: 456 Maple Avenue, Austin, TX 73301\\n•  Employee ID: EMP1002\\n•  Status: Active\"}]}},\"artifacts\":[{\"artifactId\":\"workday-artifact-EMP1002\",\"name\":\"workday_provision_result\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"name\\\":\\\"Riya Patel\\\",\\\"email\\\":\\\"riya.patel@example.com\\\",\\\"employeeId\\\":\\\"EMP1002\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "riya.patel",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "ff35e78d-1cff-4421-9018-78a8831854e4",
+          "name": "Workday - David Chen",
+          "response": "{\"id\":\"wd-task-EMP1003\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"wd-msg-EMP1003\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"New hire created in Workday.\\n\\n•  Name: David Chen\\n•  Email: david.chen@example.com\\n•  Phone: 555-0103\\n•  Address: 789 Elm Drive, Seattle, WA 98101\\n•  Employee ID: EMP1003\\n•  Status: Active\"}]}},\"artifacts\":[{\"artifactId\":\"workday-artifact-EMP1003\",\"name\":\"workday_provision_result\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"name\\\":\\\"David Chen\\\",\\\"email\\\":\\\"david.chen@example.com\\\",\\\"employeeId\\\":\\\"EMP1003\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "david.chen",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        }
+      ],
+      "config": {}
+    },
+    {
+      "name": "Employee Onboarding Zendesk Agent",
+      "description": "Automates IT service request handling in Zendesk for the Employee Onboarding network, including laptop delivery for new hires. Submits a laptop delivery request from employeeId and address, returning a Zendesk request ID. Mock agent for the Employee Onboarding Agent Network v2 PoC.",
+      "type": "mock",
+      "url": null,
+      "protocol_version": "0.3.0",
+      "version": "1.0.0",
+      "provider": {},
+      "capabilities": {},
+      "security_schemes": {},
+      "default_input_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "default_output_modes": [
+        "application/json",
+        "text/plain"
+      ],
+      "platform": "Zendesk",
+      "status": "draft",
+      "enabled": true,
+      "auth_enabled": false,
+      "auth_type": null,
+      "auth_config": {},
+      "skills": [
+        {
+          "skill_id": "request_laptop_delivery",
+          "name": "request_laptop_delivery",
+          "description": "Submits a laptop delivery service request in Zendesk for a new hire from a plain-text request containing the employee ID and delivery address. Example: \"Submit a laptop delivery request in Zendesk for Employee ID EMP1001, deliver to address 123 Oak Street, San Francisco, CA 94102.\" Returns a Zendesk request ID.",
+          "examples": [
+            "Submit a laptop delivery request in Zendesk for Employee ID EMP1001, deliver to address 123 Oak Street, San Francisco, CA 94102."
+          ],
+          "input_modes": [
+            "text/plain"
+          ],
+          "output_modes": [
+            "text/plain"
+          ],
+          "tags": [
+            "zendesk",
+            "laptop-delivery",
+            "it-service",
+            "onboarding"
+          ],
+          "enabled": true,
+          "sort_order": 0
+        }
+      ],
+      "a2a_mock_scenarios": [
+        {
+          "id": "9553a5e7-6c28-4a05-9fd4-863f4b0f199a",
+          "name": "Zendesk - EMP1001",
+          "response": "{\"id\":\"zd-task-SRV1001\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"zd-msg-SRV1001\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Laptop delivery request submitted successfully.\\n\\n•  Employee ID: EMP1001\\n•  Address: 123 Oak Street, San Francisco, CA 94102\\n•  Zendesk Request ID: SRV1001\"}]}},\"artifacts\":[{\"artifactId\":\"artifact-SRV1001\",\"name\":\"laptop_delivery_request\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1001\\\",\\\"address\\\":\\\"123 Oak Street, San Francisco, CA 94102\\\",\\\"zendeskRequestId\\\":\\\"SRV1001\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1001",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "ebc062c8-3de8-4b84-b9bd-e16af867d8a5",
+          "name": "Zendesk - EMP1002",
+          "response": "{\"id\":\"zd-task-SRV1002\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"zd-msg-SRV1002\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Laptop delivery request submitted successfully.\\n\\n•  Employee ID: EMP1002\\n•  Address: 456 Maple Avenue, Austin, TX 73301\\n•  Zendesk Request ID: SRV1002\"}]}},\"artifacts\":[{\"artifactId\":\"artifact-SRV1002\",\"name\":\"laptop_delivery_request\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1002\\\",\\\"address\\\":\\\"456 Maple Avenue, Austin, TX 73301\\\",\\\"zendeskRequestId\\\":\\\"SRV1002\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1002",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        },
+        {
+          "id": "87a6a1d9-3052-41e6-aa49-6d67cfaca5a2",
+          "name": "Zendesk - EMP1003",
+          "response": "{\"id\":\"zd-task-SRV1003\",\"contextId\":\"onboarding-ctx\",\"status\":{\"state\":\"completed\",\"message\":{\"kind\":\"message\",\"messageId\":\"zd-msg-SRV1003\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Laptop delivery request submitted successfully.\\n\\n•  Employee ID: EMP1003\\n•  Address: 789 Elm Drive, Seattle, WA 98101\\n•  Zendesk Request ID: SRV1003\"}]}},\"artifacts\":[{\"artifactId\":\"artifact-SRV1003\",\"name\":\"laptop_delivery_request\",\"parts\":[{\"kind\":\"text\",\"text\":\"{\\\"employeeId\\\":\\\"EMP1003\\\",\\\"address\\\":\\\"789 Elm Drive, Seattle, WA 98101\\\",\\\"zendeskRequestId\\\":\\\"SRV1003\\\"}\"}]}],\"kind\":\"task\"}",
+          "condition": {
+            "field": "text",
+            "value": "EMP1003",
+            "operator": "contains"
+          },
+          "responseType": "json"
+        }
+      ],
+      "config": {}
+    }
+  ]
+}

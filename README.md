@@ -33,6 +33,12 @@ The guide is split into one file per phase — work through them in order:
 Screenshots for each step live in [docs/images/](docs/images/), numbered in
 the order they're referenced across the guide.
 
+## Examples
+
+Ready-to-run agent network examples live in [examples/](examples/). Start with
+the [examples README](examples/README.md) — it explains how to design and mock
+the required resources in A²D first, then wire the mock URLs into each network.
+
 ## References
 
 - [MuleSoft free trial signup](https://anypoint.mulesoft.com/login/signup)

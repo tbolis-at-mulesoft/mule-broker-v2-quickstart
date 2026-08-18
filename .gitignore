@@ -26,4 +26,4 @@ portable-vscode
 *.vsixpackage
 
 # Local project artifacts
-it-help-investigation-agent-network
+/it-help-investigation-agent-network

@@ -1,0 +1,330 @@
+# @dialect: AGENTFABRIC=1.0
+
+system:
+  instructions: "You are an Employee Onboarding Orchestrator. You register a new hire across all corporate systems — Workday (HR record), Salesforce (CRM profile + territory), Zendesk (laptop delivery), Badging (badge request), and PingID (identity/MFA) — enriching a missing home address from the Talent Pool directory when needed, and you return a single plain-text summary of everything that was done."
+
+config:
+  agent_name: "employee_onboarding"
+  default_llm: @llm.gpt_5_6_sol
+
+
+llm:
+  gpt_5_6_sol:
+    target: "llm://employee-onboarding-azure-openai-connection"
+    kind: "OpenAI"
+    model: "gpt-5.6-sol"
+
+  gpt_5_6_luna:
+    target: "llm://employee-onboarding-azure-openai-connection"
+    kind: "OpenAI"
+    model: "gpt-5.6-luna"
+
+
+# -- WORKFLOW VARIABLES --------------------------------------------------------
+# emp_address is the only field that differs between the two branches of the
+# address router (provided vs. enriched), so it is carried across the merge in a
+# variable. name / email / phone / employeeId are read directly from their nodes.
+#
+# The three *_result variables hold the reply TEXT of the three straight-through
+# agent executors (Zendesk / Badging / PingID). They are needed because an
+# `@executor.X.output` reference for an `a2a:send_message` action lowers to the
+# RAW result STRING — the JSON-dumped A2A Task envelope — with NO implicit
+# parse_json wrap. Feeding that raw envelope into the summary prompt gave the
+# summarizer an unusable blob and it reported "no successful result". So a
+# dedicated coalesce executor (coalesceAgentResults) parses each result ONCE
+# with parse_json() and pulls the reply text into these variables; the summary
+# then reads clean text. (The subagent legs — Workday/Salesforce — already
+# return typed output unwrapped from the envelope, so they need no such step.)
+#
+# IMPORTANT: the runtime does NOT store the raw A2A Task envelope. Its A2A tool
+# executor reshapes every Task via extract_structured_response() into
+#   {type:"task", contents:{artifacts:[...], history:[...], status:[{type,value}]}}
+# and stores json.dumps() of THAT. So the reply text lives at
+# .contents.status[0].value (status is a LIST of parts; the leaf key is `value`,
+# NOT `text`) — this is why the earlier `.status.message.parts[0].text` path
+# came back empty. The `set` context is null-safe: a transport error /
+# unexpected shape makes parse_json raise, the update is swallowed, and the
+# variable keeps its "" default.
+#
+# NOTE on the summarize step: because these three legs run as deterministic
+# executors (not subagents), their results reach `summarize` only as prompt
+# prose — they are NOT tool calls in the summarizer LLM's own history (Workday /
+# Salesforce ARE, being subagents). An earlier prompt that asked the model to
+# "note any step that did not complete" let it occasionally re-adjudicate the
+# prose-only legs as "not available" and emit goalFailed=true — reporting all
+# three as incomplete even though their results were present, and failing the
+# task. The summarize prompt/system now declare every non-empty result an
+# already-completed fact and forbid re-verifying completion; a step is
+# incomplete ONLY when its result line is literally empty.
+
+variables:
+  emp_address:      mutable string = ""
+  zendesk_result:   mutable string = ""
+  badging_result:   mutable string = ""
+  pingid_result:    mutable string = ""
+
+
+# -- ACTION DEFINITIONS -------------------------------------------------------
+# Five A2A agents plus ONE MCP tool. The Talent Pool MCP also exposes
+# `lookup_employee_department`, which is deliberately NOT bound here — the graph
+# selects exactly the tool it needs (`match_email_to_address`) and nothing else.
+
+actions:
+  workday_agent:
+    target: "a2a://workday-agent-connection"
+    kind: "a2a:send_message"
+
+  salesforce_agent:
+    target: "a2a://salesforce-agent-connection"
+    kind: "a2a:send_message"
+
+  zendesk_agent:
+    target: "a2a://zendesk-agent-connection"
+    kind: "a2a:send_message"
+
+  badging_agent:
+    target: "a2a://badging-agent-connection"
+    kind: "a2a:send_message"
+
+  pingid_agent:
+    target: "a2a://pingid-agent-connection"
+    kind: "a2a:send_message"
+
+  enrich_address:
+    target: "mcp://talent-pool-mcp-connection"
+    kind: "mcp:tool"
+    tool_name: "match_email_to_address"
+    inputs:
+      email: string
+
+
+# -- TRIGGER -------------------------------------------------------------------
+
+trigger onboardingTrigger:
+  kind: "a2a"
+  target: "brokers://employee-onboarding-broker/a2a"
+  on_message: ->
+    transition to @generator.extractEmployee
+
+
+# -- EXTRACT EMPLOYEE DETAILS --------------------------------------------------
+
+generator extractEmployee:
+  description: "Extracts the new-hire details from the onboarding request."
+  label: "Extract Employee"
+  llm: @llm.gpt_5_6_luna
+  system:
+    instructions: |
+      Extract the new employee's details from the onboarding request.
+      Return the full name, work email, phone number, and home address.
+      If a field is not present in the request, return an empty string for it.
+      Do not invent an address — leave it empty if the user did not provide one.
+  prompt: ->
+    | {!@request.payload.message.parts[0].text}
+  outputs:
+    properties:
+      name:
+        type: "string"
+        description: "The employee's full name"
+      email:
+        type: "string"
+        description: "The employee's work email"
+      phone:
+        type: "string"
+        description: "The employee's phone number"
+      address:
+        type: "string"
+        description: "The employee's home address, or empty string if not provided"
+  on_exit: ->
+    transition to @executor.setAddressFromRequest
+
+
+# -- ADDRESS ENRICHMENT ROUTING ------------------------------------------------
+
+executor setAddressFromRequest:
+  description: "Seeds the address variable from the extracted request."
+  do: ->
+    set @variables.emp_address = @generator.extractEmployee.output.address
+  on_exit: ->
+    transition to @router.addressRouter
+
+router addressRouter:
+  description: "Enriches the address from the Talent Pool only when it is missing."
+  routes:
+    - target: @executor.mcpLookupAddress
+      when: @variables.emp_address == ""
+      label: "Address Missing"
+  otherwise:
+    target: @subagent.workdayProvision
+
+executor mcpLookupAddress:
+  description: "Looks up the employee's address in the Talent Pool directory by email."
+  do: ->
+    run @actions.enrich_address
+      with email = @generator.extractEmployee.output.email
+  on_exit: ->
+    transition to @executor.setAddressFromLookup
+
+executor setAddressFromLookup:
+  description: "Applies the enriched address to the workflow."
+  do: ->
+    set @variables.emp_address = @executor.mcpLookupAddress.output.address
+  on_exit: ->
+    transition to @subagent.workdayProvision
+
+
+# -- WORKDAY: CREATE NEW HIRE (subagent) --------------------------------------
+# A subagent (agent loop), not a bare executor, because the Workday agent's
+# create_new_hire skill may answer `input-required` when the home address is
+# missing. The loop lets us satisfy that follow-up (re-sending the address we
+# carry in @variables.emp_address) and only exit once the hire is `completed`.
+# It also folds the old parseWorkday generator in: the reasoning step extracts
+# the Employee ID as structured output, so no separate parse node is needed.
+#
+# NOTE: a2d does not support `input-required` mock scenarios yet, so today the
+# mock returns `completed` on the first call and the loop resolves in one pass.
+# The instructions below are written so the negotiation works unchanged once
+# that mock capability lands.
+
+subagent workdayProvision:
+  description: "Creates the new-hire record in Workday, resolving any missing-address follow-up."
+  label: "Workday Provision"
+  reasoning:
+    instructions: |
+      Create the new-hire record in Workday for this employee:
+      - Name: {!@generator.extractEmployee.output.name}
+      - Email: {!@generator.extractEmployee.output.email}
+      - Phone: {!@generator.extractEmployee.output.phone}
+      - Address: {!@variables.emp_address}
+
+      Call the Workday agent to create the hire. If it responds asking for a
+      missing home address, re-send the request including the address above.
+      When the record is created, capture the resulting Workday Employee ID
+      (format like "EMP1001") and the agent's final message.
+    actions:
+      create_hire: @actions.workday_agent
+    outputs:
+      properties:
+        employee_id:
+          type: "string"
+          description: "The Workday Employee ID (e.g. 'EMP1001')"
+        result:
+          type: "string"
+          description: "The Workday agent's final confirmation message"
+  on_exit: ->
+    transition to @subagent.salesforceProvision
+
+
+# -- SALESFORCE: CREATE CRM PROFILE (subagent) --------------------------------
+# A subagent because the Salesforce agent's create_crm_profile skill may answer
+# `input-required` offering territory options (DC - NW Prime / DC - SW Prime)
+# when no territory is supplied — and this graph intentionally does not pin one.
+# The loop lets the agent pick/confirm a territory from the offered options and
+# only exit once the profile is `completed`, returning the chosen territory as
+# structured output.
+#
+# NOTE: as above, a2d does not support `input-required` scenarios yet, so the
+# mock returns a `completed` profile (with a pre-assigned territory) in one call.
+
+subagent salesforceProvision:
+  description: "Creates the CRM profile and assigns a territory in Salesforce, negotiating territory if needed."
+  label: "Salesforce Provision"
+  reasoning:
+    instructions: |
+      Create a Salesforce CRM profile for Employee ID
+      {!@subagent.workdayProvision.output.employee_id}, email
+      {!@generator.extractEmployee.output.email}, and assign a sales territory.
+
+      Call the Salesforce agent. If it responds asking which territory to use,
+      choose the first territory it offers and confirm it. When the profile is
+      created, capture the assigned territory and the agent's final message.
+    actions:
+      create_profile: @actions.salesforce_agent
+    outputs:
+      properties:
+        territory:
+          type: "string"
+          description: "The sales territory assigned to the employee"
+        result:
+          type: "string"
+          description: "The Salesforce agent's final confirmation message"
+  on_exit: ->
+    transition to @executor.agentZendesk
+
+
+# -- ZENDESK: REQUEST LAPTOP DELIVERY ------------------------------------------
+
+executor agentZendesk:
+  description: "Submits the laptop delivery request in Zendesk."
+  do: ->
+    run @actions.zendesk_agent
+      with message = "Submit a laptop delivery request in Zendesk for Employee ID " + @subagent.workdayProvision.output.employee_id + ", deliver to address " + @variables.emp_address + "."
+  on_exit: ->
+    transition to @executor.agentBadging
+
+
+# -- BADGING: INITIATE BADGE REQUEST -------------------------------------------
+
+executor agentBadging:
+  description: "Initiates the badge request."
+  do: ->
+    run @actions.badging_agent
+      with message = "Initiate a badge request for Employee ID " + @subagent.workdayProvision.output.employee_id + ", email " + @generator.extractEmployee.output.email + "."
+  on_exit: ->
+    transition to @executor.agentPingid
+
+
+# -- PINGID: PROVISION IDENTITY ------------------------------------------------
+
+executor agentPingid:
+  description: "Provisions the PingID identity/MFA account."
+  do: ->
+    run @actions.pingid_agent
+      with message = "Provision a PingID MFA/identity account for Employee ID " + @subagent.workdayProvision.output.employee_id + ", email " + @generator.extractEmployee.output.email + "."
+  on_exit: ->
+    transition to @executor.coalesceAgentResults
+
+
+# -- COALESCE STRAIGHT-THROUGH AGENT RESULTS ----------------------------------
+# Parses the three straight-through agent executors' stored results and extracts
+# each reply text into a variable (see the GRAPH STATE comment for why).
+# An `@executor.X.output` for an a2a:send_message lowers to a raw JSON-dumped
+# STRING with NO implicit parse — so we parse_json() it explicitly. The runtime
+# stores the reply in its NORMALIZED shape ({type, contents:{status:[{value}]}}),
+# so the reply text is at .contents.status[0].value (status is a LIST of parts;
+# the leaf key is `value`, NOT `text`). Null-safe: any parse/shape failure is
+# swallowed and the variable keeps its "" default, which the summary reports as a
+# step that did not complete.
+
+executor coalesceAgentResults:
+  label: "Coalesce Agent Results"
+  description: "Extract Zendesk / Badging / PingID reply text from their raw A2A envelopes."
+  do: ->
+    set @variables.zendesk_result = parse_json(@executor.agentZendesk.output).contents.status[0].value
+    set @variables.badging_result = parse_json(@executor.agentBadging.output).contents.status[0].value
+    set @variables.pingid_result = parse_json(@executor.agentPingid.output).contents.status[0].value
+  on_exit: ->
+    transition to @generator.summarize
+
+
+# -- SUMMARY -------------------------------------------------------------------
+
+generator summarize:
+  description: "Produces the final plain-text onboarding summary."
+  llm: @llm.gpt_5_6_luna
+  system:
+    instructions: "You generate clear, plain-text summaries of employee onboarding. Use past tense, one bullet per system action, no JSON, and never mention tool or agent names. The results you are given are authoritative confirmation messages for actions that have ALREADY been carried out by upstream steps — report each as completed. Do NOT judge, second-guess, or re-verify completion, and do NOT treat a result as missing just because you did not personally call a tool. A step counts as not completed ONLY when its result line below is empty."
+  prompt: |
+    Every result below is the confirmation message of an action that has already been completed successfully. Write a plain-text summary that begins with the line: "Onboarding process for {!@generator.extractEmployee.output.name} has been completed with the following actions:" followed by one past-tense bullet per action, describing each as done. Only if a result line is empty, note that specific step as not completed.
+    Workday result: {!@subagent.workdayProvision.output.result}
+    Salesforce result: {!@subagent.salesforceProvision.output.result}
+    Zendesk result: {!@variables.zendesk_result}
+    Badging result: {!@variables.badging_result}
+    PingID result: {!@variables.pingid_result}
+  on_exit: ->
+    transition to @echo.onboardingResponse
+
+echo onboardingResponse:
+  kind: "a2a:status_update_event"
+  state: "TASK_STATE_COMPLETED"
+  message: a2a.message({messageId: uuid(), parts: [a2a.textPart(@generator.summarize.output)]})

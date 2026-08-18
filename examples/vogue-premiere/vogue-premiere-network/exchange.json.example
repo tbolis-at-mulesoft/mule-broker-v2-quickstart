@@ -1,0 +1,68 @@
+{
+  "main": "agent-network.yaml",
+  "name": "Vogue Premiere Agent Network",
+  "classifier": "agentic-network",
+  "organizationId": "0fad75bb-e242-46ea-b4d8-b1536fe84263",
+  "descriptorVersion": "1.0.0",
+  "description": "A luxury retail concierge that routes a customer message to specialist agents, checks stock and loyalty perks, and places orders behind a hard confirmation gate.",
+  "tags": [
+    "concierge",
+    "vogue-premiere"
+  ],
+  "metadata": {
+    "variables": {
+      "stylingAgent": {
+        "url": {
+          "description": "Styling A2A agent URL",
+          "default": "",
+          "secret": false
+        }
+      },
+      "availabilityAgent": {
+        "url": {
+          "description": "Availability A2A agent URL",
+          "default": "",
+          "secret": false
+        }
+      },
+      "loyaltyAgent": {
+        "url": {
+          "description": "Loyalty A2A agent URL",
+          "default": "",
+          "secret": false
+        }
+      },
+      "customerMcp": {
+        "url": {
+          "description": "Customer MCP server URL",
+          "default": "",
+          "secret": false
+        }
+      },
+      "orderMcp": {
+        "url": {
+          "description": "Order MCP server URL",
+          "default": "",
+          "secret": false
+        }
+      },
+      "azureOpenAI": {
+        "url": {
+          "description": "Azure OpenAI URL",
+          "default": "",
+          "secret": false
+        },
+        "apiKey": {
+          "description": "Azure OpenAI API Key",
+          "default": "",
+          "secret": true
+        }
+      }
+    }
+  },
+  "apiVersion": "v1",
+  "dependencies": [],
+  "groupId": "0fad75bb-e242-46ea-b4d8-b1536fe84263",
+  "assetId": "vogue-premiere-network",
+  "version": "1.0.0"
+}

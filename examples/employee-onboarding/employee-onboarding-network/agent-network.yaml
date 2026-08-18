@@ -1,0 +1,276 @@
+agentNetwork: 2.0.0
+info:
+  label: Employee Onboarding Agent Network
+  version: v1
+registry:
+  agents:
+    workday-agent:
+      info:
+        label: Workday Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              name: Employee Onboarding Workday Agent
+              description: Manages employee data in Workday. Creates new-hire records from name, email, phone, and address, returning a Workday Employee ID.
+              url: ${workdayAgent.url}
+              protocolVersion: "0.3.0"
+              version: 1.0.0
+              capabilities:
+                streaming: false
+                pushNotifications: false
+                stateTransitionHistory: false
+              defaultInputModes:
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: create_new_hire
+                  name: create_new_hire
+                  description: Creates a new employee record in Workday with name, email, phone, and address. Returns the created record with a Workday Employee ID.
+                  tags:
+                    - workday
+                    - new-hire
+                    - hr
+                  examples:
+                    - "Create a new hire in Workday. Name: Alex Smith. Email: alex.smith@example.com. Phone: 555-0100. Address: 123 Oak Street, San Francisco, CA 94102."
+                  inputModes:
+                    - text/plain
+                  outputModes:
+                    - text/plain
+    salesforce-agent:
+      info:
+        label: Salesforce Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              name: Employee Onboarding Salesforce Agent
+              description: Handles CRM profile creation and territory assignment in Salesforce for new employees.
+              url: ${salesforceAgent.url}
+              protocolVersion: "0.3.0"
+              version: 1.0.0
+              capabilities:
+                streaming: false
+                pushNotifications: false
+                stateTransitionHistory: false
+              defaultInputModes:
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: create_crm_profile
+                  name: create_crm_profile
+                  description: Creates a CRM profile in Salesforce and assigns a sales territory to the employee.
+                  tags:
+                    - salesforce
+                    - crm
+                    - territory-assignment
+                  examples:
+                    - "Create a Salesforce CRM profile and assign a territory for Employee ID EMP1001, email alex.smith@example.com."
+                  inputModes:
+                    - text/plain
+                  outputModes:
+                    - text/plain
+    zendesk-agent:
+      info:
+        label: Zendesk Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              name: Employee Onboarding Zendesk Agent
+              description: Automates IT service request handling in Zendesk, including laptop delivery for new hires.
+              url: ${zendeskAgent.url}
+              protocolVersion: "0.3.0"
+              version: 1.0.0
+              capabilities:
+                streaming: false
+                pushNotifications: false
+                stateTransitionHistory: false
+              defaultInputModes:
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: request_laptop_delivery
+                  name: request_laptop_delivery
+                  description: Submits a laptop delivery service request in Zendesk for a new hire.
+                  tags:
+                    - zendesk
+                    - laptop-delivery
+                    - it-service
+                  examples:
+                    - "Submit a laptop delivery request in Zendesk for Employee ID EMP1001, deliver to address 123 Oak Street, San Francisco, CA 94102."
+                  inputModes:
+                    - text/plain
+                  outputModes:
+                    - text/plain
+    badging-agent:
+      info:
+        label: Badging Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              name: Employee Onboarding Badging Agent
+              description: Initiates and tracks the employee badging process, including outreach for badge photo collection.
+              url: ${badgingAgent.url}
+              protocolVersion: "0.3.0"
+              version: 1.0.0
+              capabilities:
+                streaming: false
+                pushNotifications: false
+                stateTransitionHistory: false
+              defaultInputModes:
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: initiate_badge_request
+                  name: initiate_badge_request
+                  description: Initiates a badge request for a new employee, returning a badge request ID with status photo_requested.
+                  tags:
+                    - onboarding
+                    - badging
+                    - identity
+                  examples:
+                    - "Initiate a badge request for Employee ID EMP1001, email alex.smith@example.com."
+                  inputModes:
+                    - text/plain
+                  outputModes:
+                    - text/plain
+    pingid-agent:
+      info:
+        label: PingID Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              name: Employee Onboarding PingID Agent
+              description: Provisions PingID MFA/identity accounts for new employees.
+              url: ${pingidAgent.url}
+              protocolVersion: "0.3.0"
+              version: 1.0.0
+              capabilities:
+                streaming: false
+                pushNotifications: false
+                stateTransitionHistory: false
+              defaultInputModes:
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: provision_pingid
+                  name: provision_pingid
+                  description: Provisions a PingID MFA/identity account for a new employee.
+                  tags:
+                    - pingid
+                    - mfa
+                    - identity
+                  examples:
+                    - "Provision a PingID MFA/identity account for Employee ID EMP1001, email alex.smith@example.com."
+                  inputModes:
+                    - text/plain
+                  outputModes:
+                    - text/plain
+  mcps:
+    talent-pool-mcp:
+      info:
+        label: Talent Pool MCP
+      metadata:
+        transport:
+          kind: streamableHttp
+  llms:
+    employee-onboarding-azure-openai:
+      info:
+        label: Employee Onboarding LLM
+        description: Azure OpenAI LLM Provider
+      metadata:
+        platform: AzureOpenai
+context:
+  connections:
+    workday-agent-connection:
+      kind: a2a
+      ref:
+        name: workday-agent
+      url: ${workdayAgent.url}
+    salesforce-agent-connection:
+      kind: a2a
+      ref:
+        name: salesforce-agent
+      url: ${salesforceAgent.url}
+    zendesk-agent-connection:
+      kind: a2a
+      ref:
+        name: zendesk-agent
+      url: ${zendeskAgent.url}
+    badging-agent-connection:
+      kind: a2a
+      ref:
+        name: badging-agent
+      url: ${badgingAgent.url}
+    pingid-agent-connection:
+      kind: a2a
+      ref:
+        name: pingid-agent
+      url: ${pingidAgent.url}
+    talent-pool-mcp-connection:
+      kind: mcp
+      ref:
+        name: talent-pool-mcp
+      url: ${talentPoolMcp.url}
+    employee-onboarding-azure-openai-connection:
+      kind: llm
+      ref:
+        name: employee-onboarding-azure-openai
+      url: ${azureOpenAI.url}
+      authentication:
+        kind: apiKey
+        apiKey: ${azureOpenAI.apiKey}
+brokers:
+  employee-onboarding-broker:
+    kind: AgentScript
+    implementation: ./brokers/employee-onboarding.agent
+    interfaces:
+      a2a:
+        card:
+          name: Employee Onboarding Broker
+          description: Orchestrates new-employee onboarding across Workday, Salesforce, Zendesk, Badging, and PingID, enriching missing addresses from the Talent Pool directory.
+          version: 1.0.0
+          supportedInterfaces:
+            - url: http://localhost:8001/employee-onboarding-broker/
+              protocolVersion: "1.0"
+              protocolBinding: HTTP+JSON
+            - url: http://localhost:8001/employee-onboarding-broker/
+              protocolVersion: "1.0"
+              protocolBinding: JSONRPC
+          capabilities:
+            streaming: false
+            pushNotifications: true
+          defaultInputModes:
+            - text/plain
+          defaultOutputModes:
+            - text/plain
+          skills:
+            - id: onboard-employee
+              name: Onboard Employee
+              description: Onboards a new employee end-to-end across HR, CRM, IT service, badging, and identity systems.
+              tags:
+                - onboarding
+                - hr
+                - it
+              examples:
+                - "Onboard a new sales employee. Their name is 'Alex Smith', email is 'alex.smith@example.com', and phone number is '555-123-4567'."
+                - "Onboard a new hire: Jordan Lee, jordan.lee@example.com, phone 555-987-6543, address 456 Pine Avenue, Austin, TX 78701."
+                - "Please onboard Taylor Nguyen (taylor.nguyen@example.com, 555-222-3333) — no address on file yet."
