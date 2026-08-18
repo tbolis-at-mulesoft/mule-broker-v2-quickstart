@@ -1,18 +1,19 @@
 # Example Agent Networks
 
 Ready-to-run agent network examples for the quickstart. Each example is a
-self-contained folder with a `README.md` and a `*-network/` project:
+self-contained `*-network/` project with its own `README.md`:
 
 | Example | What it demonstrates |
 |---------|----------------------|
-| [it-help-investigation](it-help-investigation/) | Severity triage with deterministic escalation vs. AI-driven cross-platform investigation |
-| [vogue-premiere](vogue-premiere/) | Intent routing to specialist agents with a hard confirmation gate before placing orders |
-| [employee-onboarding](employee-onboarding/) | Multi-agent onboarding across HR, IT, and identity systems |
+| [it-help-investigation-network](it-help-investigation-network/) | Severity triage with deterministic escalation vs. AI-driven cross-platform investigation |
+| [vogue-premiere-network](vogue-premiere-network/) | Intent routing to specialist agents with a hard confirmation gate before placing orders |
+| [employee-onboarding-network](employee-onboarding-network/) | Multi-agent onboarding across HR, IT, and identity systems |
 
 Each `*-network/` project contains:
 
 ```
 <name>-network/
+  README.md                 # what the network does and how it was built
   agent-network.yaml        # the network topology
   brokers/<name>.agent      # the broker (AgentScript)
   exchange.json.example     # publishing descriptor + variable placeholders
@@ -32,7 +33,7 @@ A²D gives you.
 ### 1. Import the design spec into A²D
 
 Each example ships an A²D design spec under its `*-network/a2d-specs/` folder
-(e.g. `vogue-premiere/vogue-premiere-network/a2d-specs/vogue-premiere-design-spec.json`).
+(e.g. `vogue-premiere-network/a2d-specs/vogue-premiere-design-spec.json`).
 
 In A²D, **import** that spec. It recreates every agent card and MCP server the
 network depends on as mocked resources — no backend implementation required.
@@ -51,7 +52,7 @@ fill in each variable with the corresponding A²D mock URL (plus your LLM
 provider settings):
 
 ```bash
-cd examples/vogue-premiere/vogue-premiere-network
+cd examples/vogue-premiere-network
 cp exchange.json.example exchange.json
 # then edit exchange.json — set each *.url to the A²D mock URL
 ```
