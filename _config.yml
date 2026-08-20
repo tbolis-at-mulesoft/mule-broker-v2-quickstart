@@ -23,9 +23,11 @@ relative_links:
   enabled: true
   collections: false
 
+# The theme expects each page to carry its own H1, so take the nav title from
+# that heading without removing it from the page.
 titles_from_headings:
   enabled: true
-  strip_title: true
+  strip_title: false
 
 # nav_order lives here rather than in per-page front matter so the markdown
 # files stay clean when read on github.com.
