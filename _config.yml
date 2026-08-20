@@ -123,6 +123,11 @@ search:
   heading_level: 2
   previews: 2
 
+# Renders the ```mermaid blocks in the example networks, which github.com
+# renders on its own but the theme only loads a library for when pinned here.
+mermaid:
+  version: 11.17.0
+
 heading_anchors: true
 back_to_top: true
 back_to_top_text: Back to top
