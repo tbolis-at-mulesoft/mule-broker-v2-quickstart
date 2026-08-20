@@ -27,3 +27,7 @@ portable-vscode
 
 # Local project artifacts
 /it-help-investigation-agent-network
+
+# Claude Code
+CLAUDE.md
+.claude/
