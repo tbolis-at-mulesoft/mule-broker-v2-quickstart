@@ -27,11 +27,73 @@ titles_from_headings:
   enabled: true
   strip_title: true
 
+# nav_order lives here rather than in per-page front matter so the markdown
+# files stay clean when read on github.com.
 defaults:
   - scope:
       path: ""
     values:
       layout: default
+  - scope:
+      path: README.md
+    values:
+      nav_order: 0
+  - scope:
+      path: docs/00-prerequisites.md
+    values:
+      nav_order: 1
+  - scope:
+      path: docs/01-account-setup.md
+    values:
+      nav_order: 2
+  - scope:
+      path: docs/02-environment-setup.md
+    values:
+      nav_order: 3
+  - scope:
+      path: docs/03-link-salesforce.md
+    values:
+      nav_order: 4
+  - scope:
+      path: docs/04-mock-agents-and-mcps.md
+    values:
+      nav_order: 5
+  - scope:
+      path: docs/05-set-up-agent-network-gateways.md
+    values:
+      nav_order: 6
+  - scope:
+      path: docs/06-build-agent-network.md
+    values:
+      nav_order: 7
+  - scope:
+      path: docs/07-publish-agent-network.md
+    values:
+      nav_order: 8
+  - scope:
+      path: docs/08-deploy-agent-network.md
+    values:
+      nav_order: 9
+  - scope:
+      path: docs/09-test-agent-network-broker.md
+    values:
+      nav_order: 10
+  - scope:
+      path: examples/README.md
+    values:
+      nav_order: 11
+  - scope:
+      path: examples/employee-onboarding-network/README.md
+    values:
+      nav_order: 12
+  - scope:
+      path: examples/it-help-investigation-network/README.md
+    values:
+      nav_order: 13
+  - scope:
+      path: examples/vogue-premiere-network/README.md
+    values:
+      nav_order: 14
 
 search_enabled: true
 search:
