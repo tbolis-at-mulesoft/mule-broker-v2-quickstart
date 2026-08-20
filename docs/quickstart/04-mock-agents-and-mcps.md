@@ -52,20 +52,20 @@ cards, REST APIs) as JSON/ZIP, or import them into another instance.
 ## 5. Import the example agent and MCP specs
 
 This repo includes example specs to use as mocks for the agent network, under
-[`specs/`](specs/):
+`specs/`:
 
-- [`agent-cards/`](specs/agent-cards/) — bare Agent Card specs:
+- `agent-cards/` — bare Agent Card specs:
   - [`license-procurement-agent.json`](specs/agent-cards/license-procurement-agent.json) —
     checks software license availability and provisions licenses for
     employees.
   - [`help-center-agent.json`](specs/agent-cards/help-center-agent.json) —
     searches the IT knowledge base for answers to common issues.
-- [`mcp-metadata/`](specs/mcp-metadata/) — MCP server specs:
+- `mcp-metadata/` — MCP server specs:
   - [`escalation-mcp.json`](specs/mcp-metadata/escalation-mcp.json) —
     escalates a support ticket to the on-call team.
   - [`jira-mcp.json`](specs/mcp-metadata/jira-mcp.json) — updates a Jira
     ticket's status and adds a resolution comment.
-- [`a2d-specs/`](specs/a2d-specs/) — full A2D design spec exports, including
+- `a2d-specs/` — full A2D design spec exports, including
   each asset's mock scenarios:
   - [`license-procurement-agent.json`](specs/a2d-specs/license-procurement-agent.json) —
     Agent Card; mock scenarios for Figma, Tableau, and GitHub Enterprise
