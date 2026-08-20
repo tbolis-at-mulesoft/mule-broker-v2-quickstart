@@ -78,7 +78,7 @@ This repo includes example specs to use as mocks for the agent network, under
     server; mock scenario for a successful ticket escalation.
 
 In the **Upload design spec** panel (same **Import / Export** tab), drag and
-drop each JSON file from [`a2d-specs/`](specs/a2d-specs/), or click
+drop each JSON file from `specs/a2d-specs/`, or click
 **Choose file**, then select which assets to import.
 
 After uploading a spec, an **"Import design spec — select assets"** dialog
