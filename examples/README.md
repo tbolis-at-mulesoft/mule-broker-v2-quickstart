@@ -81,9 +81,11 @@ The network YAML references these variables by name (for example
 
 With `exchange.json` populated, follow the main quickstart guide to build,
 publish, deploy, and test the network. See the repository
-[README](../README.md) and the [docs/](../docs/) walkthrough — in particular
-[04-mock-agents-and-mcps.md](../docs/04-mock-agents-and-mcps.md) for the A²D
-step and [06-build-agent-network.md](../docs/06-build-agent-network.md)
+[README](../README.md) and the
+[Agent Network Quickstart](../docs/quickstart/README.md) — in particular
+[04-mock-agents-and-mcps.md](../docs/quickstart/04-mock-agents-and-mcps.md) for
+the A²D step and
+[06-build-agent-network.md](../docs/quickstart/06-build-agent-network.md)
 onward for build and deploy.
 
 ---

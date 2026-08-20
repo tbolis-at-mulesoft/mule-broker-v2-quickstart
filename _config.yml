@@ -29,8 +29,10 @@ titles_from_headings:
   enabled: true
   strip_title: false
 
-# nav_order lives here rather than in per-page front matter so the markdown
-# files stay clean when read on github.com.
+# Nav structure lives here rather than in per-page front matter so the
+# markdown files stay clean when read on github.com. A new guide needs a
+# docs/<guide>/README.md entry with has_children, plus one entry per page
+# naming that README's heading as its parent.
 defaults:
   - scope:
       path: ""
@@ -39,63 +41,82 @@ defaults:
   - scope:
       path: README.md
     values:
-      nav_order: 0
+      nav_exclude: true
   - scope:
-      path: docs/00-prerequisites.md
+      path: docs/quickstart/README.md
     values:
       nav_order: 1
+      has_children: true
   - scope:
-      path: docs/01-account-setup.md
+      path: docs/quickstart/00-prerequisites.md
     values:
+      parent: Agent Network Quickstart
+      nav_order: 1
+  - scope:
+      path: docs/quickstart/01-account-setup.md
+    values:
+      parent: Agent Network Quickstart
       nav_order: 2
   - scope:
-      path: docs/02-environment-setup.md
+      path: docs/quickstart/02-environment-setup.md
     values:
+      parent: Agent Network Quickstart
       nav_order: 3
   - scope:
-      path: docs/03-link-salesforce.md
+      path: docs/quickstart/03-link-salesforce.md
     values:
+      parent: Agent Network Quickstart
       nav_order: 4
   - scope:
-      path: docs/04-mock-agents-and-mcps.md
+      path: docs/quickstart/04-mock-agents-and-mcps.md
     values:
+      parent: Agent Network Quickstart
       nav_order: 5
   - scope:
-      path: docs/05-set-up-agent-network-gateways.md
+      path: docs/quickstart/05-set-up-agent-network-gateways.md
     values:
+      parent: Agent Network Quickstart
       nav_order: 6
   - scope:
-      path: docs/06-build-agent-network.md
+      path: docs/quickstart/06-build-agent-network.md
     values:
+      parent: Agent Network Quickstart
       nav_order: 7
   - scope:
-      path: docs/07-publish-agent-network.md
+      path: docs/quickstart/07-publish-agent-network.md
     values:
+      parent: Agent Network Quickstart
       nav_order: 8
   - scope:
-      path: docs/08-deploy-agent-network.md
+      path: docs/quickstart/08-deploy-agent-network.md
     values:
+      parent: Agent Network Quickstart
       nav_order: 9
   - scope:
-      path: docs/09-test-agent-network-broker.md
+      path: docs/quickstart/09-test-agent-network-broker.md
     values:
+      parent: Agent Network Quickstart
       nav_order: 10
   - scope:
       path: examples/README.md
     values:
-      nav_order: 11
-  - scope:
-      path: examples/employee-onboarding-network/README.md
-    values:
-      nav_order: 12
+      nav_order: 2
+      has_children: true
   - scope:
       path: examples/it-help-investigation-network/README.md
     values:
-      nav_order: 13
+      parent: Example Agent Networks
+      nav_order: 1
   - scope:
       path: examples/vogue-premiere-network/README.md
     values:
-      nav_order: 14
+      parent: Example Agent Networks
+      nav_order: 2
+  - scope:
+      path: examples/employee-onboarding-network/README.md
+    values:
+      parent: Example Agent Networks
+      nav_order: 3
 
 search_enabled: true
 search:
