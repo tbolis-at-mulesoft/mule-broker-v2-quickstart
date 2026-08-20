@@ -1,0 +1,55 @@
+title: MuleSoft Agent Network Quickstart
+description: >-
+  A step-by-step walkthrough for deploying a first example agent network on
+  MuleSoft's Anypoint Platform.
+url: https://tbolis-at-mulesoft.github.io
+baseurl: /mule-broker-v2-quickstart
+
+remote_theme: just-the-docs/just-the-docs@v0.12.0
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-include-cache
+  - jekyll-seo-tag
+  - jekyll-readme-index
+  - jekyll-optional-front-matter
+  - jekyll-relative-links
+  - jekyll-titles-from-headings
+
+optional_front_matter:
+  remove_originals: true
+
+relative_links:
+  enabled: true
+  collections: false
+
+titles_from_headings:
+  enabled: true
+  strip_title: true
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 2
+
+heading_anchors: true
+back_to_top: true
+back_to_top_text: Back to top
+
+aux_links:
+  GitHub repository:
+    - https://github.com/tbolis-at-mulesoft/mule-broker-v2-quickstart
+aux_links_new_tab: true
+
+exclude:
+  - .cursor/
+  - .envrc
+  - .vscode/
+  - it-help-investigation-agent-network/
+  - portable-vscode
