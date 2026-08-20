@@ -51,8 +51,9 @@ cards, REST APIs) as JSON/ZIP, or import them into another instance.
 
 ## 5. Import the example agent and MCP specs
 
-This repo includes example specs to use as mocks for the agent network, under
-`specs/`:
+This repo includes example specs to use as mocks for the agent network. They
+live alongside this guide, under `docs/quickstart/specs/` — download the JSON
+files linked below (on the Pages site, right-click → **Save link as…**):
 
 - `agent-cards/` — bare Agent Card specs:
   - [`license-procurement-agent.json`](specs/agent-cards/license-procurement-agent.json) —
