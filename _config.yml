@@ -98,9 +98,49 @@ defaults:
       parent: Agent Network Quickstart
       nav_order: 10
   - scope:
-      path: examples/README.md
+      path: docs/setup-obo-with-agentforce/README.md
     values:
       nav_order: 2
+      has_children: true
+  - scope:
+      path: docs/setup-obo-with-agentforce/00-overview-and-architecture.md
+    values:
+      parent: Setup On Behalf Of (OBO) with Agentforce
+      nav_order: 1
+  - scope:
+      path: docs/setup-obo-with-agentforce/01-agentforce-agent.md
+    values:
+      parent: Setup On Behalf Of (OBO) with Agentforce
+      nav_order: 2
+  - scope:
+      path: docs/setup-obo-with-agentforce/02-keycloak-setup.md
+    values:
+      parent: Setup On Behalf Of (OBO) with Agentforce
+      nav_order: 3
+  - scope:
+      path: docs/setup-obo-with-agentforce/03-salesforce-token-exchange.md
+    values:
+      parent: Setup On Behalf Of (OBO) with Agentforce
+      nav_order: 4
+  - scope:
+      path: docs/setup-obo-with-agentforce/04-flex-gateway-obo-policy.md
+    values:
+      parent: Setup On Behalf Of (OBO) with Agentforce
+      nav_order: 5
+  - scope:
+      path: docs/setup-obo-with-agentforce/05-wire-v2-broker.md
+    values:
+      parent: Setup On Behalf Of (OBO) with Agentforce
+      nav_order: 6
+  - scope:
+      path: docs/setup-obo-with-agentforce/06-validate.md
+    values:
+      parent: Setup On Behalf Of (OBO) with Agentforce
+      nav_order: 7
+  - scope:
+      path: examples/README.md
+    values:
+      nav_order: 3
       has_children: true
   - scope:
       path: examples/it-help-investigation-network/README.md

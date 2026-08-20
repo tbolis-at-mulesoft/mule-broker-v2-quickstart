@@ -11,6 +11,7 @@ Read it as a website at
 | Guide | What it covers |
 |-------|----------------|
 | [Agent Network Quickstart](docs/quickstart/README.md) | Ten phases, from installing VS Code to calling a broker deployed on CloudHub 2.0 |
+| [Setup On Behalf Of (OBO) with Agentforce](docs/setup-obo-with-agentforce/README.md) | Wire a v2 broker to call an Agentforce agent as the end user, via Flex Gateway OBO token exchange |
 
 Each guide lives in its own folder under `docs/`, with its screenshots and
 specs alongside it.
