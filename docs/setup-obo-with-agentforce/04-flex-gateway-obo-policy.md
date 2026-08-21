@@ -1,5 +1,7 @@
 # Phase 4 — Flex Gateway OBO Policy
 
+> **Work in progress:** This document is actively being updated and may change.
+
 > _Draft outline — section content to be filled in._
 
 Put a Mule Flex Gateway in front of the Agentforce agent and apply the

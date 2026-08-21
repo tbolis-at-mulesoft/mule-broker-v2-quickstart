@@ -1,5 +1,7 @@
 # MuleSoft Agent Network Quickstart
 
+> **Work in progress:** This document is actively being updated and may change.
+
 A step-by-step walkthrough for deploying a first example agent network on
 MuleSoft's Anypoint Platform.
 

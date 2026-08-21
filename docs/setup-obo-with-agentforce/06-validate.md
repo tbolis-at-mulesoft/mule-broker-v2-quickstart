@@ -1,5 +1,7 @@
 # Phase 6 — Validate End-to-End
 
+> **Work in progress:** This document is actively being updated and may change.
+
 > _Draft outline — section content to be filled in._
 
 Confirm the full OBO path: a user signs in, the v2 broker forwards their token,

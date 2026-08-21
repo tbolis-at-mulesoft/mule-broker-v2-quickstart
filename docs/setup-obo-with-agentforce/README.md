@@ -1,5 +1,7 @@
 # Setup On Behalf Of (OBO) with Agentforce
 
+> **Work in progress:** This document is actively being updated and may change.
+
 A step-by-step walkthrough for wiring a **v2 agent network broker** to call an
 **Agentforce agent on behalf of the end user** — so the Agentforce session runs
 as the human who started the conversation, not as a shared service account.

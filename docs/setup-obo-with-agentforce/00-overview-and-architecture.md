@@ -1,5 +1,7 @@
 # Phase 0 — Overview & Architecture
 
+> **Work in progress:** This document is actively being updated and may change.
+
 > _Draft outline — section content to be filled in._
 
 How On-Behalf-Of identity flows from the end user, through the v2 agent network

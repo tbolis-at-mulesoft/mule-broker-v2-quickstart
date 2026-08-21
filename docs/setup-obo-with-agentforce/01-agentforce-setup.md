@@ -1,12 +1,16 @@
 # Phase 1 — Agentforce Setup
 
+> **Work in progress:** This document is actively being updated and may change.
+
 Enable Salesforce and Agentforce prerequisites, configure the connected app used
 by the broker path, create the target agent, and validate API access before
 moving to token exchange.
 
-> **Prerequisite — a trial org with Agentforce enabled.** MuleSoft Vibes runs
-> against a Salesforce org (not your Anypoint account). If needed, provision a
-> free Agentforce trial org first:
+> **Prerequisite — use a Salesforce org where Connected Apps can be enabled.**
+> MuleSoft Vibes runs against a Salesforce org (not your Anypoint account). The
+> free Agentforce trial org from Quickstart Phase 1 is useful for exploration,
+> but cannot be used for this OBO guide when Connected Apps are locked/disabled.
+> Use a sandbox or another org where you can create and manage connected apps:
 > [Quickstart Phase 1 — Account Setup §4](../quickstart/01-account-setup.md#4-agentforce-360-platform-free-trial-for-mulesoft-vibes).
 
 ## Contents
@@ -30,8 +34,7 @@ moving to token exchange.
   - [3.2 Verify the Einstein Models API](#32-verify-the-einstein-models-api)
   - [3.3 Common Failures](#33-common-failures)
 - [4. Create the Agentforce Agent](#4-create-the-agentforce-agent)
-  - [4.1 Recommended — deploy with AgentScript](#41-recommended--deploy-with-agentscript)
-  - [4.2 Legacy — the Agent Builder wizard](#42-legacy--the-agent-builder-wizard)
+  - [4.1 Deploy with AgentScript](#41-deploy-with-agentscript)
 - [5. Add a "Get Current User" Action (Optional)](#5-add-a-get-current-user-action-optional)
 - [6. Activate and Test the Agent](#6-activate-and-test-the-agent)
 - [7. Test the Agent API](#7-test-the-agent-api)
@@ -87,7 +90,7 @@ In Salesforce **Setup**, navigate to:
 **Einstein -> Einstein Generative AI -> Agentforce Studio -> Agentforce Agents**
 and toggle **Agentforce** to **On**.
 
-![Agentforce Agents toggle enabled](images/agentforce-agents-toggle.png)
+![Agentforce Agents toggle enabled](images/02-agentforce-agents-toggle.png)
 
 ## 2. Connected App Setup
 
@@ -96,7 +99,13 @@ and toggle **Agentforce** to **On**.
 In Salesforce **Setup**, open **Apps -> External Client Apps -> Settings**, then
 activate Connected Apps if your org requires it.
 
-![External Client App Settings](images/external-client-app-settings.png)
+![External Client App Settings](images/03-external-client-app-settings.png)
+
+If **New Connected App** is disabled and Salesforce shows that connected apps
+cannot be enabled for the org, stop here and switch to a different org. This is
+common in the free Agentforce trial org used in quickstart onboarding.
+
+![Connected Apps disabled in trial org](images/35-connected-apps-disabled-in-trial-org.png)
 
 ### 2.2 Create a New Connected App
 
@@ -113,7 +122,7 @@ Set:
 
 Enable OAuth.
 
-![Connected App basic OAuth settings](images/connected-app-basic-oauth.png)
+![Connected App basic OAuth settings](images/04-connected-app-basic-oauth.png)
 
 ### 2.4 OAuth Scopes and Settings
 
@@ -129,14 +138,14 @@ Enable:
 - **Enable Client Credentials Flow**
 - **Issue JSON Web Token (JWT)-based access tokens for named users**
 
-![Connected App OAuth scopes and settings](images/connected-app-oauth-scopes.png)
+![Connected App OAuth scopes and settings](images/05-connected-app-oauth-scopes.png)
 
 ### 2.5 Manage the Connected App
 
 Wait a few minutes after save, then go to **Setup -> Apps -> App Manager**,
 find `agentforce_connected_app`, and choose **Manage**.
 
-![App Manager manage connected app](images/app-manager-manage-connected-app.png)
+![App Manager manage connected app](images/06-app-manager-manage-connected-app.png)
 
 ### 2.6 Edit Policies
 
@@ -146,17 +155,17 @@ In **Edit Policies**, set:
 - **Run As (User)** under Client Credentials Flow
 - **Access Token Timeout** as desired (example: 30 minutes)
 
-![Connected App detail edit policies](images/connected-app-detail-edit-policies.png)
+![Connected App detail edit policies](images/07-connected-app-detail-edit-policies.png)
 
-![OAuth policies IP relaxation](images/connected-app-edit-policies-oauth-policies.png)
+![OAuth policies IP relaxation](images/08-connected-app-edit-policies-oauth-policies.png)
 
-![Client Credentials Run As user](images/connected-app-edit-policies-run-as.png)
+![Client Credentials Run As user](images/09-connected-app-edit-policies-run-as.png)
 
 ### 2.7 View the Connected App
 
 From App Manager choose **View** when you need to retrieve consumer details.
 
-![Connected App view and manage consumer details](images/connected-app-view-api-manage-consumer-details.png)
+![Connected App view and manage consumer details](images/10-connected-app-view-api-manage-consumer-details.png)
 
 ### 2.8 Get Consumer Credentials
 
@@ -165,7 +174,7 @@ Open **Manage Consumer Details**, complete verification, and copy:
 - Consumer Key (`agentforce.clientId`)
 - Consumer Secret (`agentforce.clientSecret`)
 
-![Consumer details copy key and secret](images/connected-app-consumer-details.png)
+![Consumer details copy key and secret](images/11-connected-app-consumer-details.png)
 
 Use these credentials in your runtime configuration:
 
@@ -233,94 +242,57 @@ curl "https://YOUR_ORG.my.salesforce.com/services/data/v62.0/einstein/models" \
 
 Use one of the two approaches below.
 
-### 4.1 Recommended — deploy with AgentScript
+### 4.1 Deploy with AgentScript
 
-_TBD (intentionally left blank)._
+Use this path to create the agent in the new Agentforce Builder (AgentScript
+experience).
 
-### 4.2 Legacy — the Agent Builder wizard
+If the **Agentforce** toggle in the top-right of **Agentforce Agents** is still
+**Off**, enable it first:
 
-Use this path if you prefer the Salesforce Setup UI.
+1. Open **Setup -> Einstein -> Einstein Generative AI -> Agentforce Studio -> Agentforce Agents**.
+1. Turn the **Agentforce** toggle to **On**.
+1. Wait a few seconds for the page to refresh and confirm the toggle remains
+   enabled.
 
-### 4.2.1 Start the New Agent wizard
+![Agentforce Agents page with toggle currently off](images/12-agentforce-agents-toggle-off.png)
 
-1. In Salesforce **Setup**, go to
-   **Einstein -> Einstein Generative AI -> Agentforce Studio -> Agentforce Agents**.
-1. Confirm the **Agentforce** toggle is **On**.
-1. Click **+ New Agent**.
+1. Use either entry path to start the new Agentforce Builder:
+   - **Option A (already in Agentforce Studio):** click **New Agent**.
+   - **Option B (from Agentforce Agents home page):** click **Let's Go**.
+   - **Option C (if you need to switch apps first):** open **App Launcher**,
+     search `agentforce studio`, and select **Agentforce Studio**.
 
-![Agentforce Agents toggle enabled](images/agentforce-agents-toggle.png)
-![Agentforce Agents header with + New Agent](images/agentforce-agents-new-agent-header.png)
+![Agentforce Studio Agents page context for New Agent](images/38-agentforce-studio-agents-new-agent-button.png)
+![Agentforce Agents page with Let's Go banner](images/36-agentforce-studio-lets-go-entry.png)
+![Switch to Agentforce Studio from App Launcher](images/37-agentforce-studio-app-launcher.png)
 
-### 4.2.2 Select agent type
+1. Only when you are in **Agentforce Studio -> Agents**, click **New Agent**.
 
-The Agent Creator opens at **1. Select an agent**.
+![Agentforce Studio Agents page with New Agent button](images/38-agentforce-studio-agents-new-agent-button.png)
 
-1. Choose **Agentforce Service Agent**.
-1. Click **Next**.
+1. In **Or, start with a template**, click **Select** on
+   **Agentforce Service Agent**.
 
-![Select Agentforce Service Agent](images/agent-creator-select-service-agent.png)
+![Template options in Agentforce Builder with Agentforce Service Agent](images/32-agentforce-builder-template-options.png)
 
-### 4.2.3 Select subagents
+1. In **Name your agent**, set:
+   - **Agent Name**: `Agentforce Service Agent`
+   - **Developer Name**: `Agentforce_Service_Agent`
+1. Click **Let's Go**.
 
-On **2. Select your subagents** (sometimes shown as
-**Select your agent's subagents**), each card is a capability bundle and
-defaults are usually pre-selected as **Added**.
+![Name your agent modal with Agentforce Service Agent defaults](images/33-agentforce-name-your-agent-modal.png)
 
-1. Keep default subagents selected for this walkthrough (or adjust as needed).
-1. Click **Next**.
+1. After clicking **Let's Go**, confirm you land on the Agentforce Builder
+   **Agent Summary** screen for your new agent.
 
-![Select subagents in Agent Creator](images/agent-creator-select-subagents.png)
+![Agentforce Builder Agent Summary screen after clicking Let's Go](images/34-agentforce-builder-agent-summary.png)
 
-### 4.2.4 Customize your agent
-
-On **3. Customize your agent**, fill required fields:
-
-1. **Name / API Name** (defaults are fine unless your org requires otherwise).
-1. **Description** (required) — keep or edit to describe what the agent does.
-1. **Role** (required) — keep or edit using the **Best Practices for Agent Settings** panel guidance.
-1. **Company** (required).
-
-Example company text:
-
-> Salesforce is a global cloud computing company providing CRM software focused
-> on sales, customer service, marketing automation, and analytics. Our
-> AI-powered platform helps businesses connect with customers and drive growth.
-
-Then click **Next**.
-
-![Customize agent details](images/agent-creator-customize-agent.png)
-
-### 4.2.5 Select data sources and create
-
-On **4. Select data sources (Optional)**:
-
-1. Leave **Data Library** unset for this walkthrough (or choose one if you use it).
-1. Click **Create**.
-
-![Select data sources and create agent](images/agent-creator-select-data-sources.png)
-
-### 4.2.6 Add external app connection
-
-After the agent is created, connect it to `agentforce_connected_app`.
-
-1. Open your agent in **Agentforce Studio** (for example, **Agentforce Service Agent**).
-1. Confirm you are in **SETUP > AGENT DETAILS** (or equivalent view).
-1. Open the **Connections** tab.
-
-> If your org shows only **Settings**, open **Settings** and use
-> **Add external app** there.
-
-![Agent details Connections tab](images/agent-details-connections-tab.png)
-
-1. Click **Add external app**.
-1. Set:
+1. After the agent is active, open its setup details and add the external app
+   connection:
    - **Connection Type**: `API`
    - **Integration Name**: `agentforce_connected_app`
-   - **Connected App**: `agentforce_connected_app` (lookup by name if needed)
-1. Leave auto-filled **Configuration Information** as-is.
-1. Click **Save**.
-
-![Add external app dialog](images/add-external-app-dialog.png)
+   - **Connected App**: `agentforce_connected_app`
 
 ## 5. Add a "Get Current User" Action (Optional)
 
@@ -332,7 +304,7 @@ prompt like "What is my name?".
 1. Go to **Setup -> Flows -> New** (or **New Flow**).
 1. In **New Automation**, choose **Autolaunched Flow (No Trigger)**.
 
-![Autolaunched flow template selection](images/flows-new-automation-autolaunched.png)
+![Autolaunched flow template selection](images/20-flows-new-automation-autolaunched.png)
 
 1. Add **Get Records** from the canvas:
    - **Label**: `Get User` (API name `Get_User`)
@@ -340,14 +312,14 @@ prompt like "What is my name?".
    - **Object**: `User`
    - **Filter**: `Id` Equals **Running User -> Id** (same intent as `{!$User.Id}`)
 
-![Get Records for running user](images/flow-get-user-records.png)
+![Get Records for running user](images/21-flow-get-user-records.png)
 
 1. In the same **Get Records** element, set:
    - **Sort order**: Not Sorted
    - **How many records**: Only the first record
    - **How to store**: Automatically store all fields
 
-![Get Records sort and store options](images/flow-get-user-records-sort-store.png)
+![Get Records sort and store options](images/22-flow-get-user-records-sort-store.png)
 
 1. Add input variable (required for Agentforce actions):
    - **API Name**: `requestReason`
@@ -357,7 +329,7 @@ prompt like "What is my name?".
    **Assignment** that copies from **User from Get User** into `currentUser`
    (at least first name, last name, email).
 
-![Assignment to currentUser and outputs](images/flow-assign-to-currentuser.png)
+![Assignment to currentUser and outputs](images/23-flow-assign-to-currentuser.png)
 
 1. Add an assignment for output fields:
    - `outputName = {!Get_User.Name}`
@@ -369,7 +341,7 @@ prompt like "What is my name?".
 On the canvas, wire:
 **Start -> Get User -> Assign to currentUser -> output assignment -> End**.
 
-![Get Current User flow canvas](images/flow-get-current-user-canvas.png)
+![Get Current User flow canvas](images/24-flow-get-current-user-canvas.png)
 
 ### 5.2 Add the flow action to the agent
 
@@ -377,13 +349,13 @@ On the canvas, wire:
 1. Open the target **Topic/Subagent** for identity questions.
 1. Open **Subagent Details** and confirm the subagent name/API name.
 
-![Subagent configuration screen](images/subagent-details-configuration.png)
+![Subagent configuration screen](images/25-subagent-details-configuration.png)
 
 1. Open **This Subagent's Actions**.
 1. If needed, deactivate agent editing mode, then choose **Add Action** and
    select `Get_Current_User`.
 
-![Subagent actions list](images/subagent-details-actions.png)
+![Subagent actions list](images/26-subagent-details-actions.png)
 
 1. Configure action fields:
    - **Action Description**: Retrieves the current user's name and email
@@ -402,7 +374,7 @@ Before activation, test prompts like:
 
 Then activate the agent.
 
-![Agent test panel with Get Current User action](images/agent-test-panel-what-is-my-name.png)
+![Agent test panel with Get Current User action](images/27-agent-test-panel-what-is-my-name.png)
 
 ## 7. Test the Agent API
 

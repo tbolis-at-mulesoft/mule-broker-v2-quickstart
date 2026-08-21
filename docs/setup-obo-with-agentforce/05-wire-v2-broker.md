@@ -1,5 +1,7 @@
 # Phase 5 — Wire the v2 Broker to the Agentforce Agent
 
+> **Work in progress:** This document is actively being updated and may change.
+
 > _Draft outline — section content to be filled in._
 
 Register the gateway-fronted Agentforce agent as a dependency of the v2 agent
