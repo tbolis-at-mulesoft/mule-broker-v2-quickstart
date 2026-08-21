@@ -33,11 +33,17 @@ moving to token exchange.
   - [3.1 Obtain a Client Credentials Token](#31-obtain-a-client-credentials-token)
   - [3.2 Verify the Einstein Models API](#32-verify-the-einstein-models-api)
   - [3.3 Common Failures](#33-common-failures)
-- [4. Create the Agentforce Agent](#4-create-the-agentforce-agent)
-  - [4.1 Deploy with AgentScript](#41-deploy-with-agentscript)
-- [5. Add a "Get Current User" Action (Optional)](#5-add-a-get-current-user-action-optional)
-- [6. Activate and Test the Agent](#6-activate-and-test-the-agent)
-- [7. Test the Agent API](#7-test-the-agent-api)
+- [4. Create the "Get Current User" Flow](#4-create-the-get-current-user-flow)
+- [5. Create the Agentforce Agent](#5-create-the-agentforce-agent)
+  - [5.1 Ensure Agentforce is enabled](#51-ensure-agentforce-is-enabled)
+  - [5.2 Open Agentforce Builder](#52-open-agentforce-builder)
+  - [5.3 Select the template](#53-select-the-template)
+  - [5.4 Name the agent](#54-name-the-agent)
+  - [5.5 Confirm Agent Summary](#55-confirm-agent-summary)
+  - [5.6 Add external app connection](#56-add-external-app-connection)
+- [6. Add the "Get Current User" Action to the Agent](#6-add-the-get-current-user-action-to-the-agent)
+- [7. Activate and Test the Agent](#7-activate-and-test-the-agent)
+- [8. Test the Agent API](#8-test-the-agent-api)
 
 ## Overview
 
@@ -56,7 +62,7 @@ This phase combines two tracks:
 - **Agentforce setup**: org-level enablement and connected-app configuration
   used by broker/API calls.
 - **Agent creation**: creating and activating an Agentforce Service Agent,
-  wiring it to the connected app, and optionally adding identity flow action.
+  wiring it to the connected app, and adding identity flow action.
 
 ### Prerequisites
 
@@ -72,7 +78,7 @@ By the end of this phase, you will have:
 - Created and configured a connected app for API access.
 - Verified token issuance and Einstein API access.
 - Created an Agentforce agent (or prepared the AgentScript path).
-- Optionally added a `Get_Current_User` flow action for identity checks.
+- Added a `Get_Current_User` flow action for identity checks.
 - Validated that the agent responds through the Agent API.
 
 ## 1. Platform Enablement
@@ -238,68 +244,7 @@ curl "https://YOUR_ORG.my.salesforce.com/services/data/v62.0/einstein/models" \
 | `INVALID_SESSION_ID` on Models API | Einstein not fully enabled yet | Wait 5-10 minutes after enablement and retry |
 | `404` on Models API endpoint | Wrong API version or Einstein unavailable | Verify licenses and try another API version |
 
-## 4. Create the Agentforce Agent
-
-Use one of the two approaches below.
-
-### 4.1 Deploy with AgentScript
-
-Use this path to create the agent in the new Agentforce Builder (AgentScript
-experience).
-
-If the **Agentforce** toggle in the top-right of **Agentforce Agents** is still
-**Off**, enable it first:
-
-1. Open **Setup -> Einstein -> Einstein Generative AI -> Agentforce Studio -> Agentforce Agents**.
-1. Turn the **Agentforce** toggle to **On**.
-1. Wait a few seconds for the page to refresh and confirm the toggle remains
-   enabled.
-
-![Agentforce Agents page with toggle currently off](images/12-agentforce-agents-toggle-off.png)
-
-1. Use either entry path to start the new Agentforce Builder:
-   - **Option A (already in Agentforce Studio):** click **New Agent**.
-   - **Option B (from Agentforce Agents home page):** click **Let's Go**.
-   - **Option C (if you need to switch apps first):** open **App Launcher**,
-     search `agentforce studio`, and select **Agentforce Studio**.
-
-![Agentforce Studio Agents page context for New Agent](images/38-agentforce-studio-agents-new-agent-button.png)
-![Agentforce Agents page with Let's Go banner](images/36-agentforce-studio-lets-go-entry.png)
-![Switch to Agentforce Studio from App Launcher](images/37-agentforce-studio-app-launcher.png)
-
-1. Only when you are in **Agentforce Studio -> Agents**, click **New Agent**.
-
-![Agentforce Studio Agents page with New Agent button](images/38-agentforce-studio-agents-new-agent-button.png)
-
-1. In **Or, start with a template**, click **Select** on
-   **Agentforce Service Agent**.
-
-![Template options in Agentforce Builder with Agentforce Service Agent](images/32-agentforce-builder-template-options.png)
-
-1. In **Name your agent**, set:
-   - **Agent Name**: `Agentforce Service Agent`
-   - **Developer Name**: `Agentforce_Service_Agent`
-1. Click **Let's Go**.
-
-![Name your agent modal with Agentforce Service Agent defaults](images/33-agentforce-name-your-agent-modal.png)
-
-1. After clicking **Let's Go**, confirm you land on the Agentforce Builder
-   **Agent Summary** screen for your new agent.
-
-![Agentforce Builder Agent Summary screen after clicking Let's Go](images/34-agentforce-builder-agent-summary.png)
-
-1. After the agent is active, open its setup details and add the external app
-   connection:
-   - **Connection Type**: `API`
-   - **Integration Name**: `agentforce_connected_app`
-   - **Connected App**: `agentforce_connected_app`
-
-## 5. Add a "Get Current User" Action (Optional)
-
-This section is only required if you want to prove identity propagation with a
-prompt like "What is my name?".
-
-### 5.1 Create the flow
+## 4. Create the "Get Current User" Flow
 
 1. Go to **Setup -> Flows -> New** (or **New Flow**).
 1. In **New Automation**, choose **Autolaunched Flow (No Trigger)**.
@@ -338,12 +283,76 @@ prompt like "What is my name?".
 1. Save flow as `Get_Current_User`.
 1. Activate the flow.
 
-On the canvas, wire:
-**Start -> Get User -> Assign to currentUser -> output assignment -> End**.
+On the canvas, wire **Start → Get User → Assign to currentUser → (your Assignment
+for outputName / outputEmail) → End**. Configure the Start element with the
+`requestReason` input variable.
 
 ![Get Current User flow canvas](images/24-flow-get-current-user-canvas.png)
 
-### 5.2 Add the flow action to the agent
+## 5. Create the Agentforce Agent
+
+Use the new Agentforce Builder flow below.
+
+### 5.1 Ensure Agentforce is enabled
+
+If the **Agentforce** toggle in the top-right of **Agentforce Agents** is still
+**Off**, enable it first:
+
+1. Open **Setup -> Einstein -> Einstein Generative AI -> Agentforce Studio -> Agentforce Agents**.
+1. Turn the **Agentforce** toggle to **On**.
+1. Wait a few seconds for the page to refresh and confirm the toggle remains
+   enabled.
+
+![Agentforce Agents page with toggle currently off](images/12-agentforce-agents-toggle-off.png)
+
+### 5.2 Open Agentforce Builder
+
+1. Use either entry path to start the new Agentforce Builder:
+   - **Option A (already in Agentforce Studio):** click **New Agent**.
+   - **Option B (from Agentforce Agents home page):** click **Let's Go**.
+   - **Option C (if you need to switch apps first):** open **App Launcher**,
+     search `agentforce studio`, and select **Agentforce Studio**.
+
+![Agentforce Studio Agents page context for New Agent](images/38-agentforce-studio-agents-new-agent-button.png)
+![Agentforce Agents page with Let's Go banner](images/36-agentforce-studio-lets-go-entry.png)
+![Switch to Agentforce Studio from App Launcher](images/37-agentforce-studio-app-launcher.png)
+
+1. Only when you are in **Agentforce Studio -> Agents**, click **New Agent**.
+
+![Agentforce Studio Agents page with New Agent button](images/38-agentforce-studio-agents-new-agent-button.png)
+
+### 5.3 Select the template
+
+1. In **Or, start with a template**, click **Select** on
+   **Agentforce Service Agent**.
+
+![Template options in Agentforce Builder with Agentforce Service Agent](images/32-agentforce-builder-template-options.png)
+
+### 5.4 Name the agent
+
+1. In **Name your agent**, set:
+   - **Agent Name**: `Agentforce Service Agent`
+   - **Developer Name**: `Agentforce_Service_Agent`
+1. Click **Let's Go**.
+
+![Name your agent modal with Agentforce Service Agent defaults](images/33-agentforce-name-your-agent-modal.png)
+
+### 5.5 Confirm Agent Summary
+
+1. After clicking **Let's Go**, confirm you land on the Agentforce Builder
+   **Agent Summary** screen for your new agent.
+
+![Agentforce Builder Agent Summary screen after clicking Let's Go](images/34-agentforce-builder-agent-summary.png)
+
+### 5.6 Add external app connection
+
+1. After the agent is active, open its setup details and add the external app
+   connection:
+   - **Connection Type**: `API`
+   - **Integration Name**: `agentforce_connected_app`
+   - **Connected App**: `agentforce_connected_app`
+
+## 6. Add the "Get Current User" Action to the Agent
 
 1. In **Agentforce Studio**, open your agent.
 1. Open the target **Topic/Subagent** for identity questions.
@@ -365,7 +374,7 @@ On the canvas, wire:
 > When the user asks who they are, asks for their name, or asks about their
 > identity, use the "Get Current User" action to retrieve their name and email.
 
-## 6. Activate and Test the Agent
+## 7. Activate and Test the Agent
 
 Before activation, test prompts like:
 
@@ -376,7 +385,7 @@ Then activate the agent.
 
 ![Agent test panel with Get Current User action](images/27-agent-test-panel-what-is-my-name.png)
 
-## 7. Test the Agent API
+## 8. Test the Agent API
 
 Create a session and send a test message using your token:
 
