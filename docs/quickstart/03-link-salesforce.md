@@ -1,7 +1,7 @@
 # Phase 3 — Link Anypoint Platform to Salesforce (enable Vibes)
 
 MuleSoft Vibes and Agentforce features in Anypoint Platform run against a
-linked Salesforce org. This links the Salesforce Developer Edition org
+linked Salesforce org. This links the Agentforce 360 Platform Free Trial org
 created in [Phase 0](00-prerequisites.md) to the Anypoint Platform account
 from [Phase 1](01-account-setup.md).
 

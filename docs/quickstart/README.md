@@ -10,8 +10,8 @@ The guide is split into one file per phase — work through them in order:
    Extension Pack, and the CLI for Agent Fabric plugin, and confirm all of them
    are on the latest available versions.
 2. [Account Setup](01-account-setup.md) — sign up for a MuleSoft free trial
-   (Anypoint Platform account) and a Salesforce Developer Edition org (for
-   MuleSoft Vibes).
+   (Anypoint Platform account) and an Agentforce 360 Platform Free Trial org
+   (for MuleSoft Vibes).
 3. [Environment Setup](02-environment-setup.md) — confirm VS Code is ready and
    sign in to Anypoint Platform.
 4. [Link Anypoint Platform to Salesforce](03-link-salesforce.md) — link the

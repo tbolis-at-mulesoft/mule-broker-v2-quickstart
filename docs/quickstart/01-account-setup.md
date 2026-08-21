@@ -18,7 +18,7 @@ later.
 - [1. Start a free MuleSoft trial](#1-start-a-free-mulesoft-trial)
 - [2. Fill out the trial form](#2-fill-out-the-trial-form)
 - [3. Verify your email (optional)](#3-verify-your-email-optional)
-- [4. Salesforce Developer Edition (for MuleSoft Vibes)](#4-salesforce-developer-edition-for-mulesoft-vibes)
+- [4. Agentforce 360 Platform Free Trial (for MuleSoft Vibes)](#4-agentforce-360-platform-free-trial-for-mulesoft-vibes)
 
 ## 1. Start a free MuleSoft trial
 
@@ -56,11 +56,11 @@ After submitting, you may be prompted to verify your email address:
 
 ![Enter verification code dialog](images/09-verify-email-code.png)
 
-## 4. Salesforce Developer Edition (for MuleSoft Vibes)
+## 4. Agentforce 360 Platform Free Trial (for MuleSoft Vibes)
 
 MuleSoft Vibes (the Agentforce Vibes IDE) runs against a Salesforce org, not
-the Anypoint Platform account — sign up for a free **Salesforce Developer
-Edition** org, separate from the MuleSoft trial account created above.
+the Anypoint Platform account — sign up for a free **Agentforce 360 Platform
+Free Trial** org, separate from the MuleSoft trial account created above.
 
 1. Go to https://www.salesforce.com/platform/free-trial/signup/ and sign up
    for the **Agentforce 360 Platform Free Trial**.
@@ -75,7 +75,7 @@ Data 360 — including a hosted MCP endpoint, the Agentforce Vibes browser IDE
 (no local setup), and 60+ MCP tools / 30+ coding skills out of the box. Note:
 the org is terminated after 45 days of inactivity.
 
-![Salesforce Developer Edition signup form](images/10-salesforce-developer-edition-signup.png)
+![Agentforce 360 Platform Free Trial signup form](images/10-salesforce-developer-edition-signup.png)
 
 After submitting, you'll land on a confirmation page — check your email for a
 **"Welcome to your Developer Edition"** message with a link to reset your
