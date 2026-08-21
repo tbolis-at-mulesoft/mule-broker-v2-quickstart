@@ -7,6 +7,13 @@ call on behalf of the end user. There are two ways to create the agent — this
 guide leads with **AgentScript** as the recommended path and keeps the legacy
 Agent Builder wizard as an alternative.
 
+> **Prerequisite — a trial org with Agentforce enabled.** MuleSoft Vibes (the
+> Agentforce Vibes IDE) runs against a Salesforce org, not the Anypoint Platform
+> account — sign up for a free **Agentforce 360 Platform Free Trial** org,
+> separate from the MuleSoft trial account. See
+> [Quickstart Phase 1 — Account Setup §4](../quickstart/01-account-setup.md#4-agentforce-360-platform-free-trial-for-mulesoft-vibes)
+> to provision it.
+
 ## Contents
 
 - [1. Enable Einstein Generative AI](#1-enable-einstein-generative-ai)
