@@ -128,7 +128,7 @@ Set:
 
 Enable OAuth.
 
-![Connected App basic OAuth settings](images/05-connected-app-basic-oauth.png)
+<img src="images/05-connected-app-basic-oauth.png" alt="Connected App basic OAuth settings" width="720">
 
 ### 2.4 OAuth Scopes and Settings
 
@@ -257,14 +257,14 @@ curl "https://YOUR_ORG.my.salesforce.com/services/data/v62.0/einstein/models" \
    - **Object**: `User`
    - **Filter**: `Id` Equals **Running User -> Id** (same intent as `{!$User.Id}`)
 
-![Get Records for running user](images/14-flow-get-user-records.png)
+<img src="images/14-flow-get-user-records.png" alt="Get Records for running user" width="720">
 
 1. In the same **Get Records** element, set:
    - **Sort order**: Not Sorted
    - **How many records**: Only the first record
    - **How to store**: Automatically store all fields
 
-![Get Records sort and store options](images/15-flow-get-user-records-sort-store.png)
+<img src="images/15-flow-get-user-records-sort-store.png" alt="Get Records sort and store options" width="720">
 
 1. Add input variable (required for Agentforce actions):
    - **API Name**: `requestReason`
@@ -274,7 +274,7 @@ curl "https://YOUR_ORG.my.salesforce.com/services/data/v62.0/einstein/models" \
    **Assignment** that copies from **User from Get User** into `currentUser`
    (at least first name, last name, email).
 
-![Assignment to currentUser and outputs](images/16-flow-assign-to-currentuser.png)
+<img src="images/16-flow-assign-to-currentuser.png" alt="Assignment to currentUser and outputs" width="720">
 
 1. Add an assignment for output fields:
    - `outputName = {!Get_User.Name}`
@@ -287,7 +287,7 @@ On the canvas, wire **Start → Get User → Assign to currentUser → (your Ass
 for outputName / outputEmail) → End**. Configure the Start element with the
 `requestReason` input variable.
 
-![Get Current User flow canvas](images/17-flow-get-current-user-canvas.png)
+<img src="images/17-flow-get-current-user-canvas.png" alt="Get Current User flow canvas" width="480">
 
 ## 5. Create the Agentforce Agent
 
@@ -364,7 +364,7 @@ Option C example (open Agentforce Studio from App Launcher):
 1. Click **Add Action** under **Actions Available For Reasoning**.
 1. In the action picker, click **Create a custom action**.
 
-![Action picker with Create a custom action option](images/27-subagent-details-actions.png)
+<img src="images/27-subagent-details-actions.png" alt="Action picker with Create a custom action option" width="480">
 
 1. In **Add Action**, set:
    - **Action Name**: `Get Current User`
@@ -376,7 +376,7 @@ Option C example (open Agentforce Studio from App Launcher):
 1. Confirm **Get Current User** is listed under **Actions Available For
    Reasoning** in the **User Info** subagent.
 
-![User Info subagent showing Get Current User action added](images/29-agentforce-user-info-action-added.png)
+<img src="images/29-agentforce-user-info-action-added.png" alt="User Info subagent showing Get Current User action added" width="480">
 
 1. Go back to **Agent Summary** and confirm the new **User Info** subagent is
    already wired and available to the **Agent Router**.

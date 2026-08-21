@@ -28,7 +28,7 @@ guessing URLs.
    - `token_endpoint`
    - `userinfo_endpoint`
 
-![Keycloak realm settings endpoints section](images/37-keycloak-realm-settings-openid-endpoints.png)
+<img src="images/37-keycloak-realm-settings-openid-endpoints.png" alt="Keycloak realm settings endpoints section" width="720">
 ![OpenID provider metadata JSON](images/38-keycloak-openid-configuration-metadata.png)
 
 Typical realm-pattern endpoints:
@@ -65,7 +65,7 @@ Verify in Keycloak:
 1. In mappers for those scopes, confirm **Add to access token** is enabled.
 
 ![Keycloak client scopes list](images/39-keycloak-client-scopes-list.png)
-![Keycloak email scope settings](images/40-keycloak-client-scope-email-settings.png)
+<img src="images/40-keycloak-client-scope-email-settings.png" alt="Keycloak email scope settings" width="720">
 
 If `Add to access token` is off for needed mappers, enable it before testing.
 
@@ -81,7 +81,7 @@ Recommended settings:
 | Standard flow | On |
 | PKCE | S256 |
 
-![Keycloak public browser client capability config](images/41-keycloak-public-browser-client-capability-config.png)
+<img src="images/41-keycloak-public-browser-client-capability-config.png" alt="Keycloak public browser client capability config" width="720">
 
 Access settings guidance:
 
@@ -113,7 +113,7 @@ Typical settings:
 | Service accounts | On (if client credentials test/use is required) |
 | Standard Token Exchange | On only if you use Keycloak-side token exchange |
 
-![Keycloak broker client capability config](images/42-keycloak-client-capability-config.png)
+<img src="images/42-keycloak-client-capability-config.png" alt="Keycloak broker client capability config" width="720">
 
 Assigned default scopes should include:
 
@@ -148,8 +148,8 @@ Assign a broker client role to a real user, then verify token contents.
    `handle_user_information_retrieval` (or your equivalent).
 1. On the target user, open **Role mapping** and assign that client role.
 
-![Keycloak create client role](images/44-keycloak-client-create-role.png)
-![Keycloak user role mapping](images/45-keycloak-user-role-mapping.png)
+<img src="images/44-keycloak-client-create-role.png" alt="Keycloak create client role" width="720">
+<img src="images/45-keycloak-user-role-mapping.png" alt="Keycloak user role mapping" width="720">
 
 ### 5.2 Obtain a user token (recommended public client + PKCE)
 

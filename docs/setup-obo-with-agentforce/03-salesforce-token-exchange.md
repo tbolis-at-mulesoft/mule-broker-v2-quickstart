@@ -33,7 +33,7 @@ blocks outbound callouts unless the Keycloak origin is allowlisted.
 
 Use scheme + host (and port, if non-default), not the full `/certs` path.
 
-![Salesforce Setup navigation to Remote Site Settings](images/46-salesforce-remote-site-settings-nav.png)
+<img src="images/46-salesforce-remote-site-settings-nav.png" alt="Salesforce Setup navigation to Remote Site Settings" width="720">
 
 ## 2. Deploy the Apex token exchange handler
 
@@ -65,7 +65,7 @@ $$
 `SF_AUDIENCE`, Salesforce My Domain, and the Phase 4 OBO target value must
 match exactly (`.my.salesforce.com`, not `.lightning.force.com`).
 
-![Developer Console with KeycloakOBOHandler](images/48-salesforce-developer-console-keycloak-obo-handler.png)
+<img src="images/48-salesforce-developer-console-keycloak-obo-handler.png" alt="Developer Console with KeycloakOBOHandler" width="720">
 
 ## 3. Register the Token Exchange Handler
 
@@ -81,7 +81,7 @@ Register the handler so Salesforce can invoke it during RFC 8693 exchange.
    - **Apex Class**: `KeycloakOBOHandler`
 1. Click **Save and Enable** (or enable after save, based on UI).
 
-![Token Exchange Handler setup screen](images/49-salesforce-edit-token-exchange-handler-keycloak.png)
+<img src="images/49-salesforce-edit-token-exchange-handler-keycloak.png" alt="Token Exchange Handler setup screen" width="640">
 
 Supporting both token types avoids subject token type mismatches:
 
@@ -120,9 +120,9 @@ Create a dedicated app used by Flex Gateway for token exchange.
    - Consumer Key
    - Consumer Secret
 
-![New Connected App basic information](images/50-salesforce-new-connected-app-basic-info.png)
+<img src="images/50-salesforce-new-connected-app-basic-info.png" alt="New Connected App basic information" width="720">
 ![Connected App OAuth policies configuration](images/51-salesforce-connected-app-oauth-policies.png)
-![Connected App API section with Manage Consumer Details](images/52-salesforce-connected-app-manage-consumer-details-api.png)
+<img src="images/52-salesforce-connected-app-manage-consumer-details-api.png" alt="Connected App API section with Manage Consumer Details" width="720">
 
 These values are required by Flex Gateway in Phase 4.
 
