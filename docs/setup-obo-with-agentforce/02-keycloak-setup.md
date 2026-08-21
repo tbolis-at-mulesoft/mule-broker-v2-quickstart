@@ -28,8 +28,8 @@ guessing URLs.
    - `token_endpoint`
    - `userinfo_endpoint`
 
-![Keycloak realm settings endpoints section](images/keycloak-realm-settings-openid-endpoints.png)
-![OpenID provider metadata JSON](images/keycloak-openid-configuration-metadata.png)
+![Keycloak realm settings endpoints section](images/37-keycloak-realm-settings-openid-endpoints.png)
+![OpenID provider metadata JSON](images/38-keycloak-openid-configuration-metadata.png)
 
 Typical realm-pattern endpoints:
 
@@ -64,8 +64,8 @@ Verify in Keycloak:
 1. Confirm `email` and `profile` scopes are present and included in token scope.
 1. In mappers for those scopes, confirm **Add to access token** is enabled.
 
-![Keycloak client scopes list](images/keycloak-client-scopes-list.png)
-![Keycloak email scope settings](images/keycloak-client-scope-email-settings.png)
+![Keycloak client scopes list](images/39-keycloak-client-scopes-list.png)
+![Keycloak email scope settings](images/40-keycloak-client-scope-email-settings.png)
 
 If `Add to access token` is off for needed mappers, enable it before testing.
 
@@ -81,7 +81,7 @@ Recommended settings:
 | Standard flow | On |
 | PKCE | S256 |
 
-![Keycloak public browser client capability config](images/keycloak-public-browser-client-capability-config.png)
+![Keycloak public browser client capability config](images/41-keycloak-public-browser-client-capability-config.png)
 
 Access settings guidance:
 
@@ -113,7 +113,7 @@ Typical settings:
 | Service accounts | On (if client credentials test/use is required) |
 | Standard Token Exchange | On only if you use Keycloak-side token exchange |
 
-![Keycloak broker client capability config](images/keycloak-client-capability-config.png)
+![Keycloak broker client capability config](images/42-keycloak-client-capability-config.png)
 
 Assigned default scopes should include:
 
@@ -121,7 +121,7 @@ Assigned default scopes should include:
 - `email`
 - `profile`
 
-![Keycloak client assigned scopes](images/keycloak-client-assigned-scopes.png)
+![Keycloak client assigned scopes](images/43-keycloak-client-assigned-scopes.png)
 
 Quick broker-client credentials test:
 
@@ -148,8 +148,8 @@ Assign a broker client role to a real user, then verify token contents.
    `handle_user_information_retrieval` (or your equivalent).
 1. On the target user, open **Role mapping** and assign that client role.
 
-![Keycloak create client role](images/keycloak-client-create-role.png)
-![Keycloak user role mapping](images/keycloak-user-role-mapping.png)
+![Keycloak create client role](images/44-keycloak-client-create-role.png)
+![Keycloak user role mapping](images/45-keycloak-user-role-mapping.png)
 
 ### 5.2 Obtain a user token (recommended public client + PKCE)
 

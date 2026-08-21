@@ -40,10 +40,10 @@ moving to token exchange.
   - [5.3 Select the template](#53-select-the-template)
   - [5.4 Name the agent](#54-name-the-agent)
   - [5.5 Confirm Agent Summary](#55-confirm-agent-summary)
-  - [5.6 Add external app connection](#56-add-external-app-connection)
 - [6. Add the "Get Current User" Action to the Agent](#6-add-the-get-current-user-action-to-the-agent)
-- [7. Activate and Test the Agent](#7-activate-and-test-the-agent)
-- [8. Test the Agent API](#8-test-the-agent-api)
+- [7. Test the Agent in Preview](#7-test-the-agent-in-preview)
+- [8. Activate the Agent](#8-activate-the-agent)
+- [9. Test the Agent API](#9-test-the-agent-api)
 
 ## Overview
 
@@ -111,7 +111,7 @@ If **New Connected App** is disabled and Salesforce shows that connected apps
 cannot be enabled for the org, stop here and switch to a different org. This is
 common in the free Agentforce trial org used in quickstart onboarding.
 
-![Connected Apps disabled in trial org](images/35-connected-apps-disabled-in-trial-org.png)
+![Connected Apps disabled in trial org](images/04-connected-apps-disabled-in-trial-org.png)
 
 ### 2.2 Create a New Connected App
 
@@ -128,7 +128,7 @@ Set:
 
 Enable OAuth.
 
-![Connected App basic OAuth settings](images/04-connected-app-basic-oauth.png)
+![Connected App basic OAuth settings](images/05-connected-app-basic-oauth.png)
 
 ### 2.4 OAuth Scopes and Settings
 
@@ -144,14 +144,14 @@ Enable:
 - **Enable Client Credentials Flow**
 - **Issue JSON Web Token (JWT)-based access tokens for named users**
 
-![Connected App OAuth scopes and settings](images/05-connected-app-oauth-scopes.png)
+![Connected App OAuth scopes and settings](images/06-connected-app-oauth-scopes.png)
 
 ### 2.5 Manage the Connected App
 
 Wait a few minutes after save, then go to **Setup -> Apps -> App Manager**,
 find `agentforce_connected_app`, and choose **Manage**.
 
-![App Manager manage connected app](images/06-app-manager-manage-connected-app.png)
+![App Manager manage connected app](images/07-app-manager-manage-connected-app.png)
 
 ### 2.6 Edit Policies
 
@@ -161,17 +161,17 @@ In **Edit Policies**, set:
 - **Run As (User)** under Client Credentials Flow
 - **Access Token Timeout** as desired (example: 30 minutes)
 
-![Connected App detail edit policies](images/07-connected-app-detail-edit-policies.png)
+![Connected App detail edit policies](images/08-connected-app-detail-edit-policies.png)
 
-![OAuth policies IP relaxation](images/08-connected-app-edit-policies-oauth-policies.png)
+![OAuth policies IP relaxation](images/09-connected-app-edit-policies-oauth-policies.png)
 
-![Client Credentials Run As user](images/09-connected-app-edit-policies-run-as.png)
+![Client Credentials Run As user](images/10-connected-app-edit-policies-run-as.png)
 
 ### 2.7 View the Connected App
 
 From App Manager choose **View** when you need to retrieve consumer details.
 
-![Connected App view and manage consumer details](images/10-connected-app-view-api-manage-consumer-details.png)
+![Connected App view and manage consumer details](images/11-connected-app-view-api-manage-consumer-details.png)
 
 ### 2.8 Get Consumer Credentials
 
@@ -180,7 +180,7 @@ Open **Manage Consumer Details**, complete verification, and copy:
 - Consumer Key (`agentforce.clientId`)
 - Consumer Secret (`agentforce.clientSecret`)
 
-![Consumer details copy key and secret](images/11-connected-app-consumer-details.png)
+![Consumer details copy key and secret](images/12-connected-app-consumer-details.png)
 
 Use these credentials in your runtime configuration:
 
@@ -249,7 +249,7 @@ curl "https://YOUR_ORG.my.salesforce.com/services/data/v62.0/einstein/models" \
 1. Go to **Setup -> Flows -> New** (or **New Flow**).
 1. In **New Automation**, choose **Autolaunched Flow (No Trigger)**.
 
-![Autolaunched flow template selection](images/20-flows-new-automation-autolaunched.png)
+![Autolaunched flow template selection](images/13-flows-new-automation-autolaunched.png)
 
 1. Add **Get Records** from the canvas:
    - **Label**: `Get User` (API name `Get_User`)
@@ -257,14 +257,14 @@ curl "https://YOUR_ORG.my.salesforce.com/services/data/v62.0/einstein/models" \
    - **Object**: `User`
    - **Filter**: `Id` Equals **Running User -> Id** (same intent as `{!$User.Id}`)
 
-![Get Records for running user](images/21-flow-get-user-records.png)
+![Get Records for running user](images/14-flow-get-user-records.png)
 
 1. In the same **Get Records** element, set:
    - **Sort order**: Not Sorted
    - **How many records**: Only the first record
    - **How to store**: Automatically store all fields
 
-![Get Records sort and store options](images/22-flow-get-user-records-sort-store.png)
+![Get Records sort and store options](images/15-flow-get-user-records-sort-store.png)
 
 1. Add input variable (required for Agentforce actions):
    - **API Name**: `requestReason`
@@ -274,7 +274,7 @@ curl "https://YOUR_ORG.my.salesforce.com/services/data/v62.0/einstein/models" \
    **Assignment** that copies from **User from Get User** into `currentUser`
    (at least first name, last name, email).
 
-![Assignment to currentUser and outputs](images/23-flow-assign-to-currentuser.png)
+![Assignment to currentUser and outputs](images/16-flow-assign-to-currentuser.png)
 
 1. Add an assignment for output fields:
    - `outputName = {!Get_User.Name}`
@@ -287,7 +287,7 @@ On the canvas, wire **Start → Get User → Assign to currentUser → (your Ass
 for outputName / outputEmail) → End**. Configure the Start element with the
 `requestReason` input variable.
 
-![Get Current User flow canvas](images/24-flow-get-current-user-canvas.png)
+![Get Current User flow canvas](images/17-flow-get-current-user-canvas.png)
 
 ## 5. Create the Agentforce Agent
 
@@ -303,7 +303,7 @@ If the **Agentforce** toggle in the top-right of **Agentforce Agents** is still
 1. Wait a few seconds for the page to refresh and confirm the toggle remains
    enabled.
 
-![Agentforce Agents page with toggle currently off](images/12-agentforce-agents-toggle-off.png)
+![Agentforce Agents page with toggle currently off](images/18-agentforce-agents-toggle-off.png)
 
 ### 5.2 Open Agentforce Builder
 
@@ -313,58 +313,79 @@ If the **Agentforce** toggle in the top-right of **Agentforce Agents** is still
    - **Option C (if you need to switch apps first):** open **App Launcher**,
      search `agentforce studio`, and select **Agentforce Studio**.
 
-![Agentforce Studio Agents page context for New Agent](images/38-agentforce-studio-agents-new-agent-button.png)
-![Agentforce Agents page with Let's Go banner](images/36-agentforce-studio-lets-go-entry.png)
-![Switch to Agentforce Studio from App Launcher](images/37-agentforce-studio-app-launcher.png)
+Option A example (`New Agent` from Agentforce Studio):
+![Agentforce Studio Agents page context for New Agent](images/19-agentforce-studio-agents-new-agent-button.png)
 
-1. Only when you are in **Agentforce Studio -> Agents**, click **New Agent**.
+Option B example (`Let's Go` from Agentforce Agents page):
+![Agentforce Agents page with Let's Go banner](images/20-agentforce-studio-lets-go-entry.png)
 
-![Agentforce Studio Agents page with New Agent button](images/38-agentforce-studio-agents-new-agent-button.png)
+Option C example (open Agentforce Studio from App Launcher):
+![Switch to Agentforce Studio from App Launcher](images/21-agentforce-studio-app-launcher.png)
 
 ### 5.3 Select the template
 
 1. In **Or, start with a template**, click **Select** on
-   **Agentforce Service Agent**.
+   **Agentforce Employee Agent**.
 
-![Template options in Agentforce Builder with Agentforce Service Agent](images/32-agentforce-builder-template-options.png)
+![Template options in Agentforce Builder with Agentforce Employee Agent selected](images/22-agentforce-builder-template-options.png)
 
 ### 5.4 Name the agent
 
 1. In **Name your agent**, set:
-   - **Agent Name**: `Agentforce Service Agent`
-   - **Developer Name**: `Agentforce_Service_Agent`
+   - **Agent Name**: `Trusted Identity Agent`
+   - **Developer Name**: `Trusted_Identity_Agent`
 1. Click **Let's Go**.
 
-![Name your agent modal with Agentforce Service Agent defaults](images/33-agentforce-name-your-agent-modal.png)
+![Name your agent modal with Trusted Identity Agent values](images/23-agentforce-name-your-agent-modal.png)
 
 ### 5.5 Confirm Agent Summary
 
 1. After clicking **Let's Go**, confirm you land on the Agentforce Builder
    **Agent Summary** screen for your new agent.
 
-![Agentforce Builder Agent Summary screen after clicking Let's Go](images/34-agentforce-builder-agent-summary.png)
-
-### 5.6 Add external app connection
-
-1. After the agent is active, open its setup details and add the external app
-   connection:
-   - **Connection Type**: `API`
-   - **Integration Name**: `agentforce_connected_app`
-   - **Connected App**: `agentforce_connected_app`
+![Agentforce Builder Agent Summary screen after clicking Let's Go](images/24-agentforce-builder-agent-summary.png)
 
 ## 6. Add the "Get Current User" Action to the Agent
 
 1. In **Agentforce Studio**, open your agent.
-1. Open the target **Topic/Subagent** for identity questions.
-1. Open **Subagent Details** and confirm the subagent name/API name.
+1. Under **Subagents**, click the **+** button to create a new subagent for
+   identity questions (or select an existing one if already present).
 
-![Subagent configuration screen](images/25-subagent-details-configuration.png)
+1. In **Add Subagent**, set:
+   - **Subagent Name**: `User Info`
+   - **Description**: `Manage user account information`
+1. Click **Create and Open**.
+![Add Subagent modal with User Info name and description](images/25-agentforce-add-subagent-modal.png)
 
-1. Open **This Subagent's Actions**.
-1. If needed, deactivate agent editing mode, then choose **Add Action** and
-   select `Get_Current_User`.
+1. Confirm the new **User Info** subagent opens and is selected in the
+   **Subagents** list.
+![User Info subagent screen with Actions Available For Reasoning](images/26-subagent-details-configuration.png)
 
-![Subagent actions list](images/26-subagent-details-actions.png)
+1. Click **Add Action** under **Actions Available For Reasoning**.
+1. In the action picker, click **Create a custom action**.
+
+![Action picker with Create a custom action option](images/27-subagent-details-actions.png)
+
+1. In **Add Action**, set:
+   - **Action Name**: `Get Current User`
+   - **Description**: `Get current user information`
+   - **Reference Action Type**: `Flow`
+   - **Reference Action**: `Get Current User` (Flow record `Get_Current_User`, status **Active**)
+1. Click **Create and Open**.
+![Add Action modal with required Flow action fields](images/28-agentforce-add-flow-action-fields.png)
+1. Confirm **Get Current User** is listed under **Actions Available For
+   Reasoning** in the **User Info** subagent.
+
+![User Info subagent showing Get Current User action added](images/29-agentforce-user-info-action-added.png)
+
+1. Go back to **Agent Summary** and confirm the new **User Info** subagent is
+   already wired and available to the **Agent Router**.
+
+![Agent Summary showing User Info subagent wired from Agent Router](images/30-agent-summary-user-info-wired.png)
+
+1. Click **Save** in the top-right corner to persist the agent changes.
+
+![Agent Summary with Save button and changes saved banner](images/31-agent-summary-save-changes.png)
 
 1. Configure action fields:
    - **Action Description**: Retrieves the current user's name and email
@@ -374,18 +395,43 @@ If the **Agentforce** toggle in the top-right of **Agentforce Agents** is still
 > When the user asks who they are, asks for their name, or asks about their
 > identity, use the "Get Current User" action to retrieve their name and email.
 
-## 7. Activate and Test the Agent
+## 7. Test the Agent in Preview
 
-Before activation, test prompts like:
+1. Open the **Preview** tab to run a live test conversation with the agent.
 
-- "What is my name?"
-- "Can you make a reservation for me?"
+![Agent Preview tab with Live Test panel](images/32-agent-preview-live-test.png)
 
-Then activate the agent.
+Then test prompts like:
 
-![Agent test panel with Get Current User action](images/27-agent-test-panel-what-is-my-name.png)
+- "What's my name?"
 
-## 8. Test the Agent API
+Expected result for "What's my name?":
+
+- The chat reply should return the current Salesforce user's name.
+- In **Agent Preview Details**, you should see evidence that the flow action ran
+  (for example: transition to **User Info** and action **Get Current User**).
+
+![Agent Preview Details showing flow execution evidence](images/33-agent-preview-flow-evidence.png)
+
+If both checks pass, continue to activation.
+
+## 8. Activate the Agent
+
+1. In the top-right corner, click **Commit Version**.
+1. In the **Commit this version?** dialog, click **Commit**.
+1. After the version is committed, click **Activate**.
+1. In the **Ready to activate your agent?** dialog, click **Activate**.
+
+Commit the draft version:
+![Commit this version confirmation dialog](images/34-agent-commit-version-confirmation.png)
+
+After commit completes, click **Activate** in the top-right:
+![Agent Builder top-right Activate button after commit](images/35-agent-activate-button.png)
+
+Confirm activation in the dialog:
+![Ready to activate your agent confirmation dialog](images/36-agent-activate-confirmation.png)
+
+## 9. Test the Agent API
 
 Create a session and send a test message using your token:
 

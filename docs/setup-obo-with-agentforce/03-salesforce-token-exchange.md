@@ -33,7 +33,7 @@ blocks outbound callouts unless the Keycloak origin is allowlisted.
 
 Use scheme + host (and port, if non-default), not the full `/certs` path.
 
-![Salesforce Setup navigation to Remote Site Settings](images/salesforce-remote-site-settings-nav.png)
+![Salesforce Setup navigation to Remote Site Settings](images/46-salesforce-remote-site-settings-nav.png)
 
 ## 2. Deploy the Apex token exchange handler
 
@@ -47,7 +47,7 @@ private static final String KEYCLOAK_USERINFO_URL = 'https://KEYCLOAK_URL/realms
 private static final String SF_AUDIENCE           = 'https://YOUR_SALESFORCE_DOMAIN.my.salesforce.com';
 ```
 
-![KeycloakOBOHandler constants in Apex class](images/salesforce-keycloak-obo-handler-constants.png)
+![KeycloakOBOHandler constants in Apex class](images/47-salesforce-keycloak-obo-handler-constants.png)
 
 Implementation requirements:
 
@@ -65,7 +65,7 @@ $$
 `SF_AUDIENCE`, Salesforce My Domain, and the Phase 4 OBO target value must
 match exactly (`.my.salesforce.com`, not `.lightning.force.com`).
 
-![Developer Console with KeycloakOBOHandler](images/salesforce-developer-console-keycloak-obo-handler.png)
+![Developer Console with KeycloakOBOHandler](images/48-salesforce-developer-console-keycloak-obo-handler.png)
 
 ## 3. Register the Token Exchange Handler
 
@@ -81,7 +81,7 @@ Register the handler so Salesforce can invoke it during RFC 8693 exchange.
    - **Apex Class**: `KeycloakOBOHandler`
 1. Click **Save and Enable** (or enable after save, based on UI).
 
-![Token Exchange Handler setup screen](images/salesforce-edit-token-exchange-handler-keycloak.png)
+![Token Exchange Handler setup screen](images/49-salesforce-edit-token-exchange-handler-keycloak.png)
 
 Supporting both token types avoids subject token type mismatches:
 
@@ -120,9 +120,9 @@ Create a dedicated app used by Flex Gateway for token exchange.
    - Consumer Key
    - Consumer Secret
 
-![New Connected App basic information](images/salesforce-new-connected-app-basic-info.png)
-![Connected App OAuth policies configuration](images/salesforce-connected-app-oauth-policies.png)
-![Connected App API section with Manage Consumer Details](images/salesforce-connected-app-manage-consumer-details-api.png)
+![New Connected App basic information](images/50-salesforce-new-connected-app-basic-info.png)
+![Connected App OAuth policies configuration](images/51-salesforce-connected-app-oauth-policies.png)
+![Connected App API section with Manage Consumer Details](images/52-salesforce-connected-app-manage-consumer-details-api.png)
 
 These values are required by Flex Gateway in Phase 4.
 
@@ -232,7 +232,7 @@ Optional UI confirmation:
 - In **Setup -> Login History**, confirm an entry with **OAuth Token Exchange**
   and status **Success**.
 
-![Salesforce Login History OAuth token exchange success](images/salesforce-login-history-oauth-token-exchange.png)
+![Salesforce Login History OAuth token exchange success](images/53-salesforce-login-history-oauth-token-exchange.png)
 
 ### 7.5 Common failures
 
