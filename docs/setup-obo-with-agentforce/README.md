@@ -29,7 +29,7 @@ Work through them in order:
 0. [Overview & Architecture](00-overview-and-architecture.md) — the browser →
    v2 broker → Flex Gateway OBO → Agentforce flow, the RFC 8693 token exchange,
    and the zero-code-change principle.
-1. [Enable Agentforce & Create the Agent](01-agentforce-agent.md) — enable
+1. [Agentforce Setup](01-agentforce-setup.md) — enable
    Einstein and Agentforce, create the target agent, add the optional
    "Get Current User" flow, and test the Agent API with curl.
 2. [Keycloak Identity Setup](02-keycloak-setup.md) — configure the public

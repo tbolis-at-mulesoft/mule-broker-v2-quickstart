@@ -108,7 +108,7 @@ defaults:
       parent: Setup On Behalf Of (OBO) with Agentforce
       nav_order: 1
   - scope:
-      path: docs/setup-obo-with-agentforce/01-agentforce-agent.md
+      path: docs/setup-obo-with-agentforce/01-agentforce-setup.md
     values:
       parent: Setup On Behalf Of (OBO) with Agentforce
       nav_order: 2

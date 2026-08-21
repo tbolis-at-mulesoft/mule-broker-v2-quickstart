@@ -54,4 +54,4 @@ broker wiring — one per following phase._
 
 ---
 
-**Next:** [Phase 1 — Enable Agentforce & Create the Agent](01-agentforce-agent.md)
+**Next:** [Phase 1 — Agentforce Setup](01-agentforce-setup.md)
