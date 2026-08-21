@@ -262,7 +262,9 @@ The Agent Creator opens at **1. Select an agent**.
 
 ### 4.2.3 Select subagents
 
-On **2. Select your subagents**:
+On **2. Select your subagents** (sometimes shown as
+**Select your agent's subagents**), each card is a capability bundle and
+defaults are usually pre-selected as **Added**.
 
 1. Keep default subagents selected for this walkthrough (or adjust as needed).
 1. Click **Next**.
@@ -274,8 +276,8 @@ On **2. Select your subagents**:
 On **3. Customize your agent**, fill required fields:
 
 1. **Name / API Name** (defaults are fine unless your org requires otherwise).
-1. **Description** (required).
-1. **Role** (required).
+1. **Description** (required) — keep or edit to describe what the agent does.
+1. **Role** (required) — keep or edit using the **Best Practices for Agent Settings** panel guidance.
 1. **Company** (required).
 
 Example company text:
@@ -301,7 +303,8 @@ On **4. Select data sources (Optional)**:
 
 After the agent is created, connect it to `agentforce_connected_app`.
 
-1. Open your agent in **Agentforce Studio**.
+1. Open your agent in **Agentforce Studio** (for example, **Agentforce Service Agent**).
+1. Confirm you are in **SETUP > AGENT DETAILS** (or equivalent view).
 1. Open the **Connections** tab.
 
 > If your org shows only **Settings**, open **Settings** and use
@@ -313,7 +316,7 @@ After the agent is created, connect it to `agentforce_connected_app`.
 1. Set:
    - **Connection Type**: `API`
    - **Integration Name**: `agentforce_connected_app`
-   - **Connected App**: `agentforce_connected_app`
+   - **Connected App**: `agentforce_connected_app` (lookup by name if needed)
 1. Leave auto-filled **Configuration Information** as-is.
 1. Click **Save**.
 
