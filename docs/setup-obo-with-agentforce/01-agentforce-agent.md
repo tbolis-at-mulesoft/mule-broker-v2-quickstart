@@ -27,12 +27,31 @@ Agent Builder wizard as an alternative.
 
 ## 1. Enable Einstein Generative AI
 
-_Outline: turn on Einstein Generative AI in Setup (prerequisite for Agentforce).
-Cross-reference Quickstart Phase 3 where the Salesforce org was linked._
+Agentforce depends on Einstein Generative AI, so make sure Einstein is turned
+on in the Salesforce org first. In Salesforce **Setup**, search for
+**"Einstein"** → **Einstein Setup**, and check that **Turn on Einstein** is set
+to **On**.
+
+![Einstein Setup — Turn on Einstein](images/01-einstein-setup-turn-on.png)
+
+> If you followed the [Agent Network Quickstart](../quickstart/README.md), you
+> already enabled this while linking the org — see
+> [Quickstart Phase 3 §1](../quickstart/03-link-salesforce.md#1-enable-einstein-in-salesforce-if-not-already-on).
 
 ## 2. Enable Agentforce
 
-_Outline: toggle Agentforce on; accept terms._
+Agentforce is enabled through **Anypoint Platform**'s Salesforce integration.
+Go to **Access Management** and select **Salesforce** from the left nav — this
+page manages the capabilities integrated with Salesforce, giving cross-platform
+access to data and AI tools through trusted Salesforce orgs.
+
+![Manage Capabilities Integrated with Salesforce](images/02-anypoint-salesforce-access-management.png)
+
+Click **Accept** on the **"Enable Agentforce for Anypoint Platform"** banner.
+Review the terms (including the Generative AI section), check **"I accept the
+terms and conditions"**, then click **Accept**.
+
+![Accept Terms for Agentforce in Anypoint Platform](images/03-accept-agentforce-terms.png)
 
 ## 3. Create the Agentforce agent
 
